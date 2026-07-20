@@ -34,16 +34,16 @@ app = FastAPI(title="Smart Farm Intelligence API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ],
-    # Allow local development and Vercel-hosted frontends.
-    allow_origin_regex=r"https?://([a-z0-9-]+\.)*(vercel\.app|vercel\.dev)(:\d+)?|http://(localhost|127\.0\.0\.1|\[::1\]|192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?",
+    allow_origins=["*"], # Allow all origins so Vercel can connect
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/")
+def read_root():
+    return {"status": "ok", "message": "Smart Farm Intelligence API is running!"}
 
 
 @app.get("/health")

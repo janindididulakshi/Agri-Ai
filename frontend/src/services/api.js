@@ -5,7 +5,7 @@ const defaultBase =
   isBrowser &&
   window.location.hostname !== "localhost" &&
   window.location.hostname !== "127.0.0.1"
-    ? `${window.location.origin}/api`
+    ? "https://agri-ai-backend-production.up.railway.app"
     : "http://localhost:8000";
 const raw = (import.meta.env.VITE_API_URL || defaultBase).trim();
 
