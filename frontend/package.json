@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite --port 3000 --strictPort",
+    "start": "npx serve -s dist -l tcp://0.0.0.0:$PORT",
     "dev": "vite --port 3000 --strictPort",
     "build": "vite build",
     "preview": "vite preview --port 3000"
