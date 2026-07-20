@@ -41,11 +41,6 @@ app.add_middleware(
 )
 
 
-@app.get("/")
-def read_root():
-    return {"status": "ok", "message": "Smart Farm Intelligence API is running!"}
-
-
 @app.get("/health")
 def health():
     return {"status": "ok", "service": "smart-farm-ai"}
@@ -59,3 +54,24 @@ app.include_router(marketplace.router)
 app.include_router(reports.router)
 app.include_router(farmer_extras.router)
 app.include_router(buyer_ai.router)
+
+import os
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+# Determine the absolute path to the frontend/dist directory
+dist_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend", "dist"))
+
+# Mount the assets directory explicitly (Vite puts JS/CSS here)
+assets_dir = os.path.join(dist_dir, "assets")
+if os.path.isdir(assets_dir):
+    app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+# Catch-all route to serve the React SPA for any other paths (excluding API routes)
+@app.get("/{full_path:path}")
+async def serve_frontend(full_path: str):
+    file_path = os.path.join(dist_dir, full_path)
+    if os.path.isfile(file_path):
+        return FileResponse(file_path)
+    # Return index.html for client-side routing
+    return FileResponse(os.path.join(dist_dir, "index.html"))
