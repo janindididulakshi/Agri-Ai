@@ -145,7 +145,7 @@ export default function Dashboard() {
       }} />
 
       {/* Main Dashboard Header */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 24, alignItems: "center", marginBottom: 32, flexWrap: "wrap", position: "relative", zIndex: 1 }}>
+      <div className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 24, alignItems: "center", marginBottom: 32, flexWrap: "wrap", position: "relative", zIndex: 1 }}>
         <div>
           <div style={{ fontSize: 32, fontWeight: 900, color: "#0f172a", marginBottom: 6, textShadow: "0 2px 12px rgba(255,255,255,0.8)" }}>
             Welcome, {firstName}!
@@ -176,7 +176,7 @@ export default function Dashboard() {
       </div>
 
       {/* Main Content Grid - 2 Column */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, marginBottom: 40 }}>
+      <div className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, marginBottom: 40 }}>
         {/* Left Column */}
         <div style={{ display: "grid", gap: 24, alignContent: "start" }}>
           {/* Weather Card */}

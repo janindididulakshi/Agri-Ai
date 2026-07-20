@@ -2774,3 +2774,57 @@ button {
     align-items: stretch;
   }
 }
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  .responsive-grid {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  .responsive-grid > * {
+    width: 100% !important;
+  }
+
+  .responsive-flex-col {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .responsive-stack {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .responsive-stack-center {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .hide-on-mobile {
+    display: none !important;
+  }
+  
+  .full-width-mobile {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .responsive-padding {
+    padding: 16px !important;
+  }
+  
+  .responsive-margin-bottom {
+    margin-bottom: 16px !important;
+  }
+
+  .responsive-text-center {
+    text-align: center !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .hide-on-desktop {
+    display: none !important;
+  }
+}
