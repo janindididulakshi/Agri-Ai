@@ -76,33 +76,15 @@ const ThemeContext = createContext({
 });
 
 export function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState(() => {
-    const raw = localStorage.getItem("sf_theme") || "green";
-    return LEGACY_THEME[raw] || raw;
-  });
-
   useEffect(() => {
-    const normalized = LEGACY_THEME[theme] || theme;
-    if (normalized !== theme) {
-      setThemeState(normalized);
-      return;
-    }
-    localStorage.setItem("sf_theme", theme);
-    const vars = themes[theme] || themes.green;
+    localStorage.removeItem("sf_theme"); // Clear any old themes
+    const vars = themes.green;
     const root = document.documentElement;
     Object.entries(vars).forEach(([k, v]) => root.style.setProperty(k, v));
-  }, [theme]);
-
-  const setTheme = useCallback((t) => {
-    try {
-      const n = LEGACY_THEME[t] || t;
-      setThemeState(n);
-    } catch {
-      /* ignore */
-    }
   }, []);
 
-  const value = useMemo(() => ({ theme, setTheme }), [theme, setTheme]);
+  const setTheme = useCallback(() => {}, []);
+  const value = useMemo(() => ({ theme: "green", setTheme }), [setTheme]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }

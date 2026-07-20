@@ -97,13 +97,158 @@ function ThemeCard({ theme, label, subtitle, gradient, active, onClick }) {
   );
 }
 
+const localTranslations = {
+  EN: {
+    profileSettings: "Profile & Settings",
+    manageAccount: "Manage your account, security and app preferences",
+    farmer: "Farmer",
+    advisor: "Advisor",
+    officer: "Officer",
+    noEmail: "No email",
+    sriLanka: "Sri Lanka",
+    editProfile: "Edit Profile",
+    personalInfo: "Personal Info",
+    security: "Security",
+    notifications: "Notifications",
+    preferences: "Preferences",
+    personalInformation: "Personal Information",
+    updateContact: "Update your contact details and location",
+    fullName: "Full Name",
+    phone: "Phone Number",
+    location: "Location / District",
+    photoUrl: "Profile Photo URL",
+    savingChanges: "Saving Changes...",
+    saveChanges: "Save Changes",
+    changesSaved: "Changes saved ✅",
+    passwordSecurity: "Password & Security",
+    updatePasswordDesc: "Update your password to keep your account secure",
+    currentPassword: "Current Password",
+    newPassword: "New Password",
+    updatePassword: "Update Password",
+    signOut: "Sign Out",
+    passwordUpdated: "Password updated ✅",
+    notificationSettings: "Notification Settings",
+    controlComm: "Control how we communicate with you",
+    pushNotifications: "Push Notifications",
+    pushDesc: "Receive alerts for urgent weather and crop advisories",
+    smsAlerts: "SMS Alerts",
+    smsDesc: "Get critical market price updates via text message",
+    appPreferences: "App Preferences",
+    customizeThemes: "Customize your language and visual themes",
+    displayLanguage: "Display Language",
+    colorTheme: "Color Theme",
+    default: "Default", goviLight: "Govi light",
+    natural: "Natural", warmDaylight: "Warm daylight",
+    dark: "Dark", lowLight: "Low-light",
+    technical: "Technical", highContrast: "High contrast",
+    user: "User",
+    errorSaving: "Error saving profile.",
+    errorPw: "Error updating password."
+  },
+  SI: {
+    profileSettings: "පැතිකඩ සහ සැකසුම්",
+    manageAccount: "ඔබගේ ගිණුම, ආරක්ෂාව සහ යෙදුම් සැකසුම් කළමනාකරණය කරන්න",
+    farmer: "ගොවියා",
+    advisor: "උපදේශක",
+    officer: "නිලධාරී",
+    noEmail: "විද්‍යුත් තැපෑලක් නැත",
+    sriLanka: "ශ්‍රී ලංකාව",
+    editProfile: "පැතිකඩ සංස්කරණය",
+    personalInfo: "පුද්ගලික තොරතුරු",
+    security: "ආරක්ෂාව",
+    notifications: "දැනුම්දීම්",
+    preferences: "සැකසුම්",
+    personalInformation: "පුද්ගලික තොරතුරු",
+    updateContact: "ඔබගේ සම්බන්ධතා තොරතුරු සහ ස්ථානය යාවත්කාලීන කරන්න",
+    fullName: "සම්පූර්ණ නම",
+    phone: "දුරකථන අංකය",
+    location: "ස්ථානය / දිස්ත්‍රික්කය",
+    photoUrl: "පැතිකඩ ඡායාරූප URL",
+    savingChanges: "සුරකිමින්...",
+    saveChanges: "වෙනස්කම් සුරකින්න",
+    changesSaved: "වෙනස්කම් සුරැකිණි ✅",
+    passwordSecurity: "මුරපදය සහ ආරක්ෂාව",
+    updatePasswordDesc: "ඔබගේ ගිණුම සුරක්ෂිතව තබා ගැනීමට මුරපදය යාවත්කාලීන කරන්න",
+    currentPassword: "වත්මන් මුරපදය",
+    newPassword: "නව මුරපදය",
+    updatePassword: "මුරපදය යාවත්කාලීන කරන්න",
+    signOut: "ඉවත් වන්න",
+    passwordUpdated: "මුරපදය යාවත්කාලීන කළා ✅",
+    notificationSettings: "දැනුම්දීම් සැකසුම්",
+    controlComm: "අප ඔබ හා සම්බන්ධ වන ආකාරය පාලනය කරන්න",
+    pushNotifications: "Push දැනුම්දීම්",
+    pushDesc: "හදිසි කාලගුණ සහ බෝග උපදෙස් සඳහා ඇඟවීම් ලබා ගන්න",
+    smsAlerts: "SMS ඇඟවීම්",
+    smsDesc: "කෙටි පණිවිඩ හරහා වෙළඳපල මිල යාවත්කාලීන කිරීම් ලබා ගන්න",
+    appPreferences: "යෙදුම් සැකසුම්",
+    customizeThemes: "ඔබගේ භාෂාව සහ දෘශ්‍ය තේමා අභිරුචිකරණය කරන්න",
+    displayLanguage: "දර්ශන භාෂාව",
+    colorTheme: "වර්ණ තේමාව",
+    default: "පෙරනිමි", goviLight: "ගොවි ආලෝකය",
+    natural: "ස්වභාවික", warmDaylight: "උණුසුම් දිවා ආලෝකය",
+    dark: "අඳුරු", lowLight: "අඩු ආලෝකය",
+    technical: "තාක්ෂණික", highContrast: "ඉහළ ප්‍රතිවිරෝධතාව",
+    user: "පරිශීලක",
+    errorSaving: "පැතිකඩ සුරැකීමේ දෝෂයක්.",
+    errorPw: "මුරපදය යාවත්කාලීන කිරීමේ දෝෂයක්."
+  },
+  TA: {
+    profileSettings: "சுயவிவரம் & அமைப்புகள்",
+    manageAccount: "உங்கள் கணக்கு, பாதுகாப்பு மற்றும் பயன்பாட்டு விருப்பங்களை நிர்வகிக்கவும்",
+    farmer: "விவசாயி",
+    advisor: "ஆலோசகர்",
+    officer: "அதிகாரி",
+    noEmail: "மின்னஞ்சல் இல்லை",
+    sriLanka: "இலங்கை",
+    editProfile: "சுயவிவரத்தைத் திருத்து",
+    personalInfo: "தனிப்பட்ட தகவல்",
+    security: "பாதுகாப்பு",
+    notifications: "அறிவிப்புகள்",
+    preferences: "விருப்பங்கள்",
+    personalInformation: "தனிப்பட்ட தகவல்",
+    updateContact: "உங்கள் தொடர்பு விவரங்கள் மற்றும் இருப்பிடத்தை புதுப்பிக்கவும்",
+    fullName: "முழு பெயர்",
+    phone: "தொலைபேசி எண்",
+    location: "இடம் / மாவட்டம்",
+    photoUrl: "சுயவிவர புகைப்பட URL",
+    savingChanges: "சேமிக்கிறது...",
+    saveChanges: "மாற்றங்களைச் சேமி",
+    changesSaved: "மாற்றங்கள் சேமிக்கப்பட்டன ✅",
+    passwordSecurity: "கடவுச்சொல் & பாதுகாப்பு",
+    updatePasswordDesc: "உங்கள் கணக்கை பாதுகாப்பாக வைத்திருக்க கடவுச்சொல்லை புதுப்பிக்கவும்",
+    currentPassword: "தற்போதைய கடவுச்சொல்",
+    newPassword: "புதிய கடவுச்சொல்",
+    updatePassword: "கடவுச்சொல்லை புதுப்பி",
+    signOut: "வெளியேறு",
+    passwordUpdated: "கடவுச்சொல் புதுப்பிக்கப்பட்டது ✅",
+    notificationSettings: "அறிவிப்பு அமைப்புகள்",
+    controlComm: "நாங்கள் உங்களுடன் எவ்வாறு தொடர்பு கொள்கிறோம் என்பதைக் கட்டுப்படுத்தவும்",
+    pushNotifications: "Push அறிவிப்புகள்",
+    pushDesc: "அவசர வானிலை மற்றும் பயிர் ஆலோசனைகளுக்கான விழிப்பூட்டல்களைப் பெறவும்",
+    smsAlerts: "SMS விழிப்பூட்டல்கள்",
+    smsDesc: "குறுஞ்செய்தி மூலம் முக்கியமான சந்தை விலை புதுப்பிப்புகளைப் பெறவும்",
+    appPreferences: "பயன்பாட்டு விருப்பங்கள்",
+    customizeThemes: "உங்கள் மொழி மற்றும் காட்சி தீம்களைத் தனிப்பயனாக்குங்கள்",
+    displayLanguage: "காட்சி மொழி",
+    colorTheme: "வண்ண தீம்",
+    default: "இயல்புநிலை", goviLight: "கோவி வெளிச்சம்",
+    natural: "இயற்கை", warmDaylight: "சூடான பகல் வெளிச்சம்",
+    dark: "இருண்ட", lowLight: "குறைந்த வெளிச்சம்",
+    technical: "தொழில்நுட்பம்", highContrast: "உயர் மாறுபாடு",
+    user: "பயனர்",
+    errorSaving: "சுயவிவரத்தை சேமிப்பதில் பிழை.",
+    errorPw: "கடவுச்சொல்லை புதுப்பிப்பதில் பிழை."
+  }
+};
+
 export default function Profile() {
   const { user, logout, refreshProfile } = useAuth();
-  const { lang, setLang, t } = useLang();
+  const { lang, setLang, t: globalT } = useLang();
+  const t = (key) => localTranslations[lang?.toUpperCase()]?.[key] || globalT(key) || key;
   const { theme, setTheme } = useTheme();
   const nav = useNavigate();
 
-  const [activeTab, setActiveTab] = useState("Personal Info");
+  const [activeTab, setActiveTab] = useState("personalInfo");
 
   const [full_name, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -145,11 +290,11 @@ export default function Profile() {
   }, [user?.id]);
 
   const roleBadge = useMemo(() => {
-    if (!user) return "Farmer";
-    if (user.role === "kushiadvisor") return "Advisor";
-    if (user.role === "officer") return "Officer";
-    return "Farmer";
-  }, [user]);
+    if (!user) return t("farmer");
+    if (user.role === "kushiadvisor") return t("advisor");
+    if (user.role === "officer") return t("officer");
+    return t("farmer");
+  }, [user, lang]);
 
   const saveProfile = async () => {
     setSaving(true);
@@ -163,9 +308,9 @@ export default function Profile() {
         theme,
       });
       await refreshProfile();
-      alert("Changes saved ✅");
+      alert(t("changesSaved"));
     } catch (e) {
-      alert(e?.message || "Error saving profile.");
+      alert(e?.message || t("errorSaving"));
     } finally {
       setSaving(false);
     }
@@ -178,9 +323,9 @@ export default function Profile() {
       setNewPw("");
       setShowCurPw(false);
       setShowNewPw(false);
-      alert("Password updated ✅");
+      alert(t("passwordUpdated"));
     } catch (e) {
-      alert(e?.message || "Error updating password.");
+      alert(e?.message || t("errorPw"));
     }
   };
 
@@ -194,8 +339,8 @@ export default function Profile() {
   return (
     <div style={{ maxWidth: 1000, margin: "0 auto", padding: "40px 32px", paddingBottom: 100 }}>
       <div style={{ marginBottom: 32 }}>
-        <h1 style={{ fontSize: 28, fontWeight: 900, color: "#0f172a", margin: "0 0 6px 0" }}>Profile & Settings</h1>
-        <div style={{ fontSize: 14, color: "#64748b" }}>Manage your account, security and app preferences</div>
+        <h1 style={{ fontSize: 28, fontWeight: 900, color: "#0f172a", margin: "0 0 6px 0" }}>{t("profileSettings")}</h1>
+        <div style={{ fontSize: 14, color: "#64748b" }}>{t("manageAccount")}</div>
       </div>
 
       {/* Hero Card */}
@@ -221,56 +366,56 @@ export default function Profile() {
               
               <div style={{ paddingBottom: 6 }}>
                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-                    <h2 style={{ fontSize: 24, fontWeight: 900, color: "#0f172a", margin: 0 }}>{user?.full_name || "User"}</h2>
+                    <h2 style={{ fontSize: 24, fontWeight: 900, color: "#0f172a", margin: 0 }}>{user?.full_name || t("user")}</h2>
                     <div style={{ background: "#0bc25c", color: "#fff", fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 999, textTransform: "uppercase", letterSpacing: "0.5px" }}>{roleBadge}</div>
                  </div>
                  <div style={{ display: "flex", gap: 20, color: "#64748b", fontSize: 13, fontWeight: 600 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}><FiMail size={14}/> {user?.email || "No email"}</div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}><FiMapPin size={14}/> {user?.location || "Sri Lanka"}</div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}><FiMail size={14}/> {user?.email || t("noEmail")}</div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}><FiMapPin size={14}/> {user?.location || t("sriLanka")}</div>
                  </div>
               </div>
            </div>
            
            <button style={{ background: "#f8fafc", color: "#0bc25c", border: "1px solid #e2e8f0", padding: "10px 20px", borderRadius: 999, fontWeight: 700, fontSize: 13, display: "flex", alignItems: "center", gap: 8, cursor: "pointer", transition: "all 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.background = "#f1f5f9"} onMouseLeave={(e) => e.currentTarget.style.background = "#f8fafc"}>
-             <FiEdit2 size={16} /> Edit Profile
+             <FiEdit2 size={16} /> {t("editProfile")}
            </button>
         </div>
       </div>
 
       {/* Tabs */}
       <div style={{ display: "flex", gap: 12, marginBottom: 32 }}>
-        {["Personal Info", "Security", "Notifications", "Preferences"].map(tab => (
+        {["personalInfo", "security", "notifications", "preferences"].map((tabKey) => (
           <button 
-            key={tab} 
-            onClick={() => setActiveTab(tab)}
+            key={tabKey} 
+            onClick={() => setActiveTab(tabKey)}
             style={{ 
               padding: "10px 20px", 
               borderRadius: 999, 
               fontWeight: 700, 
               fontSize: 14, 
               cursor: "pointer", 
-              border: activeTab === tab ? "none" : "1px solid #e2e8f0",
-              background: activeTab === tab ? "#0f172a" : "#fff",
-              color: activeTab === tab ? "#fff" : "#64748b",
+              border: activeTab === tabKey ? "none" : "1px solid #e2e8f0",
+              background: activeTab === tabKey ? "#0f172a" : "#fff",
+              color: activeTab === tabKey ? "#fff" : "#64748b",
               transition: "all 0.2s"
             }}
           >
-            {tab}
+            {t(tabKey)}
           </button>
         ))}
       </div>
 
       {/* Personal Info Tab */}
-      {activeTab === "Personal Info" && (
+      {activeTab === "personalInfo" && (
          <div style={{ background: "#fff", borderRadius: 24, padding: 32, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
-            <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: "0 0 6px 0" }}>Personal Information</h3>
-            <p style={{ fontSize: 14, color: "#64748b", margin: "0 0 32px 0" }}>Update your contact details and location</p>
+            <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: "0 0 6px 0" }}>{t("personalInformation")}</h3>
+            <p style={{ fontSize: 14, color: "#64748b", margin: "0 0 32px 0" }}>{t("updateContact")}</p>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 32 }}>
-               <MockupInput label="Full Name" icon={FiUser} value={full_name} onChange={(e) => setFullName(e.target.value)} placeholder="Kasun Perera" />
-               <MockupInput label="Phone Number" icon={FiPhone} value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+94 77 123 4567" type="tel" />
-               <MockupInput label="Location / District" icon={FiMapPin} value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Kandy District" />
-               <MockupInput label="Profile Photo URL" icon={FiCamera} value={photo_url} onChange={(e) => setPhotoUrl(e.target.value)} placeholder="https://..." />
+               <MockupInput label={t("fullName")} icon={FiUser} value={full_name} onChange={(e) => setFullName(e.target.value)} placeholder="Kasun Perera" />
+               <MockupInput label={t("phone")} icon={FiPhone} value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+94 77 123 4567" type="tel" />
+               <MockupInput label={t("location")} icon={FiMapPin} value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Kandy District" />
+               <MockupInput label={t("photoUrl")} icon={FiCamera} value={photo_url} onChange={(e) => setPhotoUrl(e.target.value)} placeholder="https://..." />
             </div>
 
             <button 
@@ -278,46 +423,46 @@ export default function Profile() {
               disabled={saving}
               style={{ width: "100%", background: "#0bc25c", color: "#fff", border: "none", padding: "16px", borderRadius: 16, fontWeight: 700, fontSize: 15, cursor: saving ? "wait" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
             >
-              <FiCheck size={18} /> {saving ? "Saving Changes..." : "Save Changes"}
+              <FiCheck size={18} /> {saving ? t("savingChanges") : t("saveChanges")}
             </button>
          </div>
       )}
 
       {/* Security Tab */}
-      {activeTab === "Security" && (
+      {activeTab === "security" && (
          <div style={{ background: "#fff", borderRadius: 24, padding: 32, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
-            <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: "0 0 6px 0" }}>Password & Security</h3>
-            <p style={{ fontSize: 14, color: "#64748b", margin: "0 0 32px 0" }}>Update your password to keep your account secure</p>
+            <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: "0 0 6px 0" }}>{t("passwordSecurity")}</h3>
+            <p style={{ fontSize: 14, color: "#64748b", margin: "0 0 32px 0" }}>{t("updatePasswordDesc")}</p>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 32 }}>
-               <MockupInput label="Current Password" icon={FiLock} value={curPw} onChange={(e) => setCurPw(e.target.value)} type={showCurPw ? "text" : "password"} actionIcon={showCurPw ? FiEyeOff : FiEye} onActionClick={() => setShowCurPw(!showCurPw)} />
-               <MockupInput label="New Password" icon={FiLock} value={newPw} onChange={(e) => setNewPw(e.target.value)} type={showNewPw ? "text" : "password"} actionIcon={showNewPw ? FiEyeOff : FiEye} onActionClick={() => setShowNewPw(!showNewPw)} />
+               <MockupInput label={t("currentPassword")} icon={FiLock} value={curPw} onChange={(e) => setCurPw(e.target.value)} type={showCurPw ? "text" : "password"} actionIcon={showCurPw ? FiEyeOff : FiEye} onActionClick={() => setShowCurPw(!showCurPw)} />
+               <MockupInput label={t("newPassword")} icon={FiLock} value={newPw} onChange={(e) => setNewPw(e.target.value)} type={showNewPw ? "text" : "password"} actionIcon={showNewPw ? FiEyeOff : FiEye} onActionClick={() => setShowNewPw(!showNewPw)} />
             </div>
 
             <div style={{ display: "flex", gap: 16 }}>
                <button onClick={changePw} style={{ flex: 1, background: "#0bc25c", color: "#fff", border: "none", padding: "16px", borderRadius: 16, fontWeight: 700, fontSize: 15, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-                 Update Password
+                 {t("updatePassword")}
                </button>
                <button onClick={() => { logout(); nav("/login", { replace: true }); }} style={{ flex: 1, background: "#fff0f0", color: "#ef4444", border: "1px solid #fee2e2", padding: "16px", borderRadius: 16, fontWeight: 700, fontSize: 15, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-                 Sign Out
+                 {t("signOut")}
                </button>
             </div>
          </div>
       )}
 
       {/* Notifications Tab */}
-      {activeTab === "Notifications" && (
+      {activeTab === "notifications" && (
          <div style={{ background: "#fff", borderRadius: 24, padding: 32, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
-            <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: "0 0 6px 0" }}>Notification Settings</h3>
-            <p style={{ fontSize: 14, color: "#64748b", margin: "0 0 32px 0" }}>Control how we communicate with you</p>
+            <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: "0 0 6px 0" }}>{t("notificationSettings")}</h3>
+            <p style={{ fontSize: 14, color: "#64748b", margin: "0 0 32px 0" }}>{t("controlComm")}</p>
 
             <div style={{ display: "grid", gap: 16 }}>
                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px", background: "#f8fafc", borderRadius: 16, border: "1px solid #e2e8f0" }}>
                  <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                    <div style={{ width: 48, height: 48, borderRadius: 12, background: "#dcfce7", color: "#0bc25c", display: "flex", alignItems: "center", justifyContent: "center" }}><FiBell size={24} /></div>
                    <div>
-                     <div style={{ fontWeight: 700, color: "#1e293b", marginBottom: 4, fontSize: 15 }}>Push Notifications</div>
-                     <div style={{ fontSize: 13, color: "#64748b" }}>Receive alerts for urgent weather and crop advisories</div>
+                     <div style={{ fontWeight: 700, color: "#1e293b", marginBottom: 4, fontSize: 15 }}>{t("pushNotifications")}</div>
+                     <div style={{ fontSize: 13, color: "#64748b" }}>{t("pushDesc")}</div>
                    </div>
                  </div>
                  <ModernToggle checked={pushOn} onChange={(v) => { setPushOn(v); localStorage.setItem("sf_push", v ? "1" : "0"); }} />
@@ -327,8 +472,8 @@ export default function Profile() {
                  <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                    <div style={{ width: 48, height: 48, borderRadius: 12, background: "#dcfce7", color: "#0bc25c", display: "flex", alignItems: "center", justifyContent: "center" }}><FiSmartphone size={24} /></div>
                    <div>
-                     <div style={{ fontWeight: 700, color: "#1e293b", marginBottom: 4, fontSize: 15 }}>SMS Alerts</div>
-                     <div style={{ fontSize: 13, color: "#64748b" }}>Get critical market price updates via text message</div>
+                     <div style={{ fontWeight: 700, color: "#1e293b", marginBottom: 4, fontSize: 15 }}>{t("smsAlerts")}</div>
+                     <div style={{ fontSize: 13, color: "#64748b" }}>{t("smsDesc")}</div>
                    </div>
                  </div>
                  <ModernToggle checked={smsOn} onChange={(v) => { setSmsOn(v); localStorage.setItem("sf_sms", v ? "1" : "0"); }} />
@@ -338,13 +483,13 @@ export default function Profile() {
       )}
 
       {/* Preferences Tab */}
-      {activeTab === "Preferences" && (
+      {activeTab === "preferences" && (
          <div style={{ background: "#fff", borderRadius: 24, padding: 32, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
-            <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: "0 0 6px 0" }}>App Preferences</h3>
-            <p style={{ fontSize: 14, color: "#64748b", margin: "0 0 32px 0" }}>Customize your language and visual themes</p>
+            <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: "0 0 6px 0" }}>{t("appPreferences")}</h3>
+            <p style={{ fontSize: 14, color: "#64748b", margin: "0 0 32px 0" }}>{t("customizeThemes")}</p>
 
             <div style={{ marginBottom: 32 }}>
-               <div style={{ fontSize: 11, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 12 }}>Display Language</div>
+               <div style={{ fontSize: 11, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 12 }}>{t("displayLanguage")}</div>
                <div style={{ display: "flex", gap: 12 }}>
                  {[ { code: "si", label: "සිංහල" }, { code: "en", label: "English" }, { code: "ta", label: "தமிழ்" } ].map((lng) => (
                    <button key={lng.code} onClick={() => setLang(lng.code)} style={{ flex: 1, padding: "14px", borderRadius: 12, border: lang === lng.code ? "2px solid #0bc25c" : "1px solid #e2e8f0", background: lang === lng.code ? "#f0fdf4" : "#fff", color: lang === lng.code ? "#0bc25c" : "#64748b", fontSize: 14, fontWeight: 700, cursor: "pointer", transition: "all 0.2s" }}>
@@ -354,19 +499,6 @@ export default function Profile() {
                </div>
             </div>
 
-            <div>
-               <div style={{ fontSize: 11, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 12 }}>Color Theme</div>
-               <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
-                 {[
-                   { key: "green", label: "Default", sub: "Govi light", grad: "linear-gradient(135deg,#d8f3dc 0%,#95d5b2 100%)" },
-                   { key: "gold", label: "Natural", sub: "Warm daylight", grad: "linear-gradient(135deg,#fff3e0 0%,#ffe0b2 100%)" },
-                   { key: "night", label: "Dark", sub: "Low-light", grad: "linear-gradient(135deg,#1b4332 0%,#0d2818 100%)" },
-                   { key: "contrast", label: "Technical", sub: "High contrast", grad: "linear-gradient(135deg,#ffff00 0%,#000 60%)" },
-                 ].map((t) => (
-                   <ThemeCard key={t.key} theme={t.key} label={t.label} subtitle={t.sub} gradient={t.grad} active={theme === t.key} onClick={() => setTheme(t.key)} />
-                 ))}
-               </div>
-            </div>
          </div>
       )}
 

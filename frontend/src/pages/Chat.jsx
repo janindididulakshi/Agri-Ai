@@ -1,8 +1,50 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FiMic, FiMoreHorizontal, FiSend, FiPaperclip } from "react-icons/fi";
 import { api } from "../services/api.js";
+import { useLang } from "../context/LanguageContext.jsx";
+
+const translations = {
+  EN: {
+    micNotSupported: "Speech recognition is not supported in this browser.",
+    gpsDenied: "GPS permission denied",
+    weatherUnavailable: "Weather unavailable",
+    active: "Active",
+    assistantName: "Govi AI Assistant",
+    welcome: "Hello! I'm Govi AI Assistant. Ask about crop diseases, fertilizers, weather, or market prices — I'll answer in your preferred language.",
+    typing: "Typing...",
+    placeholder: "Type your message...",
+    chips: ["Fertilizers", "Diseases", "Weather", "Market Prices"],
+    error: "An error occurred."
+  },
+  SI: {
+    micNotSupported: "ඔබේ බ්‍රව්සරය මයික්‍රෆෝනය සඳහා සහය නොදක්වයි.",
+    gpsDenied: "GPS අවසරය ලබා ගත නොහැක",
+    weatherUnavailable: "කාලගුණය ලබා ගත නොහැක",
+    active: "සක්‍රීයයි",
+    assistantName: "ගොවි AI සහායක",
+    welcome: "ආයුබෝවන්! මම ගොවි AI සහායක. බෝග රෝග, පොහොර, කාලගුණය, හෝ වෙළඳපල මිල ගණන් ගැන විමසන්න.",
+    typing: "ටයිප් කරමින්...",
+    placeholder: "ඔබේ පණිවිඩය ඇතුළත් කරන්න...",
+    chips: ["පොහොර", "රෝග", "කාලගුණය", "වෙළඳ මිල"],
+    error: "දෝෂයක්."
+  },
+  TA: {
+    micNotSupported: "உங்கள் உலாவி மைக்ரோஃபோனை ஆதரிக்கவில்லை.",
+    gpsDenied: "ஜிபிஎஸ் அனுமதி மறுக்கப்பட்டது",
+    weatherUnavailable: "வானிலை கிடைக்கவில்லை",
+    active: "செயலில்",
+    assistantName: "கோவி AI உதவியாளர்",
+    welcome: "வணக்கம்! நான் கோவி AI உதவியாளர். பயிர் நோய்கள், உரங்கள், வானிலை அல்லது சந்தை விலைகள் பற்றி கேளுங்கள்.",
+    typing: "தட்டச்சு செய்கிறது...",
+    placeholder: "உங்கள் செய்தியை தட்டச்சு செய்யவும்...",
+    chips: ["உரங்கள்", "நோய்கள்", "வானிலை", "சந்தை விலைகள்"],
+    error: "ஒரு பிழை ஏற்பட்டது."
+  }
+};
 
 export default function Chat() {
+  const { lang } = useLang();
+  const t = translations[lang?.toUpperCase()] || translations.EN;
   const [history, setHistory] = useState([]);
   const [msg, setMsg] = useState("");
   const [typing, setTyping] = useState(false);
@@ -20,7 +62,7 @@ export default function Chat() {
       const recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = true;
-      recognition.lang = 'si-LK'; // default to Sinhala
+      recognition.lang = lang === 'si' ? 'si-LK' : lang === 'ta' ? 'ta-LK' : 'en-US';
       
       recognition.onresult = (event) => {
         const transcript = Array.from(event.results)
@@ -51,16 +93,16 @@ export default function Chat() {
         const { data } = await api.get("/weather/gps", { params: { lat: p.coords.latitude, lon: p.coords.longitude } });
         setWxTop(`${data.location || ""} - ${Math.round(data.temperature_c ?? 0)}°C`);
       } catch {
-        setWxTop("කාලගුණය ලබා ගත නොහැක");
+        setWxTop(t.weatherUnavailable);
       }
-    }, () => setWxTop("GPS අවසරය ලබා ගත නොහැක"));
-  }, []);
+    }, () => setWxTop(t.gpsDenied));
+  }, [t]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [history, typing]);
 
-  const chips = useMemo(() => ["පොහොර", "රෝග", "කාලගුණය", "වෙළඳ මිල"], []);
+  const chips = useMemo(() => t.chips, [t]);
 
   const handleAttachClick = () => {
     imageInputRef.current?.click();
@@ -73,7 +115,7 @@ export default function Chat() {
 
   const toggleListening = () => {
     if (!recognitionRef.current) {
-      alert("ඔබේ බ්‍රව්සරය මයික්‍රෆෝනය සඳහා සහය නොදක්වයි. (Speech recognition is not supported in this browser.)");
+      alert(t.micNotSupported);
       return;
     }
     if (isListening) {
@@ -134,7 +176,7 @@ export default function Chat() {
     } catch (e) {
       setHistory((h) => [
         ...h,
-        { role: "assistant", content: e?.message || "දෝෂයක්." },
+        { role: "assistant", content: e?.message || t.error },
       ]);
     } finally {
       setTyping(false);
@@ -159,10 +201,10 @@ export default function Chat() {
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <img src="/logo.jpg" alt="Govi AI" style={{ height: "48px", width: "auto", borderRadius: "12px", objectFit: "contain" }} />
             <div>
-            <div style={{ fontWeight: 900, fontSize: "20px", color: "#0f172a", marginBottom: "6px" }}>Govi AI Assistant</div>
+            <div style={{ fontWeight: 900, fontSize: "20px", color: "#0f172a", marginBottom: "6px" }}>{t.assistantName}</div>
             <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "#64748b", fontWeight: 500 }}>
               <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#0bc25c" }} />
-              Active - {wxTop}
+              {t.active} - {wxTop}
             </div>
           </div>
           </div>
@@ -176,7 +218,7 @@ export default function Chat() {
           {!history.length && (
             <div style={{ display: "flex", justifyContent: "flex-start" }}>
               <div style={{ background: "#f1f5f9", padding: "16px 20px", borderRadius: "20px 20px 20px 4px", color: "#334155", fontSize: "14px", lineHeight: 1.6, maxWidth: "80%" }}>
-                Hello! I&apos;m Govi AI Assistant. Ask about crop diseases, fertilizers, weather, or market prices — I&apos;ll answer in Sinhala or English to match you.
+                {t.welcome}
               </div>
             </div>
           )}
@@ -216,7 +258,7 @@ export default function Chat() {
           {typing && (
             <div style={{ display: "flex", justifyContent: "flex-start" }}>
                <div style={{ background: "#f1f5f9", padding: "12px 20px", borderRadius: "20px 20px 20px 4px", color: "#64748b", fontSize: "13px", fontWeight: 600 }}>
-                Typing...
+                {t.typing}
                </div>
             </div>
           )}
@@ -252,7 +294,7 @@ export default function Chat() {
               style={{ flex: 1, border: "none", outline: "none", background: "#f8fafc", padding: "12px 20px", borderRadius: "999px", fontSize: "14px", color: "#334155" }}
               value={msg}
               onChange={(e) => setMsg(e.target.value)}
-              placeholder="Type your message in Sinhala..."
+              placeholder={t.placeholder}
               onKeyDown={(e) => e.key === "Enter" && send(msg)}
             />
             

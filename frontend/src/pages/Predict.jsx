@@ -3,30 +3,62 @@ import { api } from "../services/api.js";
 import { FiCommand, FiActivity, FiFeather } from "react-icons/fi"; // for icons
 import { useLang } from "../context/LanguageContext.jsx";
 
-const soils = [
-  { k: "clay", si: "Clay ක්ලේ මැටි" },
-  { k: "loam", si: "Loam ලෝම් මැටි" },
-  { k: "sandy", si: "Sandy වැලි" },
-  { k: "red_loam", si: "Red Loam රත් ලෝම්" },
-  { k: "alluvial", si: "Alluvial ගංගා අපටු මැටි" },
-];
-
-const waters = [
-  { k: "rainfed", si: "Rainfed වර්ෂා ජලය" },
-  { k: "canal", si: "Canal වාරි කලපුව" },
-  { k: "well", si: "Well ලොල් කටුව" },
-  { k: "drip", si: "Drip බිංදු වාරි" },
-  { k: "sprinkler", si: "Sprinkler ස්‍ප්‍රින්ක්ලර්" },
-];
-
-const prevs = [
-  { k: "none", si: "None නැත" },
-  { k: "rice", si: "Rice හාල්" },
-  { k: "maize", si: "Maize ඉරිඟු" },
-  { k: "vegetables", si: "Vegetables එළවළු" },
-  { k: "tea", si: "Tea තේ" },
-  { k: "coconut", si: "Coconut පොල්" },
-];
+const localTranslations = {
+  EN: {
+    soilType: "Soil Type",
+    waterSource: "Water Source",
+    prevCrop: "Previous Crop",
+    sunlightHrs: "Sunlight Hours",
+    lat: "GPS Latitude",
+    lon: "GPS Longitude",
+    predictBtnText: "Get Recommendation",
+    recCrop: "Recommended Crop",
+    confidence: "confidence",
+    fertAdvice: "Fertilizer Advice",
+    shapTitle: "SHAP Feature Importance",
+    shapDesc: "Higher value = stronger influence",
+    soils: { clay: "Clay", loam: "Loam", sandy: "Sandy", red_loam: "Red Loam", alluvial: "Alluvial" },
+    waters: { rainfed: "Rainfed", canal: "Canal", well: "Well", drip: "Drip", sprinkler: "Sprinkler" },
+    prevs: { none: "None", rice: "Rice", maize: "Maize", vegetables: "Vegetables", tea: "Tea", coconut: "Coconut" },
+    failedPred: "Prediction failed."
+  },
+  SI: {
+    soilType: "පස වර්ගය",
+    waterSource: "ජල මූලාශ්‍රය",
+    prevCrop: "පෙර බෝගය",
+    sunlightHrs: "හිරු එළිය (පැය)",
+    lat: "GPS අක්ෂාංශ",
+    lon: "GPS දේශාංශ",
+    predictBtnText: "නිර්දේශය ගන්න",
+    recCrop: "නිර්දේශිත බෝගය",
+    confidence: "විශ්වාසය",
+    fertAdvice: "පොහොර උපදෙස්",
+    shapTitle: "SHAP වැදගත්කම",
+    shapDesc: "ඉහළ අගය = වැඩි බලපෑමක්",
+    soils: { clay: "ක්ලේ මැටි", loam: "ලෝම් මැටි", sandy: "වැලි", red_loam: "රත් ලෝම්", alluvial: "ගංගා අපටු මැටි" },
+    waters: { rainfed: "වර්ෂා ජලය", canal: "වාරි කලපුව", well: "ලොල් කටුව", drip: "බිංදු වාරි", sprinkler: "ස්‍ප්‍රින්ක්ලර්" },
+    prevs: { none: "නැත", rice: "හාල්", maize: "ඉරිඟු", vegetables: "එළවළු", tea: "තේ", coconut: "පොල්" },
+    failedPred: "නිර්දේශය අසාර්ථකයි."
+  },
+  TA: {
+    soilType: "மண் வகை",
+    waterSource: "நீர் ஆதாரம்",
+    prevCrop: "முந்தைய பயிர்",
+    sunlightHrs: "சூரிய ஒளி (மணி)",
+    lat: "அட்சரேகை",
+    lon: "தீர்க்கரேகை",
+    predictBtnText: "பரிந்துரையைப் பெறவும்",
+    recCrop: "பரிந்துரைக்கப்பட்ட பயிர்",
+    confidence: "நம்பிக்கை",
+    fertAdvice: "உர ஆலோசனை",
+    shapTitle: "SHAP முக்கியத்துவம்",
+    shapDesc: "அதிக மதிப்பு = வலுவான செல்வாக்கு",
+    soils: { clay: "களிமண்", loam: "களிமண் கலவை", sandy: "மணல்", red_loam: "சிவப்பு களிமண்", alluvial: "வண்டல்" },
+    waters: { rainfed: "மழைநீர்ப்பாசனம்", canal: "கால்வாய்", well: "கிணறு", drip: "சொட்டு நீர்", sprinkler: "தெளிப்பான்" },
+    prevs: { none: "இல்லை", rice: "அரிசி", maize: "சோளம்", vegetables: "காய்கறிகள்", tea: "தேநீர்", coconut: "தேங்காய்" },
+    failedPred: "கணிப்பு தோல்வியடைந்தது."
+  }
+};
 
 export default function Predict() {
   const [soil_type, setSoil] = useState("clay");
@@ -37,7 +69,8 @@ export default function Predict() {
   const [lon, setLon] = useState("79.8612");
   const [result, setResult] = useState(null);
   const [err, setErr] = useState("");
-  const { t } = useLang();
+  const { lang, t: globalT } = useLang();
+  const t = (key) => localTranslations[lang?.toUpperCase()]?.[key] || globalT(key) || key;
 
   useEffect(() => {
     if (!navigator.geolocation) return;
@@ -66,7 +99,7 @@ export default function Predict() {
       });
       setResult(data);
     } catch (e) {
-      setErr(e?.message || "නිර්දේශය අසාර්ථකයි.");
+      setErr(e?.message || t("failedPred"));
     }
   };
 
@@ -109,38 +142,38 @@ export default function Predict() {
           
           <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
             <div>
-              <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#334155", marginBottom: "8px" }}>Soil Type</label>
+              <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#334155", marginBottom: "8px" }}>{t("soilType")}</label>
               <select style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "1px solid #e2e8f0", background: "#f8fafc", fontSize: "15px", color: "#334155", outline: "none" }} value={soil_type} onChange={(e) => setSoil(e.target.value)}>
-                {soils.map((s) => <option key={s.k} value={s.k}>{s.si}</option>)}
+                {Object.keys(localTranslations.EN.soils).map((k) => <option key={k} value={k}>{t("soils")[k]}</option>)}
               </select>
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#334155", marginBottom: "8px" }}>Water Source</label>
+              <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#334155", marginBottom: "8px" }}>{t("waterSource")}</label>
               <select style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "1px solid #e2e8f0", background: "#f8fafc", fontSize: "15px", color: "#334155", outline: "none" }} value={water_source} onChange={(e) => setWater(e.target.value)}>
-                {waters.map((s) => <option key={s.k} value={s.k}>{s.si}</option>)}
+                {Object.keys(localTranslations.EN.waters).map((k) => <option key={k} value={k}>{t("waters")[k]}</option>)}
               </select>
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#334155", marginBottom: "8px" }}>Previous Crop</label>
+              <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#334155", marginBottom: "8px" }}>{t("prevCrop")}</label>
               <select style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "1px solid #e2e8f0", background: "#f8fafc", fontSize: "15px", color: "#334155", outline: "none" }} value={previous_crop} onChange={(e) => setPrev(e.target.value)}>
-                {prevs.map((s) => <option key={s.k} value={s.k}>{s.si}</option>)}
+                {Object.keys(localTranslations.EN.prevs).map((k) => <option key={k} value={k}>{t("prevs")[k]}</option>)}
               </select>
             </div>
 
             <div>
-              <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#334155", marginBottom: "8px" }}>Sunlight Hours</label>
+              <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#334155", marginBottom: "8px" }}>{t("sunlightHrs")}</label>
               <input type="number" step="0.1" placeholder="e.g. 7.5" style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "1px solid #e2e8f0", background: "#f8fafc", fontSize: "15px", color: "#334155", outline: "none" }} value={sunlight} onChange={(e) => setSun(e.target.value)} />
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
               <div>
-                <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#334155", marginBottom: "8px" }}>GPS Latitude</label>
+                <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#334155", marginBottom: "8px" }}>{t("lat")}</label>
                 <input style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "1px solid #e2e8f0", background: "#f8fafc", fontSize: "15px", color: "#334155", outline: "none" }} value={lat} onChange={(e) => setLat(e.target.value)} />
               </div>
               <div>
-                <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#334155", marginBottom: "8px" }}>GPS Longitude</label>
+                <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#334155", marginBottom: "8px" }}>{t("lon")}</label>
                 <input style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "1px solid #e2e8f0", background: "#f8fafc", fontSize: "15px", color: "#334155", outline: "none" }} value={lon} onChange={(e) => setLon(e.target.value)} />
               </div>
             </div>
@@ -151,7 +184,7 @@ export default function Predict() {
               onClick={run}
               style={{ background: "#6edb9f", color: "#fff", border: "none", padding: "16px", borderRadius: "12px", fontWeight: 800, fontSize: "18px", marginTop: "16px", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.7 : 1, transition: "background 0.2s", letterSpacing: "0.5px" }}
             >
-              නිර්දේශය ගන්න
+              {t("predictBtnText")}
             </button>
           </div>
         </div>
@@ -164,11 +197,11 @@ export default function Predict() {
             <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "24px", padding: "32px", boxShadow: "0 10px 25px rgba(0,0,0,0.02)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "24px" }}>
                 <div>
-                  <div style={{ fontSize: "12px", fontWeight: 700, color: "#94a3b8", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "8px" }}>Recommended Crop</div>
+                  <div style={{ fontSize: "12px", fontWeight: 700, color: "#94a3b8", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "8px" }}>{t("recCrop")}</div>
                   <div style={{ fontSize: "32px", fontWeight: 900, color: "#1e293b" }}>{result.crop_english} / {result.crop_sinhala}</div>
                 </div>
                 <div style={{ background: "#dcfce7", color: "#16a34a", padding: "8px 16px", borderRadius: "999px", fontSize: "13px", fontWeight: 800 }}>
-                  {Math.round(Number(result.confidence) * 100)}% confidence
+                  {Math.round(Number(result.confidence) * 100)}% {t("confidence")}
                 </div>
               </div>
 
@@ -178,7 +211,7 @@ export default function Predict() {
 
               <div style={{ background: "#fffbeb", border: "1px solid #fde68a", borderRadius: "16px", padding: "20px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 800, color: "#d97706", marginBottom: "12px", fontSize: "15px" }}>
-                  <span>🌱</span> Fertilizer Advice
+                  <span>🌱</span> {t("fertAdvice")}
                 </div>
                 <div style={{ fontSize: "14px", color: "#b45309", lineHeight: "1.6" }}>
                   {result.fertilizer}
@@ -189,8 +222,8 @@ export default function Predict() {
             {/* SHAP Chart Card */}
             {result.shap_data && result.shap_data.labels && (
               <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "24px", padding: "32px", boxShadow: "0 10px 25px rgba(0,0,0,0.02)" }}>
-                <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#1e293b", margin: "0 0 4px" }}>SHAP Feature Importance</h2>
-                <p style={{ fontSize: "14px", color: "#94a3b8", margin: "0 0 24px" }}>Higher value = stronger influence</p>
+                <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#1e293b", margin: "0 0 4px" }}>{t("shapTitle")}</h2>
+                <p style={{ fontSize: "14px", color: "#94a3b8", margin: "0 0 24px" }}>{t("shapDesc")}</p>
                 
                 <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                   {result.shap_data.labels.map((label, i) => {
@@ -214,7 +247,7 @@ export default function Predict() {
                 </div>
 
                 <div style={{ marginTop: "32px", padding: "12px 20px", background: "#f8fafc", borderRadius: "12px", fontSize: "13px", color: "#64748b", fontWeight: 600, display: "inline-block" }}>
-                  Higher value = stronger influence
+                  {t("shapDesc")}
                 </div>
               </div>
             )}

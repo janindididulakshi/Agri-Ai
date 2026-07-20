@@ -3,7 +3,7 @@ from functools import lru_cache
 
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 
 class Settings:
@@ -11,7 +11,7 @@ class Settings:
     OPENCODE_API_KEY: str = os.getenv("OPENCODE_API_KEY", "")
     OPENCODE_MODEL: str = os.getenv("OPENCODE_MODEL", "").strip()
     OPENCODE_BASE_URL: str = os.getenv("OPENCODE_BASE_URL", "")
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./agri_local.db")
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./agri_local.db").strip()
     SECRET_KEY: str = os.getenv("SECRET_KEY", "change-me")
     ALGORITHM: str = os.getenv("ALGORITHM", "HS256")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))

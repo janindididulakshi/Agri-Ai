@@ -44,7 +44,7 @@ def _reason_en(crop_en: str, conf: float) -> str:
     )
 
 
-@router.post("/")
+@router.post("")
 async def predict_crop(
     body: PredictBody,
     db: Session = Depends(get_db),

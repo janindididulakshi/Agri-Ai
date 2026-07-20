@@ -4,6 +4,147 @@ import { api } from "../services/api.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useLang } from "../context/LanguageContext.jsx";
 
+const localTranslations = {
+  EN: {
+    filters: "Filters",
+    refineProducts: "Refine products by need.",
+    category: "Category",
+    all: "All",
+    seeds: "Seeds",
+    tools: "Tools",
+    inputs: "Inputs",
+    fertilizer: "Fertilizer",
+    delivery: "Delivery",
+    fastDelivery: "Fast delivery only",
+    arrives48h: "Arrives within 48 hours",
+    budget: "Budget",
+    cartSummary: "Cart summary",
+    readyCheckout: "Ready for checkout.",
+    items: "Items",
+    subtotal: "Subtotal",
+    free: "Free",
+    proceedCheckout: "Proceed to checkout",
+    verifiedSellers: "Verified sellers",
+    acrossRegion: "Across your region",
+    ordersToday: "Orders today",
+    pendingDispatch: "12 pending dispatch",
+    savings: "Savings",
+    seasonalBundles: "On seasonal bundles",
+    noProducts: "No products available.",
+    freeDeliveryOver: "Free delivery over LKR 5,000",
+    addToCart: "Add to cart",
+    highQuality: "High quality",
+    from: "from",
+    updateListing: "Update listing",
+    addNewProduct: "Add a new product",
+    enterHarvest: "Enter your harvest details to start selling to the community.",
+    productName: "Product Name",
+    priceLkr: "Price (LKR)",
+    qty: "Quantity",
+    desc: "Description",
+    photo: "Photo",
+    updateProduct: "Update Product",
+    publishListing: "Publish Listing",
+    checkoutSuccess: "Checkout successful! Orders placed.",
+    checkoutFailed: "Checkout failed.",
+    failedLoad: "Failed to load products.",
+    failedAdd: "Failed to add listing.",
+    localFarmers: "local farmers"
+  },
+  SI: {
+    filters: "පෙරහන්",
+    refineProducts: "ඔබගේ අවශ්‍යතාවය අනුව නිෂ්පාදන තෝරන්න.",
+    category: "කාණ්ඩය",
+    all: "සියල්ල",
+    seeds: "බීජ",
+    tools: "උපකරණ",
+    inputs: "ආදාන",
+    fertilizer: "පොහොර",
+    delivery: "බෙදා හැරීම",
+    fastDelivery: "ඉක්මන් බෙදා හැරීම් පමණි",
+    arrives48h: "පැය 48ක් ඇතුළත ලැබේ",
+    budget: "අයවැය",
+    cartSummary: "කරත්ත සාරාංශය",
+    readyCheckout: "ගෙවීම් කිරීමට සූදානම්.",
+    items: "අයිතම",
+    subtotal: "මුළු මුදල",
+    free: "නොමිලේ",
+    proceedCheckout: "ගෙවීම් කරන්න",
+    verifiedSellers: "තහවුරු කළ විකුණුම්කරුවන්",
+    acrossRegion: "ඔබේ ප්‍රදේශය පුරා",
+    ordersToday: "අද ඇණවුම්",
+    pendingDispatch: "යැවීමට 12 ක් ඇත",
+    savings: "ඉතිරිය",
+    seasonalBundles: "කන්නයේ දීමනා සඳහා",
+    noProducts: "නිෂ්පාදන නොමැත.",
+    freeDeliveryOver: "රු. 5,000 ට වැඩි ඇණවුම් සඳහා බෙදා හැරීම නොමිලේ",
+    addToCart: "කරත්තයට එකතු කරන්න",
+    highQuality: "උසස් තත්ත්වයේ",
+    from: "වෙතින්",
+    updateListing: "ලැයිස්තුව යාවත්කාලීන කරන්න",
+    addNewProduct: "නව නිෂ්පාදනයක් එකතු කරන්න",
+    enterHarvest: "අනෙක් අයට විකිණීම සඳහා ඔබේ අස්වනු විස්තර ඇතුළත් කරන්න.",
+    productName: "නිෂ්පාදනයේ නම",
+    priceLkr: "මිල (රු.)",
+    qty: "ප්‍රමාණය",
+    desc: "විස්තරය",
+    photo: "ඡායාරූපය",
+    updateProduct: "නිෂ්පාදනය යාවත්කාලීන කරන්න",
+    publishListing: "ලැයිස්තුගත කරන්න",
+    checkoutSuccess: "ඇණවුම් සාර්ථකයි!",
+    checkoutFailed: "ඇණවුම අසාර්ථකයි.",
+    failedLoad: "නිෂ්පාදන පූරණය කිරීම අසාර්ථක විය.",
+    failedAdd: "ලැයිස්තුවට එකතු කිරීම අසාර්ථක විය.",
+    localFarmers: "ප්‍රාදේශීය ගොවීන්"
+  },
+  TA: {
+    filters: "வடிப்பான்கள்",
+    refineProducts: "தேவைக்கேற்ப தயாரிப்புகளை செம்மைப்படுத்தவும்.",
+    category: "வகை",
+    all: "அனைத்தும்",
+    seeds: "விதைகள்",
+    tools: "கருவிகள்",
+    inputs: "உள்ளீடுகள்",
+    fertilizer: "உரம்",
+    delivery: "வினியோகம்",
+    fastDelivery: "விரைவான வினியோகம் மட்டும்",
+    arrives48h: "48 மணி நேரத்திற்குள் வரும்",
+    budget: "பட்ஜெட்",
+    cartSummary: "வண்டி சுருக்கம்",
+    readyCheckout: "வெளியேற தயார்.",
+    items: "பொருட்கள்",
+    subtotal: "மொத்தம்",
+    free: "இலவசம்",
+    proceedCheckout: "வெளியேறு",
+    verifiedSellers: "சரிபார்க்கப்பட்ட விற்பனையாளர்கள்",
+    acrossRegion: "உங்கள் பிராந்தியம் முழுவதும்",
+    ordersToday: "இன்று ஆர்டர்கள்",
+    pendingDispatch: "12 அனுப்புதலில் உள்ளது",
+    savings: "சேமிப்பு",
+    seasonalBundles: "பருவ கால சலுகைகளில்",
+    noProducts: "தயாரிப்புகள் இல்லை.",
+    freeDeliveryOver: "ரூ. 5,000 க்கு மேல் இலவச வினியோகம்",
+    addToCart: "வண்டியில் சேர்",
+    highQuality: "உயர் தரம்",
+    from: "இருந்து",
+    updateListing: "பட்டியலை புதுப்பிக்கவும்",
+    addNewProduct: "புதிய தயாரிப்பைச் சேர்க்கவும்",
+    enterHarvest: "சமூகத்திற்கு விற்க உங்கள் அறுவடை விவரங்களை உள்ளிடவும்.",
+    productName: "தயாரிப்பு பெயர்",
+    priceLkr: "விலை (ரூ.)",
+    qty: "அளவு",
+    desc: "விளக்கம்",
+    photo: "புகைப்படம்",
+    updateProduct: "தயாரிப்பை புதுப்பிக்கவும்",
+    publishListing: "பட்டியலிடவும்",
+    checkoutSuccess: "வெளியேறுதல் வெற்றிகரமானது! ஆர்டர்கள் வைக்கப்பட்டன.",
+    checkoutFailed: "வெளியேறுதல் தோல்வியடைந்தது.",
+    failedLoad: "தயாரிப்புகளை ஏற்றுவதில் தோல்வி.",
+    failedAdd: "பட்டியலில் சேர்க்கத் தவறிவிட்டது.",
+    localFarmers: "உள்ளூர் விவசாயிகள்"
+  }
+};
+
 const items = [
   { si: "හාල්", en: "rice", category: "grains" },
   { si: "තක්කාලි", en: "tomato", category: "vegetables" },
@@ -24,7 +165,8 @@ export default function Market() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [err, setErr] = useState("");
-  const { t } = useLang();
+  const { lang, t: globalT } = useLang();
+  const t = (key) => localTranslations[lang?.toUpperCase()]?.[key] || globalT(key) || key;
 
   const [crop_name, setCropName] = useState("");
   const [quantity, setQuantity] = useState(10);
@@ -53,7 +195,7 @@ export default function Market() {
       setMarketProducts(marketRes.data.products || []);
       setMyProducts(mineRes.data.products || []);
     } catch (e) {
-      setErr(e?.message || "Failed to load products.");
+      setErr(e?.message || t("failedLoad"));
     }
   };
 
@@ -135,7 +277,7 @@ export default function Market() {
       resetProductForm();
       await reload();
     } catch (e) {
-      setErr(e?.message || "Failed to add listing.");
+      setErr(e?.message || t("failedAdd"));
     }
   };
 
@@ -160,10 +302,10 @@ export default function Market() {
         });
       }
       setCart([]);
-      alert("Checkout successful! Orders placed.");
+      alert(t("checkoutSuccess"));
       await reload();
     } catch (e) {
-      setErr(e?.message || "Checkout failed.");
+      setErr(e?.message || t("checkoutFailed"));
     }
   };
 
@@ -197,10 +339,10 @@ export default function Market() {
                   <div style={{ fontSize: 13, color: "#64748b" }}>{t("topRatedProducts")}</div>
                 </div>
                 <div style={{ display: "flex", gap: 8 }}>
-                   <button style={{ background: "#0bc25c", color: "#fff", border: "none", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>All</button>
-                   <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>Seeds</button>
-                   <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>Tools</button>
-                   <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>Fertilizer</button>
+                   <button style={{ background: "#0bc25c", color: "#fff", border: "none", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{t("all")}</button>
+                   <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{t("seeds")}</button>
+                   <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{t("tools")}</button>
+                   <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{t("fertilizer")}</button>
                 </div>
               </div>
               
@@ -219,12 +361,12 @@ export default function Market() {
                         <button style={{ background: "none", border: "none", color: "#94a3b8", cursor: "pointer" }}><FiHeart size={18} /></button>
                      </div>
                      <div style={{ fontSize: 13, color: "#64748b", marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-                        {p.description || `High quality ${p.crop_name} from ${p.seller_name || "local farmers"}.`}
+                        {p.description || `${t("highQuality")} ${p.crop_name} ${t("from")} ${p.seller_name || t("localFarmers")}.`}
                      </div>
                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <div>
                           <div style={{ fontSize: 16, fontWeight: 900, color: "#0bc25c" }}>LKR {Number(p.price_per_unit).toFixed(0)}</div>
-                          <div style={{ fontSize: 11, color: "#94a3b8" }}>Free delivery over LKR 5,000</div>
+                          <div style={{ fontSize: 11, color: "#94a3b8" }}>{t("freeDeliveryOver")}</div>
                         </div>
                         <button 
                           onClick={() => addToCart(p)}
@@ -232,13 +374,13 @@ export default function Market() {
                           onMouseDown={e=>e.currentTarget.style.transform="scale(0.95)"}
                           onMouseUp={e=>e.currentTarget.style.transform="scale(1)"}
                         >
-                          Add to cart
+                          {t("addToCart")}
                         </button>
                      </div>
                   </div>
                 ))}
                 {!filteredProducts.length && (
-                  <div style={{ gridColumn: "1 / -1", padding: 40, textAlign: "center", color: "#94a3b8", fontWeight: 600 }}>No products available.</div>
+                  <div style={{ gridColumn: "1 / -1", padding: 40, textAlign: "center", color: "#94a3b8", fontWeight: 600 }}>{t("noProducts")}</div>
                 )}
               </div>
            </div>
@@ -247,27 +389,27 @@ export default function Market() {
            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
               <div style={{ background: "#fff", borderRadius: 20, padding: 20, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                   <div style={{ fontSize: 13, color: "#64748b", fontWeight: 700 }}>Verified sellers</div>
+                   <div style={{ fontSize: 13, color: "#64748b", fontWeight: 700 }}>{t("verifiedSellers")}</div>
                    <FiCheck color="#0bc25c" size={16} />
                  </div>
                  <div style={{ fontSize: 24, fontWeight: 900, color: "#0f172a", marginBottom: 4 }}>248</div>
-                 <div style={{ fontSize: 12, color: "#94a3b8" }}>Across your region</div>
+                 <div style={{ fontSize: 12, color: "#94a3b8" }}>{t("acrossRegion")}</div>
               </div>
               <div style={{ background: "#fff", borderRadius: 20, padding: 20, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                   <div style={{ fontSize: 13, color: "#64748b", fontWeight: 700 }}>Orders today</div>
+                   <div style={{ fontSize: 13, color: "#64748b", fontWeight: 700 }}>{t("ordersToday")}</div>
                    <FiPackage color="#0bc25c" size={16} />
                  </div>
                  <div style={{ fontSize: 24, fontWeight: 900, color: "#0f172a", marginBottom: 4 }}>36</div>
-                 <div style={{ fontSize: 12, color: "#94a3b8" }}>12 pending dispatch</div>
+                 <div style={{ fontSize: 12, color: "#94a3b8" }}>{t("pendingDispatch")}</div>
               </div>
               <div style={{ background: "#fff", borderRadius: 20, padding: 20, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                   <div style={{ fontSize: 13, color: "#64748b", fontWeight: 700 }}>Savings</div>
+                   <div style={{ fontSize: 13, color: "#64748b", fontWeight: 700 }}>{t("savings")}</div>
                    <FiPercent color="#0bc25c" size={16} />
                  </div>
                  <div style={{ fontSize: 24, fontWeight: 900, color: "#0f172a", marginBottom: 4 }}>18%</div>
-                 <div style={{ fontSize: 12, color: "#94a3b8" }}>On seasonal bundles</div>
+                 <div style={{ fontSize: 12, color: "#94a3b8" }}>{t("seasonalBundles")}</div>
               </div>
            </div>
         </div>
@@ -278,28 +420,28 @@ export default function Market() {
            <div style={{ background: "#fff", borderRadius: 24, padding: 24, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
                  <div>
-                   <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: 0 }}>Filters</h3>
-                   <div style={{ fontSize: 13, color: "#64748b" }}>Refine products by need.</div>
+                   <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: 0 }}>{t("filters")}</h3>
+                   <div style={{ fontSize: 13, color: "#64748b" }}>{t("refineProducts")}</div>
                  </div>
                  <FiFilter color="#0bc25c" size={18} />
               </div>
 
               <div style={{ marginBottom: 24 }}>
-                 <div style={{ fontSize: 11, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 12 }}>Category</div>
+                 <div style={{ fontSize: 11, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 12 }}>{t("category")}</div>
                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                    <button style={{ background: "#0bc25c", color: "#fff", border: "none", padding: "10px", borderRadius: 12, fontWeight: 700, fontSize: 13 }}>All</button>
-                    <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "10px", borderRadius: 12, fontWeight: 700, fontSize: 13 }}>Seeds</button>
-                    <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "10px", borderRadius: 12, fontWeight: 700, fontSize: 13 }}>Tools</button>
-                    <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "10px", borderRadius: 12, fontWeight: 700, fontSize: 13 }}>Inputs</button>
+                    <button style={{ background: "#0bc25c", color: "#fff", border: "none", padding: "10px", borderRadius: 12, fontWeight: 700, fontSize: 13 }}>{t("all")}</button>
+                    <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "10px", borderRadius: 12, fontWeight: 700, fontSize: 13 }}>{t("seeds")}</button>
+                    <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "10px", borderRadius: 12, fontWeight: 700, fontSize: 13 }}>{t("tools")}</button>
+                    <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "10px", borderRadius: 12, fontWeight: 700, fontSize: 13 }}>{t("inputs")}</button>
                  </div>
               </div>
 
               <div style={{ marginBottom: 24 }}>
-                 <div style={{ fontSize: 11, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 12 }}>Delivery</div>
+                 <div style={{ fontSize: 11, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 12 }}>{t("delivery")}</div>
                  <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 16, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <div>
-                      <div style={{ fontWeight: 800, color: "#0f172a", fontSize: 14 }}>Fast delivery only</div>
-                      <div style={{ fontSize: 11, color: "#64748b" }}>Arrives within 48 hours</div>
+                      <div style={{ fontWeight: 800, color: "#0f172a", fontSize: 14 }}>{t("fastDelivery")}</div>
+                      <div style={{ fontSize: 11, color: "#64748b" }}>{t("arrives48h")}</div>
                     </div>
                     <button 
                       onClick={() => setFastDelivery(!fastDelivery)}
@@ -311,7 +453,7 @@ export default function Market() {
               </div>
 
               <div>
-                 <div style={{ fontSize: 11, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 12 }}>Budget</div>
+                 <div style={{ fontSize: 11, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 12 }}>{t("budget")}</div>
                  <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 16, padding: 20 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, fontWeight: 800, color: "#0f172a", marginBottom: 16 }}>
                       <span>LKR 0</span>
@@ -328,24 +470,24 @@ export default function Market() {
            <div style={{ background: "#fff", borderRadius: 24, padding: 24, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
                  <div>
-                   <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: 0 }}>Cart summary</h3>
-                   <div style={{ fontSize: 13, color: "#64748b" }}>Ready for checkout.</div>
+                   <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: 0 }}>{t("cartSummary")}</h3>
+                   <div style={{ fontSize: 13, color: "#64748b" }}>{t("readyCheckout")}</div>
                  </div>
                  <FiShoppingCart color="#0bc25c" size={18} />
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 24 }}>
                  <div style={{ display: "flex", justifyContent: "space-between", background: "#f8fafc", padding: 16, borderRadius: 16, border: "1px solid #e2e8f0", fontSize: 14, fontWeight: 600, color: "#64748b" }}>
-                   <span>Items</span>
+                   <span>{t("items")}</span>
                    <span style={{ color: "#0f172a", fontWeight: 800 }}>{cart.length}</span>
                  </div>
                  <div style={{ display: "flex", justifyContent: "space-between", background: "#f8fafc", padding: 16, borderRadius: 16, border: "1px solid #e2e8f0", fontSize: 14, fontWeight: 600, color: "#64748b" }}>
-                   <span>Subtotal</span>
+                   <span>{t("subtotal")}</span>
                    <span style={{ color: "#0f172a", fontWeight: 800 }}>LKR {cartTotal.toFixed(0)}</span>
                  </div>
                  <div style={{ display: "flex", justifyContent: "space-between", background: "#f8fafc", padding: 16, borderRadius: 16, border: "1px solid #e2e8f0", fontSize: 14, fontWeight: 600, color: "#64748b" }}>
-                   <span>Delivery</span>
-                   <span style={{ color: "#0bc25c", fontWeight: 800 }}>Free</span>
+                   <span>{t("delivery")}</span>
+                   <span style={{ color: "#0bc25c", fontWeight: 800 }}>{t("free")}</span>
                  </div>
               </div>
 
@@ -356,7 +498,7 @@ export default function Market() {
                 onMouseDown={e=>cart.length>0 && (e.currentTarget.style.transform="scale(0.98)")}
                 onMouseUp={e=>cart.length>0 && (e.currentTarget.style.transform="scale(1)")}
               >
-                Proceed to checkout
+                {t("proceedCheckout")}
               </button>
            </div>
         </div>
@@ -368,43 +510,43 @@ export default function Market() {
           <div style={{ background: "#fff", width: "100%", maxWidth: 600, height: "85vh", borderTopLeftRadius: 32, borderTopRightRadius: 32, padding: 32, display: "flex", flexDirection: "column", boxShadow: "0 -10px 40px rgba(0,0,0,0.1)", animation: "slideUp 0.3s ease-out" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
               <div>
-                <div style={{ fontSize: 24, fontWeight: 900, color: "#0f172a" }}>{editingProduct ? "Update listing" : "Add a new product"}</div>
-                <div style={{ fontSize: 14, color: "#64748b" }}>Enter your harvest details to start selling to the community.</div>
+                <div style={{ fontSize: 24, fontWeight: 900, color: "#0f172a" }}>{editingProduct ? t("updateListing") : t("addNewProduct")}</div>
+                <div style={{ fontSize: 14, color: "#64748b" }}>{t("enterHarvest")}</div>
               </div>
               <button onClick={() => setSheetOpen(false)} style={{ background: "#f1f5f9", border: "none", width: 40, height: 40, borderRadius: 20, display: "flex", alignItems: "center", justifyContent: "center", color: "#64748b", cursor: "pointer" }}><FiX size={20} /></button>
             </div>
             
             <div style={{ flex: 1, overflowY: "auto", paddingRight: 8, display: "flex", flexDirection: "column", gap: 16 }}>
                <div>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", display: "block", marginBottom: 8 }}>Product Name</label>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", display: "block", marginBottom: 8 }}>{t("productName")}</label>
                   <input value={crop_name} onChange={(e) => setCropName(e.target.value)} style={{ width: "100%", padding: 16, background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 12, outline: "none", fontSize: 14, fontWeight: 600 }} placeholder="E.g., Organic Tea Leaves" />
                </div>
                
                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                   <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", display: "block", marginBottom: 8 }}>Price (LKR)</label>
+                    <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", display: "block", marginBottom: 8 }}>{t("priceLkr")}</label>
                     <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} style={{ width: "100%", padding: 16, background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 12, outline: "none", fontSize: 14, fontWeight: 600 }} />
                   </div>
                   <div>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", display: "block", marginBottom: 8 }}>Quantity</label>
+                    <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", display: "block", marginBottom: 8 }}>{t("qty")}</label>
                     <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} style={{ width: "100%", padding: 16, background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 12, outline: "none", fontSize: 14, fontWeight: 600 }} />
                   </div>
                </div>
 
                <div>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", display: "block", marginBottom: 8 }}>Description</label>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", display: "block", marginBottom: 8 }}>{t("desc")}</label>
                   <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} style={{ width: "100%", padding: 16, background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 12, outline: "none", fontSize: 14, fontWeight: 600 }} placeholder="Add product details..." />
                </div>
 
                <div>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", display: "block", marginBottom: 8 }}>Photo</label>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", display: "block", marginBottom: 8 }}>{t("photo")}</label>
                   <input type="file" accept="image/*" onChange={(e) => onPickPhoto(e.target.files?.[0])} style={{ padding: 12, background: "#f8fafc", border: "1px dashed #cbd5e1", borderRadius: 12, width: "100%" }} />
                </div>
             </div>
 
             <div style={{ paddingTop: 24, borderTop: "1px solid #f1f5f9", marginTop: "auto" }}>
                <button onClick={saveProduct} style={{ width: "100%", background: "#0bc25c", color: "#fff", border: "none", padding: 16, borderRadius: 16, fontWeight: 800, fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-                 <FiCheck size={18} /> {editingProduct ? "Update Product" : "Publish Listing"}
+                 <FiCheck size={18} /> {editingProduct ? t("updateProduct") : t("publishListing")}
                </button>
             </div>
           </div>
@@ -412,4 +554,5 @@ export default function Market() {
       )}
     </div>
   );
+
 }

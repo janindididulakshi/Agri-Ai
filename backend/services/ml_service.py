@@ -48,6 +48,7 @@ def load_or_train(force_train: bool = False) -> Tuple[xgb.XGBClassifier, Dict[st
     if not force_train and MODEL_PATH.exists() and META_PATH.exists():
         meta = joblib.load(META_PATH)
         clf = xgb.XGBClassifier()
+        clf._estimator_type = "classifier"
         clf.load_model(str(MODEL_PATH))
         return clf, meta
     from ml_models.train_model import train_and_save

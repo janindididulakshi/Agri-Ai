@@ -133,5 +133,6 @@ def train_and_save() -> Tuple[xgb.XGBClassifier, Dict[str, Any]]:
     logger.info("Trained crop model saved to %s", MODEL_PATH)
 
     loaded = xgb.XGBClassifier()
+    loaded._estimator_type = "classifier"
     loaded.load_model(str(MODEL_PATH))
     return loaded, meta

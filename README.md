@@ -26,7 +26,8 @@ AI-powered farming platform for Sri Lankan agriculture. Includes a farmer PWA, a
 ```bash
 cd backend
 pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
+python -m uvicorn main:app --reload --port 8000
+
 ```
 
 The API is served at `http://localhost:8000`. Swagger docs at `http://localhost:8000/docs`.
