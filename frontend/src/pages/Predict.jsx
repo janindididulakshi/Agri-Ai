@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { api } from "../services/api.js";
 import { FiCommand, FiActivity, FiFeather } from "react-icons/fi"; // for icons
+import { useLang } from "../context/LanguageContext.jsx";
 
 const soils = [
   { k: "clay", si: "Clay ක්ලේ මැටි" },
@@ -36,6 +37,7 @@ export default function Predict() {
   const [lon, setLon] = useState("79.8612");
   const [result, setResult] = useState(null);
   const [err, setErr] = useState("");
+  const { t } = useLang();
 
   useEffect(() => {
     if (!navigator.geolocation) return;
@@ -78,7 +80,7 @@ export default function Predict() {
           <div>
             <div style={{ fontSize: "12px", fontWeight: 700, color: "#94a3b8", letterSpacing: "2px", textTransform: "uppercase" }}>Govi AI</div>
             <div style={{ fontSize: "24px", fontWeight: 800, color: "#1e293b", display: "flex", alignItems: "center", gap: "8px" }}>
-              <span>🌾</span> Crop Recommendation
+              <span>🌾</span> {t("cropRecommendationTitle")}
             </div>
           </div>
         </div>
@@ -87,7 +89,7 @@ export default function Predict() {
           disabled={disabled}
           style={{ background: "#0bc25c", color: "#fff", border: "none", padding: "12px 24px", borderRadius: "999px", fontWeight: 700, fontSize: "16px", display: "flex", alignItems: "center", gap: "8px", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.7 : 1, letterSpacing: "0.5px" }}
         >
-          <FiActivity size={20} strokeWidth={2.5} /> Predict
+          <FiActivity size={20} strokeWidth={2.5} /> {t("predictBtn")}
         </button>
       </div>
 
@@ -102,8 +104,8 @@ export default function Predict() {
         
         {/* Left Column: Form */}
         <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: "24px", padding: "32px", boxShadow: "0 10px 25px rgba(0,0,0,0.02)" }}>
-          <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#1e293b", margin: "0 0 8px" }}>Input Parameters</h2>
-          <p style={{ fontSize: "14px", color: "#64748b", margin: "0 0 32px" }}>Enter field conditions to generate a crop recommendation.</p>
+          <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#1e293b", margin: "0 0 8px" }}>{t("inputParamsTitle")}</h2>
+          <p style={{ fontSize: "14px", color: "#64748b", margin: "0 0 32px" }}>{t("inputParamsSubtitle")}</p>
           
           <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
             <div>

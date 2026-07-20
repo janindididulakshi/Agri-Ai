@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { FiX, FiFilter, FiShoppingCart, FiHeart, FiCheck, FiPackage, FiPercent, FiTrendingUp } from "react-icons/fi";
 import { api } from "../services/api.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import { useLang } from "../context/LanguageContext.jsx";
 
 const items = [
   { si: "හාල්", en: "rice", category: "grains" },
@@ -23,6 +24,7 @@ export default function Market() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [err, setErr] = useState("");
+  const { t } = useLang();
 
   const [crop_name, setCropName] = useState("");
   const [quantity, setQuantity] = useState(10);
@@ -170,15 +172,15 @@ export default function Market() {
       {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32 }}>
         <div>
-           <h1 style={{ fontSize: 28, fontWeight: 900, color: "#0f172a", margin: "0 0 6px 0" }}>Marketplace</h1>
-           <div style={{ fontSize: 14, color: "#64748b" }}>Discover trusted farm supplies, tools, and seasonal essentials.</div>
+           <h1 style={{ fontSize: 28, fontWeight: 900, color: "#0f172a", margin: "0 0 6px 0" }}>{t("marketTitle")}</h1>
+           <div style={{ fontSize: 14, color: "#64748b" }}>{t("marketSubtitle")}</div>
         </div>
         <div style={{ display: "flex", gap: 12 }}>
            <button style={{ background: "#fff", color: "#1e293b", border: "1px solid #e2e8f0", padding: "10px 20px", borderRadius: 999, fontWeight: 700, fontSize: 14, cursor: "pointer", transition: "background 0.2s" }} onMouseEnter={e=>e.currentTarget.style.background="#f1f5f9"} onMouseLeave={e=>e.currentTarget.style.background="#fff"}>
-             Sort by relevance
+             {t("sortRelevance")}
            </button>
            <button onClick={() => openProductSheet(null)} style={{ background: "#0bc25c", color: "#fff", border: "none", padding: "10px 20px", borderRadius: 999, fontWeight: 700, fontSize: 14, cursor: "pointer", display: "flex", alignItems: "center", gap: 8, boxShadow: "0 4px 12px rgba(11, 194, 92, 0.2)" }}>
-             Sell an item
+             {t("sellItem")}
            </button>
         </div>
       </div>
@@ -191,8 +193,8 @@ export default function Market() {
            <div style={{ background: "#fff", borderRadius: 24, padding: 32, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)", marginBottom: 24 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
                 <div>
-                  <h2 style={{ fontSize: 20, fontWeight: 900, color: "#0f172a", margin: 0 }}>Featured deals</h2>
-                  <div style={{ fontSize: 13, color: "#64748b" }}>Top-rated products from verified sellers.</div>
+                  <h2 style={{ fontSize: 20, fontWeight: 900, color: "#0f172a", margin: 0 }}>{t("featuredDeals")}</h2>
+                  <div style={{ fontSize: 13, color: "#64748b" }}>{t("topRatedProducts")}</div>
                 </div>
                 <div style={{ display: "flex", gap: 8 }}>
                    <button style={{ background: "#0bc25c", color: "#fff", border: "none", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>All</button>

@@ -32,5 +32,15 @@ export default {
   recentConsultations: "මෑත උපදේශන",
   cropRecommendations: "බෝග නිර්දේශ",
   marketPrices: "වෙළඳපොළ මිල ගණන්",
-  loading: "දත්ත පූරණය වෙමින් පවතී..."
+  loading: "දත්ත පූරණය වෙමින් පවතී...",
+  marketTitle: "වෙළඳපොළ",
+  marketSubtitle: "විශ්වාසවන්ත ගොවි උපකරණ සහ කන්නයේ අවශ්‍යතා සොයාගන්න.",
+  sortRelevance: "ගැලපෙන පරිදි වර්ග කරන්න",
+  sellItem: "භාණ්ඩයක් විකුණන්න",
+  featuredDeals: "සුවිශේෂී දීමනා",
+  topRatedProducts: "තහවුරු කළ වෙළෙන්දන්ගෙන් ඉහළම ශ්‍රේණිගත කළ නිෂ්පාදන.",
+  cropRecommendationTitle: "බෝග නිර්දේශය",
+  predictBtn: "අනාවැකිය",
+  inputParamsTitle: "ආදාන පරාමිතීන්",
+  inputParamsSubtitle: "බෝග නිර්දේශයක් ජනනය කිරීමට ක්ෂේත්‍ර කොන්දේසි ඇතුළත් කරන්න."
 }

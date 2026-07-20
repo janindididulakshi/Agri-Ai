@@ -32,5 +32,15 @@ export default {
   recentConsultations: "சமீபத்திய ஆலோசனைகள்",
   cropRecommendations: "பயிர் பரிந்துரைகள்",
   marketPrices: "சந்தை விலைகள்",
-  loading: "தரவு ஏற்றப்படுகிறது..."
+  loading: "தரவு ஏற்றப்படுகிறது...",
+  marketTitle: "சந்தை",
+  marketSubtitle: "நம்பகமான விவசாய பொருட்கள் மற்றும் கருவிகளை கண்டறியுங்கள்.",
+  sortRelevance: "பொருத்தமாக வரிசைப்படுத்து",
+  sellItem: "பொருளை விற்க",
+  featuredDeals: "சிறப்பு சலுகைகள்",
+  topRatedProducts: "சரிபார்க்கப்பட்ட விற்பனையாளர்களிடமிருந்து சிறந்த தயாரிப்புகள்.",
+  cropRecommendationTitle: "பயிர் பரிந்துரை",
+  predictBtn: "முன்னறிவிப்பு",
+  inputParamsTitle: "உள்ளீட்டு அளவுருக்கள்",
+  inputParamsSubtitle: "பயிர் பரிந்துரையை உருவாக்க கள நிலைகளை உள்ளிடவும்."
 }

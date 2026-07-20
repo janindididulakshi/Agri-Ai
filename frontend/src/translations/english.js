@@ -32,5 +32,15 @@ export default {
   recentConsultations: "Recent Consultations",
   cropRecommendations: "Crop Recommendations",
   marketPrices: "Market Prices",
-  loading: "Loading data..."
+  loading: "Loading data...",
+  marketTitle: "Marketplace",
+  marketSubtitle: "Discover trusted farm supplies, tools, and seasonal essentials.",
+  sortRelevance: "Sort by relevance",
+  sellItem: "Sell an item",
+  featuredDeals: "Featured deals",
+  topRatedProducts: "Top-rated products from verified sellers.",
+  cropRecommendationTitle: "Crop Recommendation",
+  predictBtn: "Predict",
+  inputParamsTitle: "Input Parameters",
+  inputParamsSubtitle: "Enter field conditions to generate a crop recommendation."
 }
