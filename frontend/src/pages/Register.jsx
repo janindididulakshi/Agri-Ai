@@ -62,10 +62,10 @@ export default function Register() {
     <>
       <div style={{ position: "fixed", top: -30, left: -30, right: -30, bottom: -30, backgroundImage: "url('/sunset-bg.jpg')", backgroundSize: "cover", backgroundPosition: "center", filter: "blur(16px)", zIndex: -2 }}></div>
       <div style={{ position: "fixed", inset: 0, background: "rgba(255, 255, 255, 0.15)", zIndex: -1 }}></div>
-      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "40px", padding: "60px 24px 40px", position: "relative" }}>
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 16px 40px", position: "relative", width: "100%" }}>
       
       {/* Language Switcher */}
-      <div style={{ display: "flex", background: "rgba(255, 255, 255, 0.5)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", borderRadius: "999px", border: "1px solid rgba(255, 255, 255, 0.4)", padding: "4px", marginBottom: "32px", boxShadow: "0 4px 16px rgba(0,0,0,0.05)" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px", background: "rgba(255, 255, 255, 0.5)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", borderRadius: "999px", border: "1px solid rgba(255, 255, 255, 0.4)", padding: "4px", marginBottom: "24px", boxShadow: "0 4px 16px rgba(0,0,0,0.05)" }}>
         {[
           { code: "si", label: "Sinhala" },
           { code: "en", label: "English" },
@@ -93,14 +93,14 @@ export default function Register() {
       </div>
 
       {/* Logo */}
-      <img src="/logo.jpg" alt="Govi AI Logo" style={{ height: "72px", objectFit: "contain", marginBottom: "20px", borderRadius: "16px", boxShadow: "0 8px 24px rgba(0,0,0,0.15)" }} />
+      <img src="/logo.jpg" alt="Govi AI Logo" style={{ height: "64px", width: "auto", objectFit: "contain", marginBottom: "16px", borderRadius: "16px", boxShadow: "0 8px 24px rgba(0,0,0,0.15)" }} />
 
       {/* Titles */}
-      <h1 style={{ margin: "0 0 8px", fontSize: "36px", fontWeight: 900, color: "#fff", letterSpacing: "-0.03em", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>Govi AI</h1>
-      <p style={{ margin: "0 0 32px", fontSize: "16px", color: "#f1f5f9", fontWeight: 600, textShadow: "0 2px 4px rgba(0,0,0,0.4)" }}>A smart path to modern farming</p>
+      <h1 style={{ margin: "0 0 8px", fontSize: "clamp(28px, 5vw, 36px)", fontWeight: 900, color: "#fff", letterSpacing: "-0.03em", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>Govi AI</h1>
+      <p style={{ margin: "0 0 24px", fontSize: "clamp(14px, 2.5vw, 16px)", color: "#f1f5f9", fontWeight: 600, textShadow: "0 2px 4px rgba(0,0,0,0.4)" }}>A smart path to modern farming</p>
 
       {/* Form Card */}
-      <div style={{ background: "rgba(255, 255, 255, 0.75)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderRadius: "24px", padding: "36px", width: "100%", maxWidth: "520px", boxShadow: "0 12px 40px rgba(0,0,0,0.15)", border: "1px solid rgba(255, 255, 255, 0.4)", display: "flex", flexDirection: "column", gap: "20px" }}>
+      <div style={{ background: "rgba(255, 255, 255, 0.75)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderRadius: "24px", padding: "clamp(20px, 4vw, 36px)", width: "100%", maxWidth: "520px", boxShadow: "0 12px 40px rgba(0,0,0,0.15)", border: "1px solid rgba(255, 255, 255, 0.4)", display: "flex", flexDirection: "column", gap: "20px" }}>
         
         {err && (
           <div style={{ display: "flex", alignItems: "center", gap: "12px", background: "#fff5f5", border: "1px solid #ffd1d1", color: "#e53e3e", padding: "16px 20px", borderRadius: "16px", fontSize: "14px", fontWeight: 600 }}>
@@ -181,7 +181,7 @@ export default function Register() {
         {/* Location Field */}
         <div>
           <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#111", marginBottom: "12px" }}>Location</label>
-          <div style={{ display: "flex", gap: "12px" }}>
+          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255, 255, 255, 0.6)", background: "rgba(255, 255, 255, 0.5)", borderRadius: "16px", padding: "14px 20px", flex: 1 }}>
               <FiMapPin size={20} color="#475569" />
               <input type="text" placeholder="Enter your location" value={location} onChange={(e) => setLocation(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />

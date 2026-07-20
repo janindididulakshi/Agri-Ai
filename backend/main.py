@@ -38,8 +38,8 @@ app.add_middleware(
         "http://localhost:3000",
         "http://127.0.0.1:3000",
     ],
-    # Phones / LAN dev servers often hit Vite on a non-loopback host.
-    allow_origin_regex=r"http://(localhost|127\.0\.0\.1|\[::1\]|192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?",
+    # Allow local development and Vercel-hosted frontends.
+    allow_origin_regex=r"https?://([a-z0-9-]+\.)*(vercel\.app|vercel\.dev)(:\d+)?|http://(localhost|127\.0\.0\.1|\[::1\]|192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

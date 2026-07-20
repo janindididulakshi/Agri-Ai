@@ -1,6 +1,13 @@
 import axios from "axios";
 
-const raw = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const isBrowser = typeof window !== "undefined";
+const defaultBase =
+  isBrowser &&
+  window.location.hostname !== "localhost" &&
+  window.location.hostname !== "127.0.0.1"
+    ? `${window.location.origin}/api`
+    : "http://localhost:8000";
+const raw = (import.meta.env.VITE_API_URL || defaultBase).trim();
 
 export const api = axios.create({
   baseURL: raw.replace(/\/$/, ""),

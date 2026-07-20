@@ -52,13 +52,12 @@ export default function AppShell() {
 
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "transparent", width: "100%" }}>
-      {/* DESKTOP SIDEBAR */}
       <aside className="gov-sidebar" style={{ width: "260px", background: "rgba(255, 255, 255, 0.85)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", borderRight: "1px solid rgba(0, 0, 0, 0.05)", display: "flex", flexDirection: "column", flexShrink: 0, zIndex: 10 }}>
         <div style={{ padding: "32px 24px", display: "flex", alignItems: "center", gap: "12px" }}>
           <img src="/logo.jpg" alt="Govi AI" style={{ height: "40px", width: "auto", borderRadius: "8px", objectFit: "contain" }} />
           <div>
             <div style={{ fontWeight: 800, fontSize: "16px", color: "#1e293b" }}>Govi AI</div>
-            <div style={{ fontSize: "11px", color: "#94a3b8" }}>Desktop dashboard</div>
+            <div style={{ fontSize: "11px", color: "#94a3b8" }}>Smart farm dashboard</div>
           </div>
         </div>
 
@@ -72,11 +71,9 @@ export default function AppShell() {
         </nav>
       </aside>
 
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", overflow: "hidden" }}>
-        {/* TOP HEADER */}
-        <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 32px", background: "rgba(255, 255, 255, 0.85)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", borderBottom: "1px solid rgba(0,0,0,0.05)", zIndex: 10 }}>
-          {/* Search Box */}
-          <div style={{ display: "flex", alignItems: "center", background: "#fff", border: "1px solid #e2e8f0", borderRadius: "999px", padding: "0 16px", height: "36px", width: "400px", gap: "10px", boxShadow: "0 1px 2px rgba(0,0,0,0.02)" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: "100vh", overflow: "hidden" }}>
+        <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", padding: "14px 16px", background: "rgba(255, 255, 255, 0.85)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", borderBottom: "1px solid rgba(0,0,0,0.05)", zIndex: 10 }}>
+          <div style={{ display: "flex", alignItems: "center", background: "#fff", border: "1px solid #e2e8f0", borderRadius: "999px", padding: "0 14px", height: "40px", flex: 1, minWidth: 0, gap: "10px", boxShadow: "0 1px 2px rgba(0,0,0,0.02)" }}>
             <FiSearch size={14} color="#94a3b8" />
             <input 
               type="text" 
@@ -85,16 +82,15 @@ export default function AppShell() {
             />
           </div>
 
-          {/* Right Actions */}
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
             <button 
               type="button" 
               onClick={toggleNotifications}
-              style={{ position: "relative", width: "36px", height: "36px", minWidth: "36px", minHeight: "36px", borderRadius: "50%", background: "#fff", border: "1px solid #e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
+              style={{ position: "relative", width: "40px", height: "40px", minWidth: "40px", minHeight: "40px", borderRadius: "50%", background: "#fff", border: "1px solid #e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
             >
               <FiBell size={16} color="#475569" />
               {unreadCount > 0 && (
-                <div style={{ position: "absolute", top: "6px", right: "8px", width: "8px", height: "8px", background: "#ef4444", borderRadius: "50%", border: "2px solid #fff" }} />
+                <div style={{ position: "absolute", top: "6px", right: "6px", width: "8px", height: "8px", background: "#ef4444", borderRadius: "50%", border: "2px solid #fff" }} />
               )}
             </button>
 
@@ -105,7 +101,7 @@ export default function AppShell() {
                 const next = langs[(langs.indexOf(lang) + 1) % langs.length];
                 setLang(next);
               }}
-              style={{ width: "36px", height: "36px", minWidth: "36px", minHeight: "36px", borderRadius: "50%", background: "#fff", border: "1px solid #e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
+              style={{ width: "40px", height: "40px", minWidth: "40px", minHeight: "40px", borderRadius: "50%", background: "#fff", border: "1px solid #e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
             >
               <FiGlobe size={16} color="#475569" />
             </button>
@@ -114,7 +110,7 @@ export default function AppShell() {
               <button
                 type="button"
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", display: "flex", alignItems: "center", width: "36px", height: "36px", minWidth: "36px", minHeight: "36px", borderRadius: "50%" }}
+                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", display: "flex", alignItems: "center", width: "40px", height: "40px", minWidth: "40px", minHeight: "40px", borderRadius: "50%" }}
               >
                 <img
                   src={user?.photo_url || "https://api.dicebear.com/7.x/avataaars/svg?seed=felix"}

@@ -459,17 +459,15 @@ button {
 @media (max-width: 900px) {
   .gov-page {
     display: grid;
-    gridTemplateColumns: 1fr;
+    grid-template-columns: 1fr;
     gap: 20px;
   }
 
-  /* Stack 2-column layout into 1 column on tablet/mobile */
   .gov-page > div:nth-child(3) {
     display: grid !important;
     grid-template-columns: 1fr !important;
   }
 
-  /* Adjust weather card on mobile */
   .gov-page {
     padding: 16px 16px 160px !important;
   }
@@ -480,12 +478,6 @@ button {
     padding: 16px 12px 160px !important;
   }
 
-  /* Weather card adjustments */
-  .gov-page > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) {
-    padding: 20px 16px !important;
-  }
-
-  /* Reduce font sizes for mobile */
   .gov-page > div:nth-child(1) {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
@@ -495,18 +487,6 @@ button {
 @media (max-width: 640px) {
   .gov-page {
     padding: 12px 10px 160px !important;
-  }
-
-  /* Full responsive grid */
-  .gov-page > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) {
-    grid-template-columns: repeat(1, 1fr) !important;
-    padding: 16px 12px !important;
-  }
-
-  /* Quick access grid - 2 columns on small mobile */
-  [style*="grid-template-columns: repeat(auto-fit"] {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
   }
 }
 
@@ -532,6 +512,22 @@ button {
       radial-gradient(circle at bottom left, rgba(255, 203, 58, 0.08), transparent 20%);
     background-repeat: no-repeat;
     background-size: 320px 320px, 280px 280px, 220px 220px;
+  }
+}
+
+@media (max-width: 900px) {
+  .gov-sidebar {
+    display: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .gov-bottom-nav {
+    height: 72px;
+  }
+
+  .gov-nav-item {
+    font-size: 10px;
   }
 }
 
