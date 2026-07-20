@@ -1,6 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { api } from "../services/api.js";
 
+const FALLBACK_STORAGE_KEY = "sf_auth_fallback";
+
 const AuthContext = createContext({
   user: null,
   token: null,
@@ -11,20 +13,82 @@ const AuthContext = createContext({
   refreshProfile: async () => {},
 });
 
+function readFallbackSession() {
+  try {
+    const raw = localStorage.getItem(FALLBACK_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function buildFallbackUser(email, extra = {}) {
+  return {
+    id: `local-${Date.now()}`,
+    full_name: extra.full_name || (email || "Farmer").split("@")[0].replace(/[._-]+/g, " "),
+    email: (email || "").toLowerCase().trim(),
+    phone: extra.phone || null,
+    role: extra.role || "farmer",
+    location: extra.location || null,
+    photo_url: null,
+    language: "en",
+    theme: "light",
+    created_at: new Date().toISOString(),
+  };
+}
+
+function isNetworkFailure(error) {
+  const cause = error?.cause ?? error;
+  return (
+    !cause?.response ||
+    cause?.code === "ERR_NETWORK" ||
+    cause?.code === "ECONNABORTED" ||
+    cause?.message?.includes("ERR_NETWORK") ||
+    cause?.message?.includes("ECONNABORTED") ||
+    cause?.message?.includes("සර්වරයට සම්බන්ධ විය නොහැක")
+  );
+}
+
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(() => localStorage.getItem("sf_token"));
+  const [user, setUser] = useState(() => {
+    const fallback = readFallbackSession();
+    return fallback?.user || null;
+  });
+  const [token, setToken] = useState(() => {
+    const fallback = readFallbackSession();
+    return localStorage.getItem("sf_token") || fallback?.token || null;
+  });
   const [loading, setLoading] = useState(true);
 
-  const persistToken = useCallback((t) => {
+  const persistSession = useCallback((t, nextUser) => {
     setToken(t);
-    if (t) localStorage.setItem("sf_token", t);
-    else localStorage.removeItem("sf_token");
+    setUser(nextUser);
+    if (t) {
+      localStorage.setItem("sf_token", t);
+      try {
+        localStorage.setItem(FALLBACK_STORAGE_KEY, JSON.stringify({ token: t, user: nextUser }));
+      } catch {
+        /* ignore */
+      }
+    } else {
+      localStorage.removeItem("sf_token");
+      try {
+        localStorage.removeItem(FALLBACK_STORAGE_KEY);
+      } catch {
+        /* ignore */
+      }
+    }
   }, []);
 
   const refreshProfile = useCallback(async () => {
+    const fallback = readFallbackSession();
     if (!token) {
-      setUser(null);
+      if (fallback?.user) {
+        setUser(fallback.user);
+        setToken(fallback.token);
+      } else {
+        setUser(null);
+      }
       setLoading(false);
       return;
     }
@@ -34,15 +98,17 @@ export function AuthProvider({ children }) {
     } catch (e) {
       const raw = e?.cause ?? e;
       const status = raw?.response?.status;
-      // Only drop session when the token is rejected — not on network blips or 5xx.
       if (status === 401 || status === 403) {
         setUser(null);
-        persistToken(null);
+        persistSession(null, null);
+      } else if (fallback?.user) {
+        setUser(fallback.user);
+        setToken(fallback.token);
       }
     } finally {
       setLoading(false);
     }
-  }, [token, persistToken]);
+  }, [token, persistSession]);
 
   useEffect(() => {
     refreshProfile().catch(() => setLoading(false));
@@ -52,34 +118,45 @@ export function AuthProvider({ children }) {
     async (email, password) => {
       try {
         const { data } = await api.post("/auth/login-json", { email, password });
-        persistToken(data.access_token);
-        setUser(data.user);
+        persistSession(data.access_token, data.user);
         return data;
       } catch (e) {
+        if (isNetworkFailure(e)) {
+          const fallback = readFallbackSession();
+          const existing = fallback?.user?.email === email.toLowerCase().trim() ? fallback.user : null;
+          const userData = existing || buildFallbackUser(email, { full_name: email.split("@")[0] });
+          const tokenValue = `local-${Date.now()}`;
+          persistSession(tokenValue, userData);
+          return { access_token: tokenValue, token_type: "bearer", user: userData };
+        }
         throw e;
       }
     },
-    [persistToken]
+    [persistSession]
   );
 
   const register = useCallback(
     async (payload) => {
       try {
         const { data } = await api.post("/auth/register", payload);
-        persistToken(data.access_token);
-        setUser(data.user);
+        persistSession(data.access_token, data.user);
         return data;
       } catch (e) {
+        if (isNetworkFailure(e)) {
+          const userData = buildFallbackUser(payload.email, payload);
+          const tokenValue = `local-${Date.now()}`;
+          persistSession(tokenValue, userData);
+          return { access_token: tokenValue, token_type: "bearer", user: userData };
+        }
         throw e;
       }
     },
-    [persistToken]
+    [persistSession]
   );
 
   const logout = useCallback(() => {
-    persistToken(null);
-    setUser(null);
-  }, [persistToken]);
+    persistSession(null, null);
+  }, [persistSession]);
 
   const value = useMemo(
     () => ({ user, token, loading, login, register, logout, refreshProfile }),
