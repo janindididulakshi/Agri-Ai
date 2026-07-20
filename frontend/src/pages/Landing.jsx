@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useState } from "react";
-import { useLang } from "../context/LanguageContext.jsx";
-import { FiMenu, FiX, FiActivity, FiCalendar, FiShoppingCart, FiBarChart2, FiCheck, FiAward, FiWifi, FiScissors, FiSettings, FiInfo, FiDollarSign, FiFileText, FiMail, FiMapPin, FiPlay, FiUser, FiMessageSquare, FiTarget, FiSun, FiGlobe, FiUserPlus, FiPhone } from "react-icons/fi";
+import { FiActivity, FiCalendar, FiShoppingCart, FiBarChart2, FiCheck, FiAward, FiWifi, FiScissors, FiSettings, FiInfo, FiDollarSign, FiFileText, FiMail, FiMapPin, FiPlay, FiUser, FiMessageSquare, FiTarget, FiSun, FiGlobe, FiUserPlus, FiPhone } from "react-icons/fi";
 
 // Translation dictionary
 const translations = {
@@ -84,6 +83,36 @@ const translations = {
       f2desc: "Sri Lankan farming context with multilingual UI.",
       feature3: "Free to start",
       f3desc: "Core advisory and weather features without hidden fees."
+    },
+    stories: {
+      title: "Success stories from farmers",
+      s1q: "Weather alerts helped me shift nursery timing — less seed loss.",
+      s2q: "The assistant explains fertilizer choices in simple language.",
+      s3q: "Listing carrots on the marketplace brought buyers faster.",
+      s1l: "Kurunegala",
+      s2l: "Embilipitiya",
+      s3l: "Anuradhapura"
+    },
+    footer: {
+      subscribe: "Subscribe For Latest Articles",
+      email: "Email",
+      go: "Go",
+      services: "Our Services",
+      chat: "AI Chat Assistant",
+      predict: "Crop Prediction",
+      weather: "Real-time Weather",
+      market: "Digital Marketplace",
+      analytics: "Farm Analytics",
+      quick: "Quick Links",
+      about: "About Govi AI",
+      why: "Why Choose Us",
+      how: "How It Works",
+      mission: "Our Mission",
+      start: "Start for Free",
+      contact: "Contact",
+      rights: "Govi AI. @All Rights Reserved.",
+      terms: "Terms & Condition",
+      privacy: "Privacy & supports"
     }
   },
   SI: {
@@ -165,6 +194,36 @@ const translations = {
       feature3: "ආරම්භ කිරීමට නිදහස්",
       f3desc: "සඟපත් ගාස්තු නොමැතිව මූලික උපදේශන සහ කාලගුණ සේවා.",
       checkmark: "✓"
+    },
+    stories: {
+      title: "ගොවීන්ගේ සාර්ථකත්වයේ කථා",
+      s1q: "කාලගුණ ඇඟවීම් මට තවාන් කාලය වෙනස් කිරීමට උදව් විය — බීජ අඩුවෙන් අපතේ ගියේය.",
+      s2q: "උපදේශකයා පොහොර තේරීම් සරල සිංහලෙන් පැහැදිලි කරයි.",
+      s3q: "වෙළඳපොලේ කැරට් ලැයිස්තුගත කිරීම වේගයෙන් ගැනුම්කරුවන් ගෙන ආවේය.",
+      s1l: "කුරුණෑගල",
+      s2l: "ඇඹිලිපිටිය",
+      s3l: "අනුරාධපුරය"
+    },
+    footer: {
+      subscribe: "නව ලිපි සඳහා දායක වන්න",
+      email: "විද්‍යුත් තැපෑල",
+      go: "යන්න",
+      services: "අපගේ සේවා",
+      chat: "AI කතාබස් සහකාර",
+      predict: "බෝග අනාවැකි",
+      weather: "තත්‍ය කාලීන කාලගුණය",
+      market: "ඩිජිටල් වෙළඳපොල",
+      analytics: "ගොවිපල විශ්ලේෂණය",
+      quick: "ඉක්මන් සබැඳි",
+      about: "ගොවි AI ගැන",
+      why: "අපිව තෝරාගන්නේ ඇයි",
+      how: "එය ක්‍රියා කරන ආකාරය",
+      mission: "අපගේ මෙහෙයුම",
+      start: "නොමිලේ ආරම්භ කරන්න",
+      contact: "සම්බන්ධ වන්න",
+      rights: "ගොවි AI. @සියලුම හිමිකම් ඇවිරිණි.",
+      terms: "නියමයන් සහ කොන්දේසි",
+      privacy: "රහස්‍යතා සහ සහාය"
     }
   },
   TA: {
@@ -246,15 +305,43 @@ const translations = {
       feature3: "தொடங்க இலவசம்",
       f3desc: "மறைக்கப்பட்ட கட்டணங்கள் இல்லாமல் முக்கிய ஆலோசனை மற்றும் வானிலை அம்சங்கள்.",
       checkmark: "✓"
+    },
+    stories: {
+      title: "விவசாயிகளின் வெற்றிக் கதைகள்",
+      s1q: "வானிலை எச்சரிக்கைகள் நாற்றங்கால் நேரத்தை மாற்ற உதவியது - குறைந்த விதை இழப்பு.",
+      s2q: "உதவியாளர் உரத் தேர்வுகளை எளிய தமிழில் விளக்குகிறார்.",
+      s3q: "சந்தையில் கேரட்டுகளை பட்டியலிட்டது வாங்குபவர்களை விரைவாக கொண்டு வந்தது.",
+      s1l: "குருநாகல்",
+      s2l: "எம்பிலிபிட்டிய",
+      s3l: "அனுராதபுரம்"
+    },
+    footer: {
+      subscribe: "சமீபத்திய கட்டுரைகளுக்கு குழுசேரவும்",
+      email: "மின்னஞ்சல்",
+      go: "செல்",
+      services: "எங்கள் சேவைகள்",
+      chat: "AI அரட்டை உதவியாளர்",
+      predict: "பயிர் கணிப்பு",
+      weather: "நிகழ்நேர வானிலை",
+      market: "டிஜிட்டல் சந்தை",
+      analytics: "பண்ணை பகுப்பாய்வு",
+      quick: "விரைவான இணைப்புகள்",
+      about: "கோவி AI பற்றி",
+      why: "எங்களை ஏன் தேர்ந்தெடுக்க வேண்டும்",
+      how: "எப்படி செயல்படுகிறது",
+      mission: "எங்கள் பணி",
+      start: "இலவசமாக தொடங்குங்கள்",
+      contact: "தொடர்பு",
+      rights: "கோவி AI. @அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.",
+      terms: "விதிமுறைகள் மற்றும் நிபந்தனைகள்",
+      privacy: "தனியுரிமை மற்றும் ஆதரவு"
     }
   }
 };
 
 export default function Landing() {
   const { token } = useAuth();
-  const { lang, setLang } = useLang();
-  const activeLang = lang.toUpperCase(); // EN, SI, TA
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeLang, setActiveLang] = useState("EN"); // Default language
   
   const t = translations[activeLang]; // Current translations
   
@@ -266,101 +353,50 @@ export default function Landing() {
 
   return (
     <div className="gov-landing">
-      <header className="gov-landing-header" style={{ flexDirection: "column", padding: 0 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", padding: "16px clamp(20px, 4vw, 50px)" }}>
-          <Link to="/" className="gov-logo">
-            <div className="gov-logo-icon">
-              <img src="/logo.jpg" alt="Govi AI Logo" className="gov-logo-img" />
-            </div>
-            <div className="gov-logo-text">
-              Govi AI
-            </div>
-          </Link>
-
-          {/* Desktop Nav */}
-          <nav className="gov-landing-nav hide-on-mobile" aria-label="Marketing">
-            <Link to="#home" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.home}</Link>
-            <Link to="#about" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.about}</Link>
-            <Link to="#services" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.services}</Link>
-            <Link to="#features" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.pages}</Link>
-            <Link to="#" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.blog}</Link>
-            <Link to="#contact" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.contact}</Link>
-          </nav>
-
-          <div className="hide-on-mobile" style={{ display: "flex", gap: 16, alignItems: "center" }}>
-            <div className="gov-lang-switcher">
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  className={`gov-lang-btn ${activeLang === lang.code ? "gov-lang-btn--active" : ""}`}
-                  onClick={() => setLang(lang.code.toLowerCase())}
-                >
-                  <span>{lang.label}</span>
-                </button>
-              ))}
-            </div>
-            {token ? (
-              <Link to="/app" className="gov-landing-btn gov-landing-btn-primary">
-                Dashboard
+      <header className="gov-landing-header">
+        <Link to="/" className="gov-logo">
+          <div className="gov-logo-icon">
+            <img src="/logo.jpg" alt="Govi AI Logo" className="gov-logo-img" />
+          </div>
+          <div className="gov-logo-text">
+            Govi AI
+          </div>
+        </Link>
+        <nav className="gov-landing-nav" aria-label="Marketing">
+          <Link to="#home" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.home}</Link>
+          <Link to="#about" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.about}</Link>
+          <Link to="#services" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.services}</Link>
+          <Link to="#features" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.pages}</Link>
+          <Link to="#" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.blog}</Link>
+          <Link to="#contact" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.contact}</Link>
+        </nav>
+        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+          <div className="gov-lang-switcher">
+            {languages.map((lang) => (
+              <button
+                key={lang.code}
+                className={`gov-lang-btn ${activeLang === lang.code ? "gov-lang-btn--active" : ""}`}
+                onClick={() => setActiveLang(lang.code)}
+              >
+                <span>{lang.label}</span>
+              </button>
+            ))}
+          </div>
+          {token ? (
+            <Link to="/app" className="gov-landing-btn gov-landing-btn-primary">
+              Dashboard
+            </Link>
+          ) : (
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <Link to="/login" className="gov-landing-btn gov-landing-btn-primary" style={{ fontSize: 14 }}>
+                Sign in
               </Link>
-            ) : (
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <Link to="/login" className="gov-landing-btn gov-landing-btn-primary" style={{ fontSize: 14 }}>
-                  Sign in
-                </Link>
-                <Link to="/register" className="gov-landing-btn gov-landing-btn-primary" style={{ fontSize: 14 }}>
-                  Sign up
-                </Link>
-              </div>
-            )}
-          </div>
-
-          <button className="hide-on-desktop" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ background: "none", border: "none", fontSize: 28, cursor: "pointer", color: "#0f172a", display: "flex", padding: 4 }}>
-            {isMenuOpen ? <FiX /> : <FiMenu />}
-          </button>
-        </div>
-
-        {/* Mobile Nav Overlay */}
-        {isMenuOpen && (
-          <div className="hide-on-desktop" style={{ width: "100%", background: "#fff", padding: "16px 20px", display: "flex", flexDirection: "column", gap: 20, borderTop: "1px solid rgba(0,0,0,0.05)" }}>
-            <nav style={{ display: "flex", flexDirection: "column", gap: 16, fontSize: 16, fontWeight: 700 }}>
-              <Link to="#home" onClick={() => setIsMenuOpen(false)} style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.home}</Link>
-              <Link to="#about" onClick={() => setIsMenuOpen(false)} style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.about}</Link>
-              <Link to="#services" onClick={() => setIsMenuOpen(false)} style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.services}</Link>
-              <Link to="#features" onClick={() => setIsMenuOpen(false)} style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.pages}</Link>
-              <Link to="#" onClick={() => setIsMenuOpen(false)} style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.blog}</Link>
-              <Link to="#contact" onClick={() => setIsMenuOpen(false)} style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.contact}</Link>
-            </nav>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: 16, paddingTop: 16, borderTop: "1px solid rgba(0,0,0,0.05)" }}>
-              <div className="gov-lang-switcher" style={{ width: "fit-content" }}>
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    className={`gov-lang-btn ${activeLang === lang.code ? "gov-lang-btn--active" : ""}`}
-                    onClick={() => { setLang(lang.code.toLowerCase()); setIsMenuOpen(false); }}
-                  >
-                    <span>{lang.label}</span>
-                  </button>
-                ))}
-              </div>
-              {token ? (
-                <Link to="/app" className="gov-landing-btn gov-landing-btn-primary" onClick={() => setIsMenuOpen(false)} style={{ textAlign: "center" }}>
-                  Dashboard
-                </Link>
-              ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: "1fr 1fr", gap: '12px' }}>
-                  <Link to="/login" className="gov-landing-btn gov-landing-btn-primary" onClick={() => setIsMenuOpen(false)} style={{ fontSize: 14, textAlign: "center", justifyContent: "center" }}>
-                    Sign in
-                  </Link>
-                  <Link to="/register" className="gov-landing-btn gov-landing-btn-primary" onClick={() => setIsMenuOpen(false)} style={{ fontSize: 14, textAlign: "center", justifyContent: "center" }}>
-                    Sign up
-                  </Link>
-                </div>
-              )}
+              <Link to="/register" className="gov-landing-btn gov-landing-btn-primary" style={{ fontSize: 14 }}>
+                Sign up
+              </Link>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </header>
 
       <section id="home" className="gov-landing-hero">
@@ -454,52 +490,51 @@ export default function Landing() {
             </div>
           </div>
           <div className="gov-mission-content">
-            <div className="gov-landing-kicker" style={{ textAlign: 'left', color: '#166534' }}>Our Mission</div>
-            <h2>Digital Stewardship for Eco-friendly Growth</h2>
+            <div className="gov-landing-kicker" style={{ textAlign: 'left', color: '#166534' }}>{t.about.oldKicker}</div>
+            <h2>{t.about.oldTitle}</h2>
             <p>
-              At Govi AI, we believe that the health of the land is inextricably linked to the technology we use to tend it. 
-              Our "Digital Stewardship" philosophy focuses on precise, data-backed decisions that minimize environmental footprint while maximizing farmer profitability.
+              {t.about.oldDesc}
             </p>
             <div className="gov-mission-list" style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '24px' }}>
               <div className="gov-mission-item" style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                 <div>
-                  <h3>Regenerative Practices</h3>
-                  <p>Integrating tech with soil regeneration techniques to build long-term land health.</p>
+                  <h3>{t.about.oldFeat1}</h3>
+                  <p>{t.about.oldFeat1desc}</p>
                 </div>
               </div>
               <div className="gov-mission-item" style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                 <div>
-                  <h3>Data Transparency</h3>
-                  <p>Full lifecycle visibility from seed to silo for enhanced consumer trust.</p>
+                  <h3>{t.about.oldFeat2}</h3>
+                  <p>{t.about.oldFeat2desc}</p>
                 </div>
               </div>
             </div>
-            <Link to="#" className="gov-btn-outline-dark">Read Sustainability Report</Link>
+            <Link to="#" className="gov-btn-outline-dark">{t.about.oldBtn}</Link>
           </div>
         </div>
       </section>
 
       <section id="solutions" className="gov-landing-solutions">
         <div className="gov-solutions-header">
-          <div className="gov-landing-kicker">Our services</div>
-          <h2>Integrated Agricultural Solutions</h2>
-          <p>Smart tools tailored for Sri Lankan farmers, combining real-time intelligence with local expertise for sustainable growth.</p>
+          <div className="gov-landing-kicker">{t.services.our}</div>
+          <h2>{t.services.intTitle}</h2>
+          <p>{t.services.intSub}</p>
         </div>
         <div className="gov-solutions-grid">
           <div className="gov-solution-card">
-            <h3>AI Advisor</h3>
-            <p>Get instant guidance on fertilizers, pest management, market prices, and seasonal practices — all grounded in Sri Lankan farming context.</p>
-            <Link to="#" className="gov-solution-link">Explore Service →</Link>
+            <h3>{t.originalServices.advisor}</h3>
+            <p>{t.originalServices.adesc}</p>
+            <Link to="#" className="gov-solution-link">{t.services.explore}</Link>
           </div>
           <div className="gov-solution-card">
-            <h3>Weather Forecasting</h3>
-            <p>GPS-based weather alerts and forecasts to help you plan irrigation, field work, and protect your crops from unexpected conditions.</p>
-            <Link to="#" className="gov-solution-link">Explore Service →</Link>
+            <h3>{t.originalServices.weather}</h3>
+            <p>{t.originalServices.wdesc}</p>
+            <Link to="#" className="gov-solution-link">{t.services.explore}</Link>
           </div>
           <div className="gov-solution-card">
-            <h3>Digital Marketplace</h3>
-            <p>List your harvests, manage buyer inquiries, and connect directly with customers to get the best prices for your produce.</p>
-            <Link to="#" className="gov-solution-link">Explore Service →</Link>
+            <h3>{t.originalServices.market}</h3>
+            <p>{t.originalServices.mdesc}</p>
+            <Link to="#" className="gov-solution-link">{t.services.explore}</Link>
           </div>
         </div>
       </section>
@@ -507,17 +542,17 @@ export default function Landing() {
       <section className="gov-landing-section" style={{ background: "color-mix(in srgb, var(--sf-card) 65%, var(--sf-bg))", borderTop: "1px solid var(--sf-border)" }}>
         <div className="gov-why">
           <div className="gov-card" style={{ padding: 28 }}>
-            <div style={{ fontWeight: 900, marginBottom: 16 }}>Product</div>
+            <div style={{ fontWeight: 900, marginBottom: 16 }}>{t.why.product}</div>
             <div className="sf-muted" style={{ display: "grid", gap: 10 }}>
-              <span>Assistant</span>
-              <span>Weather</span>
-              <span>Marketplace</span>
-              <span>Reports</span>
+              <span>{t.why.assistant}</span>
+              <span>{t.why.weather}</span>
+              <span>{t.why.marketplace}</span>
+              <span>{t.why.reports}</span>
             </div>
-            <div style={{ marginTop: 24, fontWeight: 900 }}>Company</div>
+            <div style={{ marginTop: 24, fontWeight: 900 }}>{t.why.company}</div>
             <div className="sf-muted" style={{ display: "grid", gap: 10 }}>
-              <span>About</span>
-              <span>Careers</span>
+              <span>{t.why.about}</span>
+              <span>{t.why.careers}</span>
             </div>
             <div
               style={{
@@ -531,36 +566,36 @@ export default function Landing() {
                 color: "var(--sf-primary)",
               }}
             >
-              10,000+ active farmers (goal)
+              {t.why.goal}
             </div>
           </div>
           <div>
-            <h2 style={{ textAlign: "left", marginBottom: 20 }}>Why choose us?</h2>
+            <h2 style={{ textAlign: "left", marginBottom: 20 }}>{t.why.title}</h2>
             <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 18 }}>
               <li style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                 <FiCheck size={20} style={{ color: "var(--sf-primary)", fontWeight: 900, flexShrink: 0, marginTop: 2 }} />
                 <div>
-                  <strong>Easy to use</strong>
+                  <strong>{t.why.feature1}</strong>
                   <div className="sf-muted" style={{ marginTop: 4 }}>
-                    Designed for smartphones — large tap targets, offline-friendly PWA install.
+                    {t.why.f1desc}
                   </div>
                 </div>
               </li>
               <li style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                 <FiCheck size={20} style={{ color: "var(--sf-primary)", fontWeight: 900, flexShrink: 0, marginTop: 2 }} />
                 <div>
-                  <strong>Localized</strong>
+                  <strong>{t.why.feature2}</strong>
                   <div className="sf-muted" style={{ marginTop: 4 }}>
-                    Sri Lankan farming context with multilingual UI.
+                    {t.why.f2desc}
                   </div>
                 </div>
               </li>
               <li style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                 <FiCheck size={20} style={{ color: "var(--sf-primary)", fontWeight: 900, flexShrink: 0, marginTop: 2 }} />
                 <div>
-                  <strong>Free to start</strong>
+                  <strong>{t.why.feature3}</strong>
                   <div className="sf-muted" style={{ marginTop: 4 }}>
-                    Core advisory and weather features without hidden fees.
+                    {t.why.f3desc}
                   </div>
                 </div>
               </li>
@@ -570,12 +605,12 @@ export default function Landing() {
       </section>
 
       <section className="gov-landing-section">
-        <h2>Success stories from farmers</h2>
+        <h2>{t.stories.title}</h2>
         <div className="gov-services-grid">
           {[
-            { name: "Sunil Perera", loc: "Kurunegala", quote: "Weather alerts helped me shift nursery timing — less seed loss." },
-            { name: "Kamal Silva", loc: "Embilipitiya", quote: "The assistant explains fertilizer choices in simple Sinhala." },
-            { name: "Nimal Fonseka", loc: "Anuradhapura", quote: "Listing carrots on the marketplace brought buyers faster." },
+            { name: "Sunil Perera", loc: t.stories.s1l, quote: t.stories.s1q },
+            { name: "Kamal Silva", loc: t.stories.s2l, quote: t.stories.s2q },
+            { name: "Nimal Fonseka", loc: t.stories.s3l, quote: t.stories.s3q },
           ].map((s) => (
             <div key={s.name} className="gov-card">
               <div style={{ color: "#f4a923", marginBottom: 8 }}>★★★★★</div>
@@ -601,36 +636,36 @@ export default function Landing() {
               </div>
             </Link>
             <div className="gov-footer-subscribe" style={{ marginTop: '32px' }}>
-              <h3>Subscribe For Latest Articles</h3>
+              <h3>{t.footer.subscribe}</h3>
               <div className="gov-footer-subscribe-form">
-                <input type="email" placeholder="Email" />
-                <button type="button">Go</button>
+                <input type="email" placeholder={t.footer.email} />
+                <button type="button">{t.footer.go}</button>
               </div>
             </div>
           </div>
           <div className="gov-footer-links-row">
             <div className="gov-footer-col">
-              <h4>Our Services</h4>
+              <h4>{t.footer.services}</h4>
               <ul>
-                <li><Link to="/app/chat"><FiMessageSquare size={16} style={{display: 'inline', marginRight: 6}} /> AI Chat Assistant</Link></li>
-                <li><Link to="/app/predict"><FiTarget size={16} style={{display: 'inline', marginRight: 6}} /> Crop Prediction</Link></li>
-                <li><Link to="/app"><FiSun size={16} style={{display: 'inline', marginRight: 6}} /> Real-time Weather</Link></li>
-                <li><Link to="/app/market"><FiShoppingCart size={16} style={{display: 'inline', marginRight: 6}} /> Digital Marketplace</Link></li>
-                <li><Link to="/app/reports"><FiBarChart2 size={16} style={{display: 'inline', marginRight: 6}} /> Farm Analytics</Link></li>
+                <li><Link to="/app/chat"><FiMessageSquare size={16} style={{display: 'inline', marginRight: 6}} /> {t.footer.chat}</Link></li>
+                <li><Link to="/app/predict"><FiTarget size={16} style={{display: 'inline', marginRight: 6}} /> {t.footer.predict}</Link></li>
+                <li><Link to="/app"><FiSun size={16} style={{display: 'inline', marginRight: 6}} /> {t.footer.weather}</Link></li>
+                <li><Link to="/app/market"><FiShoppingCart size={16} style={{display: 'inline', marginRight: 6}} /> {t.footer.market}</Link></li>
+                <li><Link to="/app/reports"><FiBarChart2 size={16} style={{display: 'inline', marginRight: 6}} /> {t.footer.analytics}</Link></li>
               </ul>
             </div>
             <div className="gov-footer-col">
-              <h4>Quick Links</h4>
+              <h4>{t.footer.quick}</h4>
               <ul>
-                <li><a href="#"><FiInfo size={16} style={{display: 'inline', marginRight: 6}} /> About Govi AI</a></li>
-                <li><a href="#"><FiAward size={16} style={{display: 'inline', marginRight: 6}} /> Why Choose Us</a></li>
-                <li><a href="#"><FiSettings size={16} style={{display: 'inline', marginRight: 6}} /> How It Works</a></li>
-                <li><a href="#"><FiGlobe size={16} style={{display: 'inline', marginRight: 6}} /> Our Mission</a></li>
-                <li><Link to="/register"><FiUserPlus size={16} style={{display: 'inline', marginRight: 6}} /> Start for Free</Link></li>
+                <li><a href="#"><FiInfo size={16} style={{display: 'inline', marginRight: 6}} /> {t.footer.about}</a></li>
+                <li><a href="#"><FiAward size={16} style={{display: 'inline', marginRight: 6}} /> {t.footer.why}</a></li>
+                <li><a href="#"><FiSettings size={16} style={{display: 'inline', marginRight: 6}} /> {t.footer.how}</a></li>
+                <li><a href="#"><FiGlobe size={16} style={{display: 'inline', marginRight: 6}} /> {t.footer.mission}</a></li>
+                <li><Link to="/register"><FiUserPlus size={16} style={{display: 'inline', marginRight: 6}} /> {t.footer.start}</Link></li>
               </ul>
             </div>
             <div className="gov-footer-col">
-              <h4>Contact</h4>
+              <h4>{t.footer.contact}</h4>
               <ul>
                 <li><a href="tel:+9476044308015"><FiPhone size={16} style={{display: 'inline', marginRight: 6}} /> +94 76044308015</a></li>
                 <li><a href="mailto:info@govi.ai"><FiMail size={16} style={{display: 'inline', marginRight: 6}} /> info@govi.ai</a></li>
@@ -648,10 +683,10 @@ export default function Landing() {
           </div>
         </div>
         <div className="gov-footer-bottom">
-          <p>© {new Date().getFullYear()} Govi AI. @All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} {t.footer.rights}</p>
           <div style={{ display: 'flex', gap: '16px' }}>
-            <a href="#" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', textDecoration: 'none' }}>Terms & Condition</a>
-            <a href="#" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', textDecoration: 'none' }}>Privacy & supports</a>
+            <a href="#" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', textDecoration: 'none' }}>{t.footer.terms}</a>
+            <a href="#" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', textDecoration: 'none' }}>{t.footer.privacy}</a>
           </div>
         </div>
       </footer>
