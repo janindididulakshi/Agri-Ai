@@ -1154,6 +1154,14 @@ button {
   flex-wrap: wrap;
 }
 
+@media (max-width: 900px) {
+  .gov-landing-header {
+    padding: 16px 20px;
+    gap: 16px;
+    justify-content: center;
+  }
+}
+
 .gov-landing-nav {
   display: flex;
   gap: 40px;
@@ -1162,6 +1170,12 @@ button {
   font-weight: 800;
   opacity: 1;
   color: #0f172a;
+}
+
+@media (max-width: 900px) {
+  .gov-landing-nav {
+    display: none;
+  }
 }
 
 .gov-landing-nav a {
@@ -2776,7 +2790,7 @@ button {
 }
 
 /* Responsive Utilities */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .responsive-grid {
     display: flex !important;
     flex-direction: column !important;
@@ -2823,7 +2837,7 @@ button {
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 901px) {
   .hide-on-desktop {
     display: none !important;
   }

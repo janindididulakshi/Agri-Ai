@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useState } from "react";
-import { FiActivity, FiCalendar, FiShoppingCart, FiBarChart2, FiCheck, FiAward, FiWifi, FiScissors, FiSettings, FiInfo, FiDollarSign, FiFileText, FiMail, FiMapPin, FiPlay, FiUser, FiMessageSquare, FiTarget, FiSun, FiGlobe, FiUserPlus, FiPhone } from "react-icons/fi";
+import { FiMenu, FiX, FiActivity, FiCalendar, FiShoppingCart, FiBarChart2, FiCheck, FiAward, FiWifi, FiScissors, FiSettings, FiInfo, FiDollarSign, FiFileText, FiMail, FiMapPin, FiPlay, FiUser, FiMessageSquare, FiTarget, FiSun, FiGlobe, FiUserPlus, FiPhone } from "react-icons/fi";
 
 // Translation dictionary
 const translations = {
@@ -252,6 +252,7 @@ const translations = {
 export default function Landing() {
   const { token } = useAuth();
   const [activeLang, setActiveLang] = useState("EN"); // Default language
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const t = translations[activeLang]; // Current translations
   
@@ -263,50 +264,101 @@ export default function Landing() {
 
   return (
     <div className="gov-landing">
-      <header className="gov-landing-header">
-        <Link to="/" className="gov-logo">
-          <div className="gov-logo-icon">
-            <img src="/logo.jpg" alt="Govi AI Logo" className="gov-logo-img" />
-          </div>
-          <div className="gov-logo-text">
-            Govi AI
-          </div>
-        </Link>
-        <nav className="gov-landing-nav" aria-label="Marketing">
-          <Link to="#home" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.home}</Link>
-          <Link to="#about" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.about}</Link>
-          <Link to="#services" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.services}</Link>
-          <Link to="#features" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.pages}</Link>
-          <Link to="#" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.blog}</Link>
-          <Link to="#contact" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.contact}</Link>
-        </nav>
-        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-          <div className="gov-lang-switcher">
-            {languages.map((lang) => (
-              <button
-                key={lang.code}
-                className={`gov-lang-btn ${activeLang === lang.code ? "gov-lang-btn--active" : ""}`}
-                onClick={() => setActiveLang(lang.code)}
-              >
-                <span>{lang.label}</span>
-              </button>
-            ))}
-          </div>
-          {token ? (
-            <Link to="/app" className="gov-landing-btn gov-landing-btn-primary">
-              Dashboard
-            </Link>
-          ) : (
-            <div style={{ display: 'flex', gap: '12px' }}>
-              <Link to="/login" className="gov-landing-btn gov-landing-btn-primary" style={{ fontSize: 14 }}>
-                Sign in
-              </Link>
-              <Link to="/register" className="gov-landing-btn gov-landing-btn-primary" style={{ fontSize: 14 }}>
-                Sign up
-              </Link>
+      <header className="gov-landing-header" style={{ flexDirection: "column", padding: 0 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", padding: "16px clamp(20px, 4vw, 50px)" }}>
+          <Link to="/" className="gov-logo">
+            <div className="gov-logo-icon">
+              <img src="/logo.jpg" alt="Govi AI Logo" className="gov-logo-img" />
             </div>
-          )}
+            <div className="gov-logo-text">
+              Govi AI
+            </div>
+          </Link>
+
+          {/* Desktop Nav */}
+          <nav className="gov-landing-nav hide-on-mobile" aria-label="Marketing">
+            <Link to="#home" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.home}</Link>
+            <Link to="#about" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.about}</Link>
+            <Link to="#services" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.services}</Link>
+            <Link to="#features" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.pages}</Link>
+            <Link to="#" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.blog}</Link>
+            <Link to="#contact" style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.contact}</Link>
+          </nav>
+
+          <div className="hide-on-mobile" style={{ display: "flex", gap: 16, alignItems: "center" }}>
+            <div className="gov-lang-switcher">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  className={`gov-lang-btn ${activeLang === lang.code ? "gov-lang-btn--active" : ""}`}
+                  onClick={() => setActiveLang(lang.code)}
+                >
+                  <span>{lang.label}</span>
+                </button>
+              ))}
+            </div>
+            {token ? (
+              <Link to="/app" className="gov-landing-btn gov-landing-btn-primary">
+                Dashboard
+              </Link>
+            ) : (
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <Link to="/login" className="gov-landing-btn gov-landing-btn-primary" style={{ fontSize: 14 }}>
+                  Sign in
+                </Link>
+                <Link to="/register" className="gov-landing-btn gov-landing-btn-primary" style={{ fontSize: 14 }}>
+                  Sign up
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <button className="hide-on-desktop" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ background: "none", border: "none", fontSize: 28, cursor: "pointer", color: "#0f172a", display: "flex", padding: 4 }}>
+            {isMenuOpen ? <FiX /> : <FiMenu />}
+          </button>
         </div>
+
+        {/* Mobile Nav Overlay */}
+        {isMenuOpen && (
+          <div className="hide-on-desktop" style={{ width: "100%", background: "#fff", padding: "16px 20px", display: "flex", flexDirection: "column", gap: 20, borderTop: "1px solid rgba(0,0,0,0.05)" }}>
+            <nav style={{ display: "flex", flexDirection: "column", gap: 16, fontSize: 16, fontWeight: 700 }}>
+              <Link to="#home" onClick={() => setIsMenuOpen(false)} style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.home}</Link>
+              <Link to="#about" onClick={() => setIsMenuOpen(false)} style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.about}</Link>
+              <Link to="#services" onClick={() => setIsMenuOpen(false)} style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.services}</Link>
+              <Link to="#features" onClick={() => setIsMenuOpen(false)} style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.pages}</Link>
+              <Link to="#" onClick={() => setIsMenuOpen(false)} style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.blog}</Link>
+              <Link to="#contact" onClick={() => setIsMenuOpen(false)} style={{ color: '#0f172a', textDecoration: 'none' }}>{t.nav.contact}</Link>
+            </nav>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 16, paddingTop: 16, borderTop: "1px solid rgba(0,0,0,0.05)" }}>
+              <div className="gov-lang-switcher" style={{ width: "fit-content" }}>
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    className={`gov-lang-btn ${activeLang === lang.code ? "gov-lang-btn--active" : ""}`}
+                    onClick={() => { setActiveLang(lang.code); setIsMenuOpen(false); }}
+                  >
+                    <span>{lang.label}</span>
+                  </button>
+                ))}
+              </div>
+              {token ? (
+                <Link to="/app" className="gov-landing-btn gov-landing-btn-primary" onClick={() => setIsMenuOpen(false)} style={{ textAlign: "center" }}>
+                  Dashboard
+                </Link>
+              ) : (
+                <div style={{ display: 'grid', gridTemplateColumns: "1fr 1fr", gap: '12px' }}>
+                  <Link to="/login" className="gov-landing-btn gov-landing-btn-primary" onClick={() => setIsMenuOpen(false)} style={{ fontSize: 14, textAlign: "center", justifyContent: "center" }}>
+                    Sign in
+                  </Link>
+                  <Link to="/register" className="gov-landing-btn gov-landing-btn-primary" onClick={() => setIsMenuOpen(false)} style={{ fontSize: 14, textAlign: "center", justifyContent: "center" }}>
+                    Sign up
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </header>
 
       <section id="home" className="gov-landing-hero">
