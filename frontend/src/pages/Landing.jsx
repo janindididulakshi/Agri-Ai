@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useState } from "react";
+import { useLang } from "../context/LanguageContext.jsx";
 import { FiMenu, FiX, FiActivity, FiCalendar, FiShoppingCart, FiBarChart2, FiCheck, FiAward, FiWifi, FiScissors, FiSettings, FiInfo, FiDollarSign, FiFileText, FiMail, FiMapPin, FiPlay, FiUser, FiMessageSquare, FiTarget, FiSun, FiGlobe, FiUserPlus, FiPhone } from "react-icons/fi";
 
 // Translation dictionary
@@ -251,7 +252,8 @@ const translations = {
 
 export default function Landing() {
   const { token } = useAuth();
-  const [activeLang, setActiveLang] = useState("EN"); // Default language
+  const { lang, setLang } = useLang();
+  const activeLang = lang.toUpperCase(); // EN, SI, TA
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const t = translations[activeLang]; // Current translations
@@ -291,7 +293,7 @@ export default function Landing() {
                 <button
                   key={lang.code}
                   className={`gov-lang-btn ${activeLang === lang.code ? "gov-lang-btn--active" : ""}`}
-                  onClick={() => setActiveLang(lang.code)}
+                  onClick={() => setLang(lang.code.toLowerCase())}
                 >
                   <span>{lang.label}</span>
                 </button>
@@ -336,7 +338,7 @@ export default function Landing() {
                   <button
                     key={lang.code}
                     className={`gov-lang-btn ${activeLang === lang.code ? "gov-lang-btn--active" : ""}`}
-                    onClick={() => { setActiveLang(lang.code); setIsMenuOpen(false); }}
+                    onClick={() => { setLang(lang.code.toLowerCase()); setIsMenuOpen(false); }}
                   >
                     <span>{lang.label}</span>
                   </button>

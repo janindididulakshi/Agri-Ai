@@ -1,4 +1,4 @@
-﻿export default {
+export default {
   welcome: "Welcome!",
   login: "Login",
   register: "Register",
@@ -23,5 +23,14 @@
   location: "Location",
   show: "Show",
   hide: "Hide",
-  language: "Language"
+  language: "Language",
+  dashboardWelcome: "Welcome",
+  dashboardSubtitle: "Daily predictions & alerts",
+  newPrediction: "New Prediction",
+  sevenDayOutlook: "7-Day Outlook",
+  cropHealth: "Crop Health",
+  recentConsultations: "Recent Consultations",
+  cropRecommendations: "Crop Recommendations",
+  marketPrices: "Market Prices",
+  loading: "Loading data..."
 }

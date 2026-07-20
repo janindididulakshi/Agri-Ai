@@ -1,4 +1,4 @@
-﻿export default {
+export default {
   welcome: "வரவேற்கிறோம்!",
   login: "உள்நுழை",
   register: "பதிவு",
@@ -23,5 +23,14 @@
   location: "இடம்",
   show: "காட்டு",
   hide: "மறை",
-  language: "மொழி"
+  language: "மொழி",
+  dashboardWelcome: "வரவேற்கிறோம்",
+  dashboardSubtitle: "தினசரி முன்னறிவிப்புகள் மற்றும் எச்சரிக்கைகள்",
+  newPrediction: "புதிய முன்னறிவிப்பு",
+  sevenDayOutlook: "7 நாள் பார்வை",
+  cropHealth: "பயிர் ஆரோக்கியம்",
+  recentConsultations: "சமீபத்திய ஆலோசனைகள்",
+  cropRecommendations: "பயிர் பரிந்துரைகள்",
+  marketPrices: "சந்தை விலைகள்",
+  loading: "தரவு ஏற்றப்படுகிறது..."
 }

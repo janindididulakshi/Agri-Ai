@@ -1,4 +1,4 @@
-﻿export default {
+export default {
   welcome: "සාදරයෙන්!",
   login: "පිවිසෙන්න",
   register: "ලියාපදිංචි වන්න",
@@ -23,5 +23,14 @@
   location: "ස්ථානය",
   show: "පෙන්වන්න",
   hide: "සඟවන්න",
-  language: "භාෂාව"
+  language: "භාෂාව",
+  dashboardWelcome: "සාදරයෙන් පිළිගනිමු",
+  dashboardSubtitle: "දෛනික අනාවැකි සහ ඇඟවීම්",
+  newPrediction: "නව අනාවැකිය",
+  sevenDayOutlook: "දින 7ක දැක්ම",
+  cropHealth: "බෝග සෞඛ්‍ය",
+  recentConsultations: "මෑත උපදේශන",
+  cropRecommendations: "බෝග නිර්දේශ",
+  marketPrices: "වෙළඳපොළ මිල ගණන්",
+  loading: "දත්ත පූරණය වෙමින් පවතී..."
 }

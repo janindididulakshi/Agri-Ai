@@ -54,6 +54,7 @@ export default function Dashboard() {
   const [err, setErr] = useState("");
 
   const greeting = useMemo(() => user?.full_name || "ගොවි මිත්‍රයා", [user]);
+  const { t } = useLang();
   const firstName = greeting.split(" ")[0];
   const dateStr = useMemo(() => new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }), []);
 
@@ -148,10 +149,10 @@ export default function Dashboard() {
       <div className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 24, alignItems: "center", marginBottom: 32, flexWrap: "wrap", position: "relative", zIndex: 1 }}>
         <div>
           <div style={{ fontSize: 32, fontWeight: 900, color: "#0f172a", marginBottom: 6, textShadow: "0 2px 12px rgba(255,255,255,0.8)" }}>
-            Welcome, {firstName}!
+            {t("dashboardWelcome")}, {firstName}!
           </div>
           <div style={{ fontSize: 15, color: "#334155", fontWeight: 600, textShadow: "0 2px 12px rgba(255,255,255,0.8)" }}>
-            Daily predictions & alerts · {dateStr}
+            {t("dashboardSubtitle")} · {dateStr}
           </div>
         </div>
 
