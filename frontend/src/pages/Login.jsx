@@ -11,9 +11,46 @@ const LeafIcon = () => (
   </svg>
 );
 
+const translations = {
+  EN: {
+    title: "Govi AI",
+    subtitle: "A smart path to modern farming",
+    email: "Email",
+    password: "Password",
+    err: "Login failed. Please check your email and password.",
+    loginBtn: "Login →",
+    newHere: "New here?",
+    register: "Register",
+    back: "Back to Home"
+  },
+  SI: {
+    title: "ගොවි AI",
+    subtitle: "නවීන ගොවිතැනට සුහුරු මාවතක්",
+    email: "විද්‍යුත් තැපෑල",
+    password: "මුරපදය",
+    err: "ප්‍රවේශ වීම අසාර්ථකයි. කරුණාකර ඔබගේ විද්‍යුත් තැපෑල සහ මුරපදය පරීක්ෂා කරන්න.",
+    loginBtn: "ප්‍රවේශ වන්න →",
+    newHere: "නවකයෙක්ද?",
+    register: "ලියාපදිංචි වන්න",
+    back: "මුල් පිටුවට ආපසු යන්න"
+  },
+  TA: {
+    title: "கோவி AI",
+    subtitle: "நவீன விவசாயத்திற்கான ஸ்மார்ட் பாதை",
+    email: "மின்னஞ்சல்",
+    password: "கடவுச்சொல்",
+    err: "உள்நுழைவு தோல்வியடைந்தது. உங்கள் மின்னஞ்சல் மற்றும் கடவுச்சொல்லை சரிபார்க்கவும்.",
+    loginBtn: "உள்நுழைக →",
+    newHere: "புதியவரா?",
+    register: "பதிவு செய்க",
+    back: "முகப்புப் பக்கத்திற்குத் திரும்பு"
+  }
+};
+
 export default function Login() {
   const { login } = useAuth();
   const { lang, setLang } = useLang();
+  const t = translations[lang?.toUpperCase()] || translations.EN;
   const nav = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,8 +97,8 @@ export default function Login() {
       <img src="/logo.jpg" alt="Govi AI Logo" style={{ height: "64px", width: "auto", objectFit: "contain", marginBottom: "16px", borderRadius: "16px", boxShadow: "0 8px 24px rgba(0,0,0,0.15)" }} />
 
       {/* Titles */}
-      <h1 style={{ margin: "0 0 8px", fontSize: "clamp(28px, 5vw, 36px)", fontWeight: 900, color: "#fff", letterSpacing: "-0.03em", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>Govi AI</h1>
-      <p style={{ margin: "0 0 24px", fontSize: "clamp(14px, 2.5vw, 16px)", color: "#f1f5f9", fontWeight: 600, textShadow: "0 2px 4px rgba(0,0,0,0.4)" }}>A smart path to modern farming</p>
+      <h1 style={{ margin: "0 0 8px", fontSize: "clamp(28px, 5vw, 36px)", fontWeight: 900, color: "#fff", letterSpacing: "-0.03em", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>{t.title}</h1>
+      <p style={{ margin: "0 0 24px", fontSize: "clamp(14px, 2.5vw, 16px)", color: "#f1f5f9", fontWeight: 600, textShadow: "0 2px 4px rgba(0,0,0,0.4)" }}>{t.subtitle}</p>
 
       {/* Form Card */}
       <div style={{ background: "rgba(255, 255, 255, 0.75)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderRadius: "24px", padding: "clamp(20px, 4vw, 40px)", width: "100%", maxWidth: "480px", boxShadow: "0 12px 40px rgba(0,0,0,0.15)", border: "1px solid rgba(255, 255, 255, 0.4)", display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -77,7 +114,7 @@ export default function Login() {
           <FiMail size={20} color="#64748b" />
           <input 
             type="email" 
-            placeholder="Email" 
+            placeholder={t.email} 
             value={email} 
             onChange={(e) => setEmail(e.target.value)}
             style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", color: "#1e293b", background: "transparent" }}
@@ -88,7 +125,7 @@ export default function Login() {
           <FiLock size={20} color="#64748b" />
           <input 
             type={show ? "text" : "password"}
-            placeholder="Password" 
+            placeholder={t.password} 
             value={password} 
             onChange={(e) => setPassword(e.target.value)}
             style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", color: "#1e293b", background: "transparent" }}
@@ -107,7 +144,7 @@ export default function Login() {
               await login(email.trim(), password);
               nav("/app", { replace: true });
             } catch (e) {
-              setErr("Login failed. Please check your email and password.");
+              setErr(t.err);
             }
           }}
           style={{
@@ -128,16 +165,16 @@ export default function Login() {
             transition: "all 0.2s"
           }}
         >
-          Login →
+          {t.loginBtn}
         </button>
 
         <div style={{ textAlign: "center", marginTop: "16px" }}>
           <Link to="/register" style={{ textDecoration: "none", fontSize: "15px", color: "#22c55e", fontWeight: 800 }}>
-            <span style={{ color: "#718096", fontWeight: 600 }}>New here?</span> Register
+            <span style={{ color: "#718096", fontWeight: 600 }}>{t.newHere} </span> {t.register}
           </Link>
           <div style={{ marginTop: "24px" }}>
             <Link to="/" style={{ textDecoration: "none", fontSize: "14px", color: "#a0aec0", fontWeight: 600 }}>
-              Back to Home / Landing
+              {t.back}
             </Link>
           </div>
         </div>

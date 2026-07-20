@@ -24,9 +24,76 @@ const RadioUnchecked = () => (
   </svg>
 );
 
+const translations = {
+  EN: {
+    title: "Govi AI",
+    subtitle: "A smart path to modern farming",
+    roleFarmerTitle: "Farmer",
+    roleFarmerDesc: "Register as a farmer to manage your land",
+    roleAdvisorTitle: "Agricultural Advisor",
+    roleAdvisorDesc: "Register as an agricultural advisor",
+    fullName: "Full Name",
+    email: "Email",
+    phone: "Phone Number (Optional)",
+    password: "Password",
+    confirmPassword: "Confirm Password",
+    location: "Location",
+    locationPlaceholder: "Enter your location",
+    autoDetect: "Auto-detect",
+    err: "Registration failed. Please try again.",
+    registerBtn: "Register →",
+    alreadyAccount: "Already have an account? ",
+    login: "Login",
+    back: "Back to Home"
+  },
+  SI: {
+    title: "ගොවි AI",
+    subtitle: "නවීන ගොවිතැනට සුහුරු මාවතක්",
+    roleFarmerTitle: "ගොවියා",
+    roleFarmerDesc: "ඔබේ ඉඩම කළමනාකරණය කිරීමට ගොවියෙකු ලෙස ලියාපදිංචි වන්න",
+    roleAdvisorTitle: "කෘෂි උපදේශක",
+    roleAdvisorDesc: "කෘෂිකාර්මික උපදේශකයෙකු ලෙස ලියාපදිංචි වන්න",
+    fullName: "සම්පූර්ණ නම",
+    email: "විද්‍යුත් තැපෑල",
+    phone: "දුරකථන අංකය (විකල්ප)",
+    password: "මුරපදය",
+    confirmPassword: "මුරපදය තහවුරු කරන්න",
+    location: "ස්ථානය",
+    locationPlaceholder: "ඔබගේ ස්ථානය ඇතුළත් කරන්න",
+    autoDetect: "ස්වයංක්‍රීයව හඳුනාගන්න",
+    err: "ලියාපදිංචි වීම අසාර්ථකයි. කරුණාකර නැවත උත්සාහ කරන්න.",
+    registerBtn: "ලියාපදිංචි වන්න →",
+    alreadyAccount: "දැනටමත් ගිණුමක් තිබේද? ",
+    login: "ප්‍රවේශ වන්න",
+    back: "මුල් පිටුවට"
+  },
+  TA: {
+    title: "கோவி AI",
+    subtitle: "நவீன விவசாயத்திற்கான ஸ்மார்ட் பாதை",
+    roleFarmerTitle: "விவசாயி",
+    roleFarmerDesc: "உங்கள் நிலத்தை நிர்வகிக்க விவசாயியாக பதிவு செய்யவும்",
+    roleAdvisorTitle: "விவசாய ஆலோசகர்",
+    roleAdvisorDesc: "விவசாய ஆலோசகராக பதிவு செய்யவும்",
+    fullName: "முழு பெயர்",
+    email: "மின்னஞ்சல்",
+    phone: "தொலைபேசி எண் (விருப்பத்தேர்வு)",
+    password: "கடவுச்சொல்",
+    confirmPassword: "கடவுச்சொல்லை உறுதிப்படுத்தவும்",
+    location: "இடம்",
+    locationPlaceholder: "உங்கள் இருப்பிடத்தை உள்ளிடவும்",
+    autoDetect: "தானியங்கி கண்டறிதல்",
+    err: "பதிவு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்.",
+    registerBtn: "பதிவு செய் →",
+    alreadyAccount: "ஏற்கனவே கணக்கு உள்ளதா? ",
+    login: "உள்நுழை",
+    back: "முகப்புக்குத் திரும்பு"
+  }
+};
+
 export default function Register() {
   const { register } = useAuth();
   const { lang, setLang } = useLang();
+  const t = translations[lang?.toUpperCase()] || translations.EN;
   const nav = useNavigate();
 
   const [full_name, setFullName] = useState("");
@@ -96,8 +163,8 @@ export default function Register() {
       <img src="/logo.jpg" alt="Govi AI Logo" style={{ height: "64px", width: "auto", objectFit: "contain", marginBottom: "16px", borderRadius: "16px", boxShadow: "0 8px 24px rgba(0,0,0,0.15)" }} />
 
       {/* Titles */}
-      <h1 style={{ margin: "0 0 8px", fontSize: "clamp(28px, 5vw, 36px)", fontWeight: 900, color: "#fff", letterSpacing: "-0.03em", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>Govi AI</h1>
-      <p style={{ margin: "0 0 24px", fontSize: "clamp(14px, 2.5vw, 16px)", color: "#f1f5f9", fontWeight: 600, textShadow: "0 2px 4px rgba(0,0,0,0.4)" }}>A smart path to modern farming</p>
+      <h1 style={{ margin: "0 0 8px", fontSize: "clamp(28px, 5vw, 36px)", fontWeight: 900, color: "#fff", letterSpacing: "-0.03em", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>{t.title}</h1>
+      <p style={{ margin: "0 0 24px", fontSize: "clamp(14px, 2.5vw, 16px)", color: "#f1f5f9", fontWeight: 600, textShadow: "0 2px 4px rgba(0,0,0,0.4)" }}>{t.subtitle}</p>
 
       {/* Form Card */}
       <div style={{ background: "rgba(255, 255, 255, 0.75)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderRadius: "24px", padding: "clamp(20px, 4vw, 36px)", width: "100%", maxWidth: "520px", boxShadow: "0 12px 40px rgba(0,0,0,0.15)", border: "1px solid rgba(255, 255, 255, 0.4)", display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -125,8 +192,8 @@ export default function Register() {
               {role === "farmer" ? <RadioChecked /> : <RadioUnchecked />}
             </div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: "16px", color: "#111", marginBottom: "4px" }}>Farmer (ගොවියා)</div>
-              <div style={{ fontSize: "13px", color: "#475569" }}>Register as a farmer to manage your land</div>
+              <div style={{ fontWeight: 800, fontSize: "16px", color: "#111", marginBottom: "4px" }}>{t.roleFarmerTitle}</div>
+              <div style={{ fontSize: "13px", color: "#475569" }}>{t.roleFarmerDesc}</div>
             </div>
           </button>
 
@@ -144,8 +211,8 @@ export default function Register() {
               {role === "kushiadvisor" ? <RadioChecked /> : <RadioUnchecked />}
             </div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: "16px", color: "#111", marginBottom: "4px" }}>Kushi Advisor (කෘෂි උපදේශක)</div>
-              <div style={{ fontSize: "13px", color: "#718096" }}>Register as an agricultural advisor</div>
+              <div style={{ fontWeight: 800, fontSize: "16px", color: "#111", marginBottom: "4px" }}>{t.roleAdvisorTitle}</div>
+              <div style={{ fontSize: "13px", color: "#718096" }}>{t.roleAdvisorDesc}</div>
             </div>
           </button>
         </div>
@@ -154,40 +221,40 @@ export default function Register() {
         <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "4px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255, 255, 255, 0.6)", background: "rgba(255, 255, 255, 0.5)", borderRadius: "16px", padding: "14px 20px" }}>
             <FiUser size={20} color="#475569" />
-            <input type="text" placeholder="Full Name" value={full_name} onChange={(e) => setFullName(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+            <input type="text" placeholder={t.fullName} value={full_name} onChange={(e) => setFullName(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255, 255, 255, 0.6)", background: "rgba(255, 255, 255, 0.5)", borderRadius: "16px", padding: "14px 20px" }}>
             <FiMail size={20} color="#475569" />
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+            <input type="email" placeholder={t.email} value={email} onChange={(e) => setEmail(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255, 255, 255, 0.6)", background: "rgba(255, 255, 255, 0.5)", borderRadius: "16px", padding: "14px 20px" }}>
             <FiPhone size={20} color="#475569" />
-            <input type="text" placeholder="Phone Number (Optional)" value={phone} onChange={(e) => setPhone(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+            <input type="text" placeholder={t.phone} value={phone} onChange={(e) => setPhone(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255, 255, 255, 0.6)", background: "rgba(255, 255, 255, 0.5)", borderRadius: "16px", padding: "14px 20px" }}>
             <FiLock size={20} color="#475569" />
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+            <input type="password" placeholder={t.password} value={password} onChange={(e) => setPassword(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255, 255, 255, 0.6)", background: "rgba(255, 255, 255, 0.5)", borderRadius: "16px", padding: "14px 20px" }}>
             <FiLock size={20} color="#475569" />
-            <input type="password" placeholder="Confirm Password" value={password2} onChange={(e) => setPassword2(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+            <input type="password" placeholder={t.confirmPassword} value={password2} onChange={(e) => setPassword2(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
           </div>
         </div>
 
         {/* Location Field */}
         <div>
-          <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#111", marginBottom: "12px" }}>Location</label>
+          <label style={{ display: "block", fontSize: "14px", fontWeight: 700, color: "#111", marginBottom: "12px" }}>{t.location}</label>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255, 255, 255, 0.6)", background: "rgba(255, 255, 255, 0.5)", borderRadius: "16px", padding: "14px 20px", flex: 1 }}>
               <FiMapPin size={20} color="#475569" />
-              <input type="text" placeholder="Enter your location" value={location} onChange={(e) => setLocation(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+              <input type="text" placeholder={t.locationPlaceholder} value={location} onChange={(e) => setLocation(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
             </div>
             <button type="button" onClick={detectGps} style={{ background: "rgba(255, 255, 255, 0.8)", border: "1px solid rgba(255, 255, 255, 0.6)", borderRadius: "16px", padding: "0 24px", fontSize: "14px", fontWeight: 700, color: "#1e293b", cursor: "pointer", transition: "all 0.2s" }}>
-              Auto-detect
+              {t.autoDetect}
             </button>
           </div>
         </div>
@@ -209,7 +276,7 @@ export default function Register() {
               });
               nav("/app", { replace: true });
             } catch (e) {
-              setErr(e?.message || "Registration failed. Please try again.");
+              setErr(e?.message || t.err);
             }
           }}
           style={{
@@ -230,18 +297,18 @@ export default function Register() {
             transition: "all 0.2s"
           }}
         >
-          Register →
+          {t.registerBtn}
         </button>
 
         {/* Footer Links */}
         <div style={{ textAlign: "center", marginTop: "8px" }}>
           <Link to="/login" style={{ textDecoration: "none", fontSize: "14px", color: "#0bc25c", fontWeight: 800 }}>
-            <span style={{ color: "#718096", fontWeight: 500 }}>Already have an account? </span>
-            Login
+            <span style={{ color: "#718096", fontWeight: 500 }}>{t.alreadyAccount}</span>
+            {t.login}
           </Link>
           <div style={{ marginTop: "16px" }}>
             <Link to="/" style={{ textDecoration: "none", fontSize: "13px", color: "#718096", fontWeight: 500 }}>
-              Back to Home
+              {t.back}
             </Link>
           </div>
         </div>
