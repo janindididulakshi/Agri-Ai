@@ -77,6 +77,8 @@ export default function AppShell() {
             <FiSearch size={14} color="#94a3b8" />
             <input 
               type="text" 
+              name="search_dummy"
+              autoComplete="off"
               placeholder="Search farm data..." 
               style={{ border: "none", outline: "none", background: "transparent", fontSize: "14px", color: "#334155", flex: 1, minHeight: 0, height: "100%", padding: 0 }}
             />
