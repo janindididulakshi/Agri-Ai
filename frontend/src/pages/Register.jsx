@@ -102,6 +102,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [role, setRole] = useState("farmer");
+  const [location, setLocation] = useState("");
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
   const [err, setErr] = useState("");
