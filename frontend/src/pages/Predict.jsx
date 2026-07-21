@@ -113,7 +113,7 @@ export default function Predict() {
           <div>
             <div style={{ fontSize: "12px", fontWeight: 700, color: "#94a3b8", letterSpacing: "2px", textTransform: "uppercase" }}>Govi AI</div>
             <div style={{ fontSize: "24px", fontWeight: 800, color: "#1e293b", display: "flex", alignItems: "center", gap: "8px" }}>
-              <span>🌾</span> {t("cropRecommendationTitle")}
+              {t("cropRecommendationTitle")}
             </div>
           </div>
         </div>

@@ -350,8 +350,8 @@ export default function Profile() {
            <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "url('https://images.unsplash.com/photo-1592982537447-6f23f8b05615?auto=format&fit=crop&q=80&w=2000') center/cover", opacity: 0.8, mixBlendMode: "overlay" }} />
         </div>
         
-        <div style={{ padding: "0 32px 32px 32px", display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: -50 }}>
-           <div style={{ display: "flex", gap: 24, alignItems: "flex-end" }}>
+        <div style={{ padding: "0 24px 32px 24px", display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: -50, flexWrap: "wrap", gap: 16 }}>
+           <div style={{ display: "flex", gap: 24, alignItems: "flex-end", flexWrap: "wrap" }}>
               {/* Avatar */}
               <label style={{ width: 110, height: 110, borderRadius: "50%", border: "4px solid #fff", background: "#f1f5f9", overflow: "hidden", flexShrink: 0, position: "relative", cursor: "pointer", boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}>
                  <input type="file" accept="image/*" style={{ display: "none" }} onChange={(e) => onPhoto(e.target.files?.[0])} />
@@ -383,7 +383,7 @@ export default function Profile() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: "flex", gap: 12, marginBottom: 32 }}>
+      <div style={{ display: "flex", gap: 12, marginBottom: 32, overflowX: "auto", paddingBottom: 4, WebkitOverflowScrolling: "touch" }}>
         {["personalInfo", "security", "notifications", "preferences"].map((tabKey) => (
           <button 
             key={tabKey} 
@@ -411,7 +411,7 @@ export default function Profile() {
             <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: "0 0 6px 0" }}>{t("personalInformation")}</h3>
             <p style={{ fontSize: 14, color: "#64748b", margin: "0 0 32px 0" }}>{t("updateContact")}</p>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 32 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24, marginBottom: 32 }}>
                <MockupInput label={t("fullName")} icon={FiUser} value={full_name} onChange={(e) => setFullName(e.target.value)} placeholder="Kasun Perera" />
                <MockupInput label={t("phone")} icon={FiPhone} value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+94 77 123 4567" type="tel" />
                <MockupInput label={t("location")} icon={FiMapPin} value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Kandy District" />
@@ -434,7 +434,7 @@ export default function Profile() {
             <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", margin: "0 0 6px 0" }}>{t("passwordSecurity")}</h3>
             <p style={{ fontSize: 14, color: "#64748b", margin: "0 0 32px 0" }}>{t("updatePasswordDesc")}</p>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 32 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24, marginBottom: 32 }}>
                <MockupInput label={t("currentPassword")} icon={FiLock} value={curPw} onChange={(e) => setCurPw(e.target.value)} type={showCurPw ? "text" : "password"} actionIcon={showCurPw ? FiEyeOff : FiEye} onActionClick={() => setShowCurPw(!showCurPw)} />
                <MockupInput label={t("newPassword")} icon={FiLock} value={newPw} onChange={(e) => setNewPw(e.target.value)} type={showNewPw ? "text" : "password"} actionIcon={showNewPw ? FiEyeOff : FiEye} onActionClick={() => setShowNewPw(!showNewPw)} />
             </div>

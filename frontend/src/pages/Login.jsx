@@ -117,6 +117,7 @@ export default function Login() {
             placeholder={t.email} 
             value={email} 
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="off"
             style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", color: "#1e293b", background: "transparent" }}
           />
         </div>
@@ -128,6 +129,7 @@ export default function Login() {
             placeholder={t.password} 
             value={password} 
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
             style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", color: "#1e293b", background: "transparent" }}
           />
           <button type="button" onClick={() => setShow(!show)} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", color: "#64748b", padding: 0 }}>

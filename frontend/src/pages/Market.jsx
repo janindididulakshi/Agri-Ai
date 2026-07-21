@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { FiX, FiFilter, FiShoppingCart, FiHeart, FiCheck, FiPackage, FiPercent, FiTrendingUp } from "react-icons/fi";
+import { FiX, FiFilter, FiShoppingCart, FiHeart, FiCheck, FiPackage, FiPercent, FiTrendingUp, FiEdit2, FiTrash2 } from "react-icons/fi";
 import { api } from "../services/api.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useLang } from "../context/LanguageContext.jsx";
@@ -169,6 +169,7 @@ export default function Market() {
   const t = (key) => localTranslations[lang?.toUpperCase()]?.[key] || globalT(key) || key;
 
   const [crop_name, setCropName] = useState("");
+  const [formCategory, setFormCategory] = useState("seeds");
   const [quantity, setQuantity] = useState(10);
   const [unit, setUnit] = useState("kg");
   const [price, setPrice] = useState(250);
@@ -180,10 +181,39 @@ export default function Market() {
 
   const [cart, setCart] = useState([]);
   const [fastDelivery, setFastDelivery] = useState(false);
+  const [checkoutSuccess, setCheckoutSuccess] = useState(false);
+  const [category, setCategory] = useState("all");
+
+  const activeBtnStyle = { background: "#0bc25c", color: "#fff", border: "1px solid #0bc25c", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer", transition: "all 0.2s" };
+  const inactiveBtnStyle = { background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer", transition: "all 0.2s" };
+  const activeSideStyle = { ...activeBtnStyle, padding: "10px", borderRadius: 12 };
+  const inactiveSideStyle = { ...inactiveBtnStyle, padding: "10px", borderRadius: 12 };
 
   const filteredProducts = useMemo(() => {
-    return marketProducts.filter((p) => p.is_available);
-  }, [marketProducts]);
+    let filtered = marketProducts.filter((p) => p.is_available);
+    
+    if (category !== "all") {
+      filtered = filtered.filter(p => {
+        // Use proper DB category if available, fallback to text match for older items
+        if (p.category && p.category !== "other") {
+          return p.category.toLowerCase() === category.toLowerCase();
+        }
+        const text = ((p.crop_name || "") + " " + (p.description || "")).toLowerCase();
+        const lowerCat = category.toLowerCase();
+        if (lowerCat === "seeds") return text.includes("seed") || text.includes("බීජ") || text.includes("පැළ") || text.includes("விதை");
+        if (lowerCat === "tools") return text.includes("tool") || text.includes("උපකරණ") || text.includes("equipment") || text.includes("tractor") || text.includes("கருவி");
+        if (lowerCat === "fertilizer") return text.includes("fertilizer") || text.includes("පොහොර") || text.includes("compost") || text.includes("உரம்");
+        if (lowerCat === "inputs") return text.includes("input") || text.includes("chemical") || text.includes("ආදාන") || text.includes("fertilizer") || text.includes("පොහොර");
+        return true;
+      });
+    }
+
+    if (fastDelivery) {
+      filtered = filtered.filter(p => p.quantity > 20);
+    }
+    
+    return filtered;
+  }, [marketProducts, category, fastDelivery]);
 
   const reload = async () => {
     try {
@@ -221,6 +251,7 @@ export default function Market() {
 
   const resetProductForm = () => {
     setCropName("");
+    setFormCategory("seeds");
     setQuantity(10);
     setUnit("kg");
     setPrice(250);
@@ -240,6 +271,7 @@ export default function Market() {
     }
     setEditingProduct(product);
     setCropName(product.crop_name || items[0].si);
+    setFormCategory(product.category || "seeds");
     setQuantity(product.quantity || 10);
     setUnit(product.unit || "kg");
     setPrice(product.price_per_unit || 250);
@@ -256,6 +288,7 @@ export default function Market() {
       setErr("");
       const payload = {
         crop_name,
+        category: formCategory,
         quantity: Number(quantity),
         unit,
         price_per_unit: Number(price),
@@ -281,6 +314,17 @@ export default function Market() {
     }
   };
 
+  const deleteProduct = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this listing?")) return;
+    try {
+      setErr("");
+      await api.delete(`/marketplace/products/${id}`);
+      await reload();
+    } catch (e) {
+      setErr(e?.message || "Failed to delete listing.");
+    }
+  };
+
   const addToCart = (product) => {
     setCart((prev) => [...prev, product]);
   };
@@ -302,7 +346,8 @@ export default function Market() {
         });
       }
       setCart([]);
-      alert(t("checkoutSuccess"));
+      setCheckoutSuccess(true);
+      setTimeout(() => setCheckoutSuccess(false), 4000);
       await reload();
     } catch (e) {
       setErr(e?.message || t("checkoutFailed"));
@@ -311,8 +356,24 @@ export default function Market() {
 
   return (
     <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 32px", paddingBottom: 100 }}>
+      <style>{`
+        .market-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; }
+        .market-grid { display: grid; grid-template-columns: 1fr 340px; gap: 32px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        @media (max-width: 900px) {
+          .market-grid { grid-template-columns: 1fr; display: flex; flex-direction: column-reverse; }
+          .stats-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
+          .market-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+          .stats-grid { grid-template-columns: 1fr; }
+          .product-grid { grid-template-columns: 1fr; }
+        }
+      `}</style>
+      
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32 }}>
+      <div className="market-header">
         <div>
            <h1 style={{ fontSize: 28, fontWeight: 900, color: "#0f172a", margin: "0 0 6px 0" }}>{t("marketTitle")}</h1>
            <div style={{ fontSize: 14, color: "#64748b" }}>{t("marketSubtitle")}</div>
@@ -329,24 +390,24 @@ export default function Market() {
 
       {err ? <div style={{ padding: 16, background: "#fee2e2", color: "#ef4444", borderRadius: 12, marginBottom: 24, fontWeight: 600 }}>{err}</div> : null}
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 32 }}>
+      <div className="market-grid">
         {/* Left Column (Main Content) */}
         <div>
            <div style={{ background: "#fff", borderRadius: 24, padding: 32, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)", marginBottom: 24 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 32, flexWrap: "wrap", gap: 16 }}>
                 <div>
                   <h2 style={{ fontSize: 20, fontWeight: 900, color: "#0f172a", margin: 0 }}>{t("featuredDeals")}</h2>
-                  <div style={{ fontSize: 13, color: "#64748b" }}>{t("topRatedProducts")}</div>
+                  <div style={{ fontSize: 13, color: "#64748b", marginTop: 4 }}>{t("topRatedProducts")}</div>
                 </div>
-                <div style={{ display: "flex", gap: 8 }}>
-                   <button style={{ background: "#0bc25c", color: "#fff", border: "none", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{t("all")}</button>
-                   <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{t("seeds")}</button>
-                   <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{t("tools")}</button>
-                   <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "6px 16px", borderRadius: 999, fontWeight: 700, fontSize: 13, cursor: "pointer" }}>{t("fertilizer")}</button>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                   <button onClick={() => setCategory("all")} style={category === "all" ? activeBtnStyle : inactiveBtnStyle}>{t("all")}</button>
+                   <button onClick={() => setCategory("seeds")} style={category === "seeds" ? activeBtnStyle : inactiveBtnStyle}>{t("seeds")}</button>
+                   <button onClick={() => setCategory("tools")} style={category === "tools" ? activeBtnStyle : inactiveBtnStyle}>{t("tools")}</button>
+                   <button onClick={() => setCategory("fertilizer")} style={category === "fertilizer" ? activeBtnStyle : inactiveBtnStyle}>{t("fertilizer")}</button>
                 </div>
               </div>
               
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 24 }}>
+              <div className="product-grid">
                 {filteredProducts.slice(0, 4).map((p) => (
                   <div key={p.id} style={{ background: "#f8fafc", borderRadius: 20, padding: 20, border: "1px solid #f1f5f9", position: "relative" }}>
                      <div style={{ height: 160, borderRadius: 12, overflow: "hidden", marginBottom: 16, background: "#e2e8f0" }}>
@@ -358,7 +419,15 @@ export default function Market() {
                      </div>
                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
                         <div style={{ fontSize: 16, fontWeight: 800, color: "#0f172a" }}>{p.crop_name}</div>
-                        <button style={{ background: "none", border: "none", color: "#94a3b8", cursor: "pointer" }}><FiHeart size={18} /></button>
+                        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                          {p.farmer_id === user?.id && (
+                            <>
+                              <button onClick={() => openProductSheet(p)} style={{ background: "none", border: "none", color: "#3b82f6", cursor: "pointer", padding: 0 }} title="Edit"><FiEdit2 size={16} /></button>
+                              <button onClick={() => deleteProduct(p.id)} style={{ background: "none", border: "none", color: "#ef4444", cursor: "pointer", padding: 0 }} title="Delete"><FiTrash2 size={16} /></button>
+                            </>
+                          )}
+                          <button style={{ background: "none", border: "none", color: "#94a3b8", cursor: "pointer", padding: 0 }}><FiHeart size={18} /></button>
+                        </div>
                      </div>
                      <div style={{ fontSize: 13, color: "#64748b", marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                         {p.description || `${t("highQuality")} ${p.crop_name} ${t("from")} ${p.seller_name || t("localFarmers")}.`}
@@ -386,7 +455,7 @@ export default function Market() {
            </div>
 
            {/* Bottom Stats Grid */}
-           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+           <div className="stats-grid">
               <div style={{ background: "#fff", borderRadius: 20, padding: 20, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
                    <div style={{ fontSize: 13, color: "#64748b", fontWeight: 700 }}>{t("verifiedSellers")}</div>
@@ -429,10 +498,10 @@ export default function Market() {
               <div style={{ marginBottom: 24 }}>
                  <div style={{ fontSize: 11, fontWeight: 800, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 12 }}>{t("category")}</div>
                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                    <button style={{ background: "#0bc25c", color: "#fff", border: "none", padding: "10px", borderRadius: 12, fontWeight: 700, fontSize: 13 }}>{t("all")}</button>
-                    <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "10px", borderRadius: 12, fontWeight: 700, fontSize: 13 }}>{t("seeds")}</button>
-                    <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "10px", borderRadius: 12, fontWeight: 700, fontSize: 13 }}>{t("tools")}</button>
-                    <button style={{ background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", padding: "10px", borderRadius: 12, fontWeight: 700, fontSize: 13 }}>{t("inputs")}</button>
+                    <button onClick={() => setCategory("all")} style={category === "all" ? activeSideStyle : inactiveSideStyle}>{t("all")}</button>
+                    <button onClick={() => setCategory("seeds")} style={category === "seeds" ? activeSideStyle : inactiveSideStyle}>{t("seeds")}</button>
+                    <button onClick={() => setCategory("tools")} style={category === "tools" ? activeSideStyle : inactiveSideStyle}>{t("tools")}</button>
+                    <button onClick={() => setCategory("inputs")} style={category === "inputs" || category === "fertilizer" ? activeSideStyle : inactiveSideStyle}>{t("inputs")}</button>
                  </div>
               </div>
 
@@ -445,9 +514,9 @@ export default function Market() {
                     </div>
                     <button 
                       onClick={() => setFastDelivery(!fastDelivery)}
-                      style={{ width: 44, height: 24, borderRadius: 12, background: fastDelivery ? "#0bc25c" : "#e2e8f0", border: "none", position: "relative", cursor: "pointer", transition: "all 0.2s" }}
+                      style={{ width: 50, minWidth: 50, height: 26, padding: 0, borderRadius: 13, background: fastDelivery ? "#0bc25c" : "#e2e8f0", border: "none", position: "relative", cursor: "pointer", transition: "all 0.2s", flexShrink: 0 }}
                     >
-                      <div style={{ width: 20, height: 20, background: "#fff", borderRadius: "50%", position: "absolute", top: 2, left: fastDelivery ? 22 : 2, transition: "all 0.2s", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }} />
+                      <div style={{ width: 22, height: 22, background: "#fff", borderRadius: "50%", position: "absolute", top: 2, left: fastDelivery ? 26 : 2, transition: "all 0.2s", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }} />
                     </button>
                  </div>
               </div>
@@ -521,6 +590,17 @@ export default function Market() {
                   <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", display: "block", marginBottom: 8 }}>{t("productName")}</label>
                   <input value={crop_name} onChange={(e) => setCropName(e.target.value)} style={{ width: "100%", padding: 16, background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 12, outline: "none", fontSize: 14, fontWeight: 600 }} placeholder="E.g., Organic Tea Leaves" />
                </div>
+
+               <div>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", display: "block", marginBottom: 8 }}>{t("category")}</label>
+                  <select value={formCategory} onChange={(e) => setFormCategory(e.target.value)} style={{ width: "100%", padding: 16, background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 12, outline: "none", fontSize: 14, fontWeight: 600 }}>
+                    <option value="seeds">{t("seeds")}</option>
+                    <option value="tools">{t("tools")}</option>
+                    <option value="fertilizer">{t("fertilizer")}</option>
+                    <option value="inputs">{t("inputs")}</option>
+                    <option value="other">Other</option>
+                  </select>
+               </div>
                
                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                   <div>
@@ -549,6 +629,17 @@ export default function Market() {
                  <FiCheck size={18} /> {editingProduct ? t("updateProduct") : t("publishListing")}
                </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Checkout Success Popup */}
+      {checkoutSuccess && (
+        <div style={{ position: "fixed", bottom: 40, left: "50%", transform: "translateX(-50%)", background: "#0bc25c", color: "#fff", padding: "16px 24px", borderRadius: 16, display: "flex", alignItems: "center", gap: 12, boxShadow: "0 8px 32px rgba(11, 194, 92, 0.4)", zIndex: 2000, animation: "slideUp 0.3s ease-out", fontWeight: 700 }}>
+          <div style={{ background: "rgba(255,255,255,0.2)", borderRadius: "50%", padding: 4, display: "flex", alignItems: "center", justifyItems: "center" }}><FiCheck size={20} /></div>
+          <div>
+            <div style={{ fontSize: 16 }}>{t("checkoutSuccess")}</div>
+            <div style={{ fontSize: 13, fontWeight: 500, opacity: 0.9 }}>The seller has been notified via alerts.</div>
           </div>
         </div>
       )}

@@ -213,32 +213,6 @@ export default function Dashboard() {
 
   return (
     <div className="gov-page" style={{ paddingBottom: 160, position: "relative", minHeight: "100vh" }}>
-      {/* Background Image */}
-      <div style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundImage: "url('/dashboard_bg.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        zIndex: -2,
-        transform: "scale(1.05)",
-      }} />
-      {/* Light Overlay for Readability */}
-      <div style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: "rgba(255, 255, 255, 0.3)",
-        backdropFilter: "blur(4px)",
-        WebkitBackdropFilter: "blur(4px)",
-        zIndex: -1,
-      }} />
-
       {/* Main Dashboard Header */}
       <div className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 24, alignItems: "center", marginBottom: 32, flexWrap: "wrap", position: "relative", zIndex: 1 }}>
         <div>
@@ -329,9 +303,6 @@ export default function Dashboard() {
                 <div style={{ fontSize: 13, color: "#64748b" }}>
                   {t("shapSnap")}
                 </div>
-              </div>
-              <div style={{ width: 36, height: 36, background: "#dcfce7", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", color: "#10b981" }}>
-                ✨
               </div>
             </div>
 

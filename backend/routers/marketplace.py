@@ -8,13 +8,14 @@ from sqlalchemy.orm import Session
 
 from database import get_db
 from deps import get_current_user
-from models.db_models import Farmer, MarketplaceOrder, MarketplaceProduct
+from models.db_models import Farmer, MarketplaceOrder, MarketplaceProduct, Alert
 
 router = APIRouter(prefix="/marketplace", tags=["marketplace"])
 
 
 class ProductIn(BaseModel):
     crop_name: str
+    category: str = "other"
     quantity: float
     unit: str = "kg"
     price_per_unit: float
@@ -28,6 +29,7 @@ class ProductIn(BaseModel):
 
 class ProductUpdate(BaseModel):
     crop_name: Optional[str] = None
+    category: Optional[str] = None
     quantity: Optional[float] = None
     unit: Optional[str] = None
     price_per_unit: Optional[float] = None
@@ -72,6 +74,7 @@ def create_product(
         p = MarketplaceProduct(
             farmer_id=user.id,
             crop_name=body.crop_name,
+            category=body.category,
             quantity=body.quantity,
             unit=body.unit,
             price_per_unit=body.price_per_unit,
@@ -173,6 +176,15 @@ def create_order(body: OrderIn, db: Session = Depends(get_db)):
         prod.quantity = float(prod.quantity) - float(body.quantity)
         if prod.quantity <= 0:
             prod.is_available = False
+            
+        # Create notification for the farmer
+        alert = Alert(
+            farmer_id=prod.farmer_id,
+            alert_type="new_order",
+            message=f"නව ඇණවුමක් ලැබී ඇත: {prod.crop_name} ({body.quantity} {prod.unit}) - ගැණුම්කරු: {body.buyer_name} ({body.buyer_phone})"
+        )
+        db.add(alert)
+        
         db.commit()
         db.refresh(order)
         return {"order_id": str(order.id), "total_price": total}

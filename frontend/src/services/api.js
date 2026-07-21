@@ -61,3 +61,41 @@ api.interceptors.response.use(
     return Promise.reject(e);
   }
 );
+
+// Advanced Caching System for Instant UI Feel
+const cache = new Map();
+const originalGet = api.get;
+
+api.get = async (url, config) => {
+  // Do not cache binary data like PDFs
+  if (config?.responseType === "blob") {
+    return originalGet.call(api, url, config);
+  }
+  
+  const key = url;
+  const cached = cache.get(key);
+  const now = Date.now();
+  
+  if (cached && (now - cached.time < 60000)) { // 60 seconds max cache life
+    // Stale-while-revalidate: if older than 5 seconds, refresh in background
+    if (now - cached.time > 5000) {
+       originalGet.call(api, url, config)
+         .then(res => cache.set(key, { data: res, time: Date.now() }))
+         .catch(() => {});
+    }
+    return Promise.resolve(cached.data);
+  }
+  
+  const res = await originalGet.call(api, url, config);
+  cache.set(key, { data: res, time: Date.now() });
+  return res;
+};
+
+// Clear cache automatically on any mutating request
+["post", "put", "delete", "patch"].forEach(method => {
+  const original = api[method];
+  api[method] = async (...args) => {
+    cache.clear();
+    return original.apply(api, args);
+  };
+});

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiMapPin, FiMail, FiPhone, FiLock, FiAlertCircle } from "react-icons/fi";
+import { FiUser, FiMapPin, FiMail, FiPhone, FiLock, FiAlertCircle, FiEye, FiEyeOff } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useLang } from "../context/LanguageContext.jsx";
 
@@ -102,7 +102,8 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [role, setRole] = useState("farmer");
-  const [location, setLocation] = useState("");
+  const [show1, setShow1] = useState(false);
+  const [show2, setShow2] = useState(false);
   const [err, setErr] = useState("");
 
   const canSubmit = useMemo(() => {
@@ -221,27 +222,33 @@ export default function Register() {
         <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "4px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255, 255, 255, 0.6)", background: "rgba(255, 255, 255, 0.5)", borderRadius: "16px", padding: "14px 20px" }}>
             <FiUser size={20} color="#475569" />
-            <input type="text" placeholder={t.fullName} value={full_name} onChange={(e) => setFullName(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+            <input type="text" placeholder={t.fullName} value={full_name} onChange={(e) => setFullName(e.target.value)} autoComplete="off" style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255, 255, 255, 0.6)", background: "rgba(255, 255, 255, 0.5)", borderRadius: "16px", padding: "14px 20px" }}>
             <FiMail size={20} color="#475569" />
-            <input type="email" placeholder={t.email} value={email} onChange={(e) => setEmail(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+            <input type="email" placeholder={t.email} value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="off" style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255, 255, 255, 0.6)", background: "rgba(255, 255, 255, 0.5)", borderRadius: "16px", padding: "14px 20px" }}>
             <FiPhone size={20} color="#475569" />
-            <input type="text" placeholder={t.phone} value={phone} onChange={(e) => setPhone(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+            <input type="text" placeholder={t.phone} value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="off" style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255, 255, 255, 0.6)", background: "rgba(255, 255, 255, 0.5)", borderRadius: "16px", padding: "14px 20px" }}>
             <FiLock size={20} color="#475569" />
-            <input type="password" placeholder={t.password} value={password} onChange={(e) => setPassword(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+            <input type={show1 ? "text" : "password"} placeholder={t.password} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+            <button type="button" onClick={() => setShow1(!show1)} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", color: "#64748b", padding: 0 }}>
+              {show1 ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+            </button>
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255, 255, 255, 0.6)", background: "rgba(255, 255, 255, 0.5)", borderRadius: "16px", padding: "14px 20px" }}>
             <FiLock size={20} color="#475569" />
-            <input type="password" placeholder={t.confirmPassword} value={password2} onChange={(e) => setPassword2(e.target.value)} style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+            <input type={show2 ? "text" : "password"} placeholder={t.confirmPassword} value={password2} onChange={(e) => setPassword2(e.target.value)} autoComplete="new-password" style={{ border: "none", outline: "none", flex: 1, fontSize: "15px", background: "transparent", color: "#1e293b" }} />
+            <button type="button" onClick={() => setShow2(!show2)} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", color: "#64748b", padding: 0 }}>
+              {show2 ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+            </button>
           </div>
         </div>
 

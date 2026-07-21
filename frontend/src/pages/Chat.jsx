@@ -184,7 +184,7 @@ export default function Chat() {
   };
 
   return (
-    <div style={{ padding: "24px", height: "100%", boxSizing: "border-box" }}>
+    <div className="gov-page" style={{ height: "100%", boxSizing: "border-box", display: "flex", flexDirection: "column" }}>
       <div style={{ 
         maxWidth: "900px", 
         margin: "0 auto", 

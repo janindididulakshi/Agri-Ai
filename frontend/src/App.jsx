@@ -26,7 +26,28 @@ function PrivateShell() {
 
 function RequireAuth({ children }) {
   const { token, loading } = useAuth();
-  if (loading) return <div className="gov-page sf-muted">පූරණය…</div>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#f8fafc' }}>
+        <style>
+          {`
+            @keyframes buffering {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}
+        </style>
+        <div style={{
+          width: 48,
+          height: 48,
+          border: '4px solid #e2e8f0',
+          borderTop: '4px solid #0bc25c',
+          borderRadius: '50%',
+          animation: 'buffering 1s linear infinite'
+        }}></div>
+      </div>
+    );
+  }
   if (!token) return <Navigate to="/login" replace />;
   return children;
 }

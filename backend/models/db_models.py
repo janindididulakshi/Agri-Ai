@@ -112,6 +112,7 @@ class MarketplaceProduct(Base):
         index=True,
     )
     crop_name = Column(String(100), nullable=False)
+    category = Column(String(50), default="other")
     quantity = Column(Float, nullable=False)
     unit = Column(String(20), default="kg")
     price_per_unit = Column(Float, nullable=False)

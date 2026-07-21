@@ -169,7 +169,7 @@ export default function Reports() {
   return (
     <div style={{ maxWidth: 1000, margin: "0 auto", padding: "40px 32px", paddingBottom: 100 }}>
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 32, flexWrap: "wrap", gap: 16 }}>
         <div>
            <h1 style={{ fontSize: 28, fontWeight: 900, color: "#0f172a", margin: "0 0 6px 0" }}>{t("reportTitle")}</h1>
            <div style={{ fontSize: 14, color: "#64748b" }}>{t("reportSubtitle")}</div>
@@ -182,17 +182,17 @@ export default function Reports() {
         </button>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 32 }}>
-        <DetailedStat title={t("farmSize")} value="7.2 ha" subtitle={`${t("managedIn")} ${user?.location || "Kandy District"}`} icon={FiGrid} />
-        <DetailedStat title={t("cropType")} value={summary?.top_crop || "Tea"} subtitle={t("primaryCrop")} icon={FiFeather} />
-        <DetailedStat title={t("consultations")} value={String(summary?.total_consultations || 12)} subtitle={t("expertSessions")} icon={FiMessageCircle} />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 24, marginBottom: 32 }}>
+        <DetailedStat title={t("alerts")} value={String(summary?.orders_count ?? 0)} subtitle={`Total marketplace orders in ${user?.location || "your area"}`} icon={FiGrid} />
+        <DetailedStat title={t("cropType")} value={summary?.top_crop || "—"} subtitle={t("primaryCrop")} icon={FiFeather} />
+        <DetailedStat title={t("consultations")} value={String(summary?.total_consultations ?? 0)} subtitle={t("expertSessions")} icon={FiMessageCircle} />
       </div>
 
       {loading ? <div style={{ color: "#64748b", fontWeight: 600, marginBottom: 24 }}>{t("loading")}</div> : null}
       {err ? <div style={{ padding: 16, background: "#fee2e2", color: "#ef4444", borderRadius: 12, marginBottom: 24, fontWeight: 600 }}>{err}</div> : null}
 
       {summary ? (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginBottom: 32 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 16, marginBottom: 32 }}>
           <Stat title={t("consultations")} value={String(summary.total_consultations ?? 0)} />
           <Stat title={t("mainCrop")} value={String(summary.top_crop || "—")} />
           <Stat title={t("revenue")} value={Number(summary.sales_total_lkr || 0).toFixed(0)} />
@@ -200,31 +200,37 @@ export default function Reports() {
         </div>
       ) : null}
 
-      {summary?.consultations_by_month?.length ? (
-        <div style={{ background: "#fff", borderRadius: 24, padding: 32, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)", marginBottom: 24 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-             <div style={{ fontSize: 18, fontWeight: 800, color: "#0f172a" }}>{t("monthlyConsultations")}</div>
-             <div style={{ fontSize: 14, color: "#64748b", fontWeight: 600 }}>2026-07</div>
+      {summary ? (
+        <>
+          <div style={{ background: "#fff", borderRadius: 24, padding: 32, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)", marginBottom: 24 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+               <div style={{ fontSize: 18, fontWeight: 800, color: "#0f172a" }}>{t("monthlyConsultations")}</div>
+               <div style={{ fontSize: 14, color: "#64748b", fontWeight: 600 }}>{new Date().getFullYear()}</div>
+            </div>
+            <div style={{ height: 280 }}>
+              {summary.consultations_by_month?.length ? (
+                <Bar data={consultChart} options={chartOptions} />
+              ) : (
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%", color: "#94a3b8", fontWeight: 600 }}>No consultation data available for this year.</div>
+              )}
+            </div>
           </div>
-          <div style={{ height: 280 }}>
-            <Bar data={consultChart} options={chartOptions} />
-          </div>
-        </div>
-      ) : null}
 
-      {summary?.weather_avg_by_month?.length ? (
-        <div style={{ background: "#fff", borderRadius: 24, padding: 32, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)", marginBottom: 24 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-             <div style={{ fontSize: 18, fontWeight: 800, color: "#0f172a" }}>{t("avgTemp")}</div>
-             <div style={{ fontSize: 14, color: "#64748b", fontWeight: 600 }}>2026-07</div>
+          <div style={{ background: "#fff", borderRadius: 24, padding: 32, border: "1px solid #f1f5f9", boxShadow: "0 4px 20px rgba(0,0,0,0.02)", marginBottom: 24 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+               <div style={{ fontSize: 18, fontWeight: 800, color: "#0f172a" }}>{t("avgTemp")}</div>
+               <div style={{ fontSize: 14, color: "#64748b", fontWeight: 600 }}>{new Date().getFullYear()}</div>
+            </div>
+            <div style={{ height: 280 }}>
+              {summary.weather_avg_by_month?.length ? (
+                <Bar data={wxChart} options={chartOptions} />
+              ) : (
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%", color: "#94a3b8", fontWeight: 600 }}>{t("noWeatherLogs")}</div>
+              )}
+            </div>
           </div>
-          <div style={{ height: 280 }}>
-            <Bar data={wxChart} options={chartOptions} />
-          </div>
-        </div>
-      ) : (
-        <div style={{ color: "#64748b", fontWeight: 600, padding: 24, background: "#f8fafc", borderRadius: 16, textAlign: "center" }}>{t("noWeatherLogs")}</div>
-      )}
+        </>
+      ) : null}
     </div>
   );
 }
