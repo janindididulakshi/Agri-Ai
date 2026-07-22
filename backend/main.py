@@ -1,4 +1,6 @@
+import asyncio
 import logging
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -13,20 +15,54 @@ from seed_doa import seed_doa_if_empty
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+_executor = ThreadPoolExecutor(max_workers=1)
+
+
+def _run_db_init():
+    """Run synchronous DB init using a dedicated connection, not the main pool."""
+    import os
+    from sqlalchemy import create_engine, text
+    from sqlalchemy.pool import NullPool
+    try:
+        url = os.environ.get("DATABASE_URL", "").strip()
+        if not url:
+            return
+        is_pg = url.startswith("postgres")
+        connect_args = {}
+        if is_pg:
+            connect_args = {
+                "sslmode": "require", "connect_timeout": 15,
+                "keepalives": 1, "keepalives_idle": 30,
+                "keepalives_interval": 5, "keepalives_count": 3,
+            }
+        # NullPool: each operation opens/closes its own connection — zero pool pressure
+        init_eng = create_engine(url, poolclass=NullPool, connect_args=connect_args)
+        with init_eng.connect() as conn:
+            conn.execute(text("SELECT 1"))
+        # Run migrations on the dedicated engine
+        Base.metadata.create_all(bind=init_eng, checkfirst=True)
+        ensure_marketplace_product_columns(init_eng)
+        logger.info("Database tables ensured (init engine)")
+        # Seed using the dedicated engine session
+        from sqlalchemy.orm import sessionmaker
+        InitSession = sessionmaker(bind=init_eng)
+        db = InitSession()
+        try:
+            seed_doa_if_empty(db)
+            logger.info("DOA knowledge seed checked")
+        finally:
+            db.close()
+        init_eng.dispose()
+    except Exception as e:
+        logger.error("DB init error (non-fatal): %s", e)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    eng = get_engine()
-    Base.metadata.create_all(bind=eng)
-    ensure_marketplace_product_columns(eng)
-    logger.info("Database tables ensured")
-    Db = get_session_factory()
-    db = Db()
-    try:
-        seed_doa_if_empty(db)
-        logger.info("DOA knowledge seed checked")
-    finally:
-        db.close()
+    # Run DB init in background using a dedicated engine (does NOT block the main pool)
+    loop = asyncio.get_event_loop()
+    loop.run_in_executor(_executor, _run_db_init)
+    logger.info("DB initialization running in background")
     yield
 
 
@@ -68,10 +104,24 @@ if os.path.isdir(assets_dir):
     app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
 
 # Catch-all route to serve the React SPA for any other paths (excluding API routes)
+_API_PREFIXES = ("auth", "marketplace", "weather", "predict", "chat", "reports", "farmer", "buyer", "health", "docs", "openapi", "redoc")
+
 @app.get("/{full_path:path}")
 async def serve_frontend(full_path: str):
+    # Don't intercept API routes
+    if full_path.split("/")[0] in _API_PREFIXES:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Not found")
     file_path = os.path.join(dist_dir, full_path)
     if os.path.isfile(file_path):
         return FileResponse(file_path)
     # Return index.html for client-side routing
-    return FileResponse(os.path.join(dist_dir, "index.html"))
+    index_path = os.path.join(dist_dir, "index.html")
+    if os.path.isfile(index_path):
+        return FileResponse(index_path)
+    from fastapi.responses import JSONResponse
+    return JSONResponse({"message": "Smart Farm API running"}, status_code=200)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

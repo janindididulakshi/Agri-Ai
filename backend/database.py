@@ -29,13 +29,25 @@ def init_engine():
     for attempt in range(1, 4):
         try:
             pool_kwargs = {}
+            connect_args = {}
             if _is_postgres:
                 pool_kwargs = {
-                    "pool_size": 10,
+                    "pool_size": 5,
                     "max_overflow": 10,
-                    "pool_recycle": 300,
+                    "pool_recycle": 1800,
+                    "pool_timeout": 30,
+                    "pool_pre_ping": True,
                 }
-            eng = create_engine(url, pool_pre_ping=True, echo=False, **pool_kwargs)
+                connect_args = {
+                    "sslmode": "require",
+                    "connect_timeout": 10,
+                    "keepalives": 1,
+                    "keepalives_idle": 30,
+                    "keepalives_interval": 5,
+                    "keepalives_count": 3,
+                    "options": "-c statement_timeout=30000",
+                }
+            eng = create_engine(url, echo=False, connect_args=connect_args, **pool_kwargs)
             with eng.connect() as conn:
                 conn.execute(text("SELECT 1"))
             _engine = eng
@@ -73,5 +85,8 @@ def get_db():
     db = DbSession()
     try:
         yield db
+    except Exception:
+        db.rollback()
+        raise
     finally:
         db.close()

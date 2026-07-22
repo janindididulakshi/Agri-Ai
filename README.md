@@ -8,7 +8,6 @@ AI-powered farming platform for Sri Lankan agriculture. Includes a farmer PWA, a
 |---|---|---|
 | `backend/` | FastAPI Python API (auth, weather, ML, AI chat, marketplace, PDF reports) | 8000 |
 | `frontend/` | Farmer PWA "Govi AI" (dashboard, weather, chat, predictions, marketplace) | 3000 |
-| `buyer-website/` | Buyer marketplace "Govi Velandapola" (browse, cart, checkout, tracking) | 3001 |
 
 ## Prerequisites
 
@@ -44,10 +43,9 @@ Opens at `http://localhost:3000`.
 
 ## Running All Together
 
-Start three terminals:
+Start two terminals:
 
 1. `cd backend && uvicorn main:app --reload --port 8000`
 2. `cd frontend && npm run dev`
-3. `cd buyer-website && npm run dev`
 
-Both frontends expect the backend at `http://localhost:8000` (set via `VITE_API_URL` in their `.env` files).
+The frontend expects the backend at `http://localhost:8000` (set via `VITE_API_URL` in its `.env` file).
