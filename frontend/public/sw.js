@@ -1,4 +1,4 @@
-const CACHE = "smartfarm-shell-v1";
+const CACHE = "smartfarm-shell-v2";
 const ASSETS = ["/", "/index.html", "/offline.html", "/manifest.json"];
 
 self.addEventListener("install", (event) => {
@@ -16,24 +16,35 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
+
+  // Use Network-First strategy for HTML documents (like index.html)
+  if (req.headers.get("accept")?.includes("text/html")) {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
+          return res;
+        })
+        .catch(() => caches.match(req).then((cached) => cached || caches.match("/offline.html")))
+    );
+    return;
+  }
+
+  // Use Cache-First for other assets (JS, CSS, images)
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;
       return fetch(req)
         .then((res) => {
-          const copy = res.clone();
-          if (req.url.startsWith(self.location.origin)) {
+          // Only cache successful responses
+          if (res.status === 200 && req.url.startsWith(self.location.origin)) {
+            const copy = res.clone();
             caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
           }
           return res;
         })
-        .catch(async () => {
-          if (req.mode === "navigate") {
-            const off = await caches.match("/offline.html");
-            if (off) return off;
-          }
-          return caches.match("/index.html");
-        });
+        .catch(() => null);
     })
   );
 });

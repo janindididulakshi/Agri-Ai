@@ -115,6 +115,12 @@ async def serve_frontend(full_path: str):
     file_path = os.path.join(dist_dir, full_path)
     if os.path.isfile(file_path):
         return FileResponse(file_path)
+    
+    # If the missing file is an asset (JS, CSS, images, etc.), return 404 so it doesn't silently return HTML
+    if full_path.startswith("assets/") or full_path.endswith((".js", ".css", ".png", ".jpg", ".map", ".json", ".ico")):
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Asset not found")
+
     # Return index.html for client-side routing
     index_path = os.path.join(dist_dir, "index.html")
     if os.path.isfile(index_path):
