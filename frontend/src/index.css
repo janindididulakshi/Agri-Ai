@@ -2842,3 +2842,89 @@ button {
     display: none !important;
   }
 }
+/* --- Responsive Utilities Added for Hamburger & Layout --- */
+
+.page-wrapper {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+@media (max-width: 900px) {
+  .page-wrapper {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-wrapper {
+    padding: 16px;
+    padding-bottom: 96px; /* Space for BottomNav */
+  }
+}
+
+/* Mobile Sidebar Overlay */
+.mobile-sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.mobile-sidebar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  max-width: 85vw;
+  background: var(--gov-sidebar-bg);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+}
+
+.mobile-sidebar-container.open {
+  transform: translateX(0);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Ensure images in grids are responsive */
+.responsive-img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive Table Wrapper */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Dashboard Responsive Grids */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

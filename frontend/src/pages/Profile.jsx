@@ -337,7 +337,7 @@ export default function Profile() {
   };
 
   return (
-    <div style={{ maxWidth: 1000, margin: "0 auto", padding: "40px 32px", paddingBottom: 100 }}>
+    <div className="page-wrapper">
       <div style={{ marginBottom: 32 }}>
         <h1 style={{ fontSize: 28, fontWeight: 900, color: "#0f172a", margin: "0 0 6px 0" }}>{t("profileSettings")}</h1>
         <div style={{ fontSize: 14, color: "#64748b" }}>{t("manageAccount")}</div>

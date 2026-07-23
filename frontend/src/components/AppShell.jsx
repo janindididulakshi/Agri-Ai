@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { FiHome, FiMessageSquare, FiShoppingCart, FiBarChart2, FiUser, FiSearch, FiBell, FiGlobe, FiLogOut, FiFeather, FiActivity } from "react-icons/fi";
+import { FiHome, FiMessageSquare, FiShoppingCart, FiBarChart2, FiUser, FiSearch, FiBell, FiGlobe, FiLogOut, FiActivity, FiMenu } from "react-icons/fi";
 import { useLang } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useNotifications } from "../context/NotificationContext.jsx";
@@ -38,50 +38,89 @@ function SidebarLink({ to, icon, label }) {
   );
 }
 
+const SidebarContent = () => (
+  <>
+    <div style={{ padding: "32px 24px", display: "flex", alignItems: "center", gap: "12px" }}>
+      <img src="/logo.jpg" alt="Govi AI" style={{ height: "40px", width: "auto", borderRadius: "8px", objectFit: "contain" }} />
+      <div>
+        <div style={{ fontWeight: 800, fontSize: "16px", color: "#1e293b" }}>Govi AI</div>
+        <div style={{ fontSize: "11px", color: "#94a3b8" }}>Smart farm dashboard</div>
+      </div>
+    </div>
+    <nav style={{ flex: 1 }}>
+      <SidebarLink to="/app" icon={<FiHome size={20} />} label="Home" />
+      <SidebarLink to="/app/chat" icon={<FiMessageSquare size={20} />} label="Chat" />
+      <SidebarLink to="/app/predict" icon={<FiActivity size={20} />} label="Crop Suggestion" />
+      <SidebarLink to="/app/market" icon={<FiShoppingCart size={20} />} label="Market" />
+      <SidebarLink to="/app/reports" icon={<FiBarChart2 size={20} />} label="Reports" />
+      <SidebarLink to="/app/profile" icon={<FiUser size={20} />} label="Profile" />
+    </nav>
+  </>
+);
+
 export default function AppShell() {
   const { lang, setLang } = useLang();
   const { user, logout } = useAuth();
   const { unreadCount, toggle: toggleNotifications } = useNotifications();
   const nav = useNavigate();
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
     nav("/login", { replace: true });
   };
 
+  // Close mobile menu on route change
+  const handleNavClick = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "transparent", width: "100%" }}>
-      <aside className="gov-sidebar" style={{ width: "260px", background: "rgba(255, 255, 255, 0.85)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", borderRight: "1px solid rgba(0, 0, 0, 0.05)", display: "flex", flexDirection: "column", flexShrink: 0, zIndex: 10 }}>
-        <div style={{ padding: "32px 24px", display: "flex", alignItems: "center", gap: "12px" }}>
-          <img src="/logo.jpg" alt="Govi AI" style={{ height: "40px", width: "auto", borderRadius: "8px", objectFit: "contain" }} />
-          <div>
-            <div style={{ fontWeight: 800, fontSize: "16px", color: "#1e293b" }}>Govi AI</div>
-            <div style={{ fontSize: "11px", color: "#94a3b8" }}>Smart farm dashboard</div>
-          </div>
-        </div>
+      {/* Mobile Sidebar Overlay */}
+      {isMobileMenuOpen && (
+        <div className="mobile-sidebar-overlay" onClick={() => setIsMobileMenuOpen(false)}></div>
+      )}
+      <div className={`mobile-sidebar-container ${isMobileMenuOpen ? "open" : ""}`} onClick={handleNavClick}>
+        <SidebarContent />
+      </div>
 
-        <nav style={{ flex: 1 }}>
-          <SidebarLink to="/app" icon={<FiHome size={20} />} label="Home" />
-          <SidebarLink to="/app/chat" icon={<FiMessageSquare size={20} />} label="Chat" />
-          <SidebarLink to="/app/predict" icon={<FiActivity size={20} />} label="Crop Suggestion" />
-          <SidebarLink to="/app/market" icon={<FiShoppingCart size={20} />} label="Market" />
-          <SidebarLink to="/app/reports" icon={<FiBarChart2 size={20} />} label="Reports" />
-          <SidebarLink to="/app/profile" icon={<FiUser size={20} />} label="Profile" />
-        </nav>
+      {/* Desktop Sidebar */}
+      <aside className="gov-sidebar" style={{ width: "260px", background: "rgba(255, 255, 255, 0.85)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", borderRight: "1px solid rgba(0, 0, 0, 0.05)", display: "flex", flexDirection: "column", flexShrink: 0, zIndex: 10 }}>
+        <SidebarContent />
       </aside>
 
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: "100vh", overflow: "hidden" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: "100vh", overflow: "hidden", minWidth: 0 }}>
         <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", padding: "14px 16px", background: "rgba(255, 255, 255, 0.85)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", borderBottom: "1px solid rgba(0,0,0,0.05)", zIndex: 10 }}>
-          <div style={{ display: "flex", alignItems: "center", background: "#fff", border: "1px solid #e2e8f0", borderRadius: "999px", padding: "0 14px", height: "40px", flex: 1, minWidth: 0, gap: "10px", boxShadow: "0 1px 2px rgba(0,0,0,0.02)" }}>
-            <FiSearch size={14} color="#94a3b8" />
-            <input 
-              type="text" 
-              name="search_dummy"
-              autoComplete="off"
-              placeholder="Search farm data..." 
-              style={{ border: "none", outline: "none", background: "transparent", fontSize: "14px", color: "#334155", flex: 1, minHeight: 0, height: "100%", padding: 0 }}
-            />
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", flex: 1, minWidth: 0 }}>
+            {/* Hamburger Menu (Mobile/Tablet only) */}
+            <button 
+              type="button"
+              className="hamburger-menu"
+              onClick={() => setIsMobileMenuOpen(true)}
+              style={{ background: "none", border: "none", color: "#475569", padding: "8px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
+            >
+              <FiMenu size={24} />
+            </button>
+            <style>
+              {`
+                @media (min-width: 900px) {
+                  .hamburger-menu { display: none !important; }
+                }
+              `}
+            </style>
+
+            <div style={{ display: "flex", alignItems: "center", background: "#fff", border: "1px solid #e2e8f0", borderRadius: "999px", padding: "0 14px", height: "40px", flex: 1, minWidth: 0, maxWidth: "600px", gap: "10px", boxShadow: "0 1px 2px rgba(0,0,0,0.02)" }}>
+              <FiSearch size={14} color="#94a3b8" />
+              <input 
+                type="text" 
+                name="search_dummy"
+                autoComplete="off"
+                placeholder="Search..." 
+                style={{ border: "none", outline: "none", background: "transparent", fontSize: "14px", color: "#334155", flex: 1, minWidth: 0, height: "100%", padding: 0 }}
+              />
+            </div>
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>

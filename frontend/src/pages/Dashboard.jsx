@@ -245,7 +245,7 @@ export default function Dashboard() {
       </div>
 
       {/* Main Content Grid - 2 Column */}
-      <div className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, marginBottom: 40 }}>
+      <div className="dashboard-grid">
         {/* Left Column */}
         <div style={{ display: "grid", gap: 24, alignContent: "start" }}>
           {/* Weather Card */}

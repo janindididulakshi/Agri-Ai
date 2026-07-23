@@ -104,7 +104,7 @@ export default function Predict() {
   };
 
   return (
-    <div style={{ padding: "32px", maxWidth: "1200px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "24px" }}>
+    <div className="page-wrapper" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
       
       {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #e2e8f0", paddingBottom: "24px" }}>

@@ -355,9 +355,9 @@ export default function Market() {
   };
 
   return (
-    <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 32px", paddingBottom: 100 }}>
+    <div className="page-wrapper">
       <style>{`
-        .market-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; }
+        .market-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
         .market-grid { display: grid; grid-template-columns: 1fr 340px; gap: 32px; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
